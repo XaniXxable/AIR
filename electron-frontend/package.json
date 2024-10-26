@@ -1,0 +1,15 @@
+{
+  "name": "air-frontend",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron . --no-sandbox",
+    "dev": "electron-reload . -- electron .",
+    "build": "electron-builder"
+  },
+  "author": "",
+  "description": "",
+  "devDependencies": {
+    "electron": "^33.0.2"
+  }
+}
