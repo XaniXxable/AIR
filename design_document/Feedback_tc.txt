@@ -1,0 +1,9 @@
+In general: The project fits nicely!
+
+Some feedback from our side:
+- no references (-1p)
+- unclear what model architecture will be used. (-1p)
+- evaluation of the system unclear, what metrics will you use? How will you measure the performance of your entire system? (-1.5p)
+-> for example qualitative analysis (human evaluation): are the results based on a query correct?
+
+Nice project idea! Looking forward to its development.
