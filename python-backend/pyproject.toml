@@ -1,12 +1,14 @@
 [tool.poetry]
-name = "air-backend"
+name = "python-backend"
 version = "0.1.0"
 description = ""
-authors = ["Matthias Hemmer"]
+authors = ["Matthias Hemmer <matthias.hemmer@student.tugraz.at>"]
 readme = "README.md"
+packages = [{include = "air-backend", from="src"}]
 
 [tool.poetry.dependencies]
-python = ">=3.10"
+python = "^3.12"
+fastapi = "^0.115.5"
 
 
 [build-system]
