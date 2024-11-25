@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Matthias Hemmer <matthias.hemmer@student.tugraz.at>"]
 readme = "README.md"
-packages = [{include = "air_backend", from="src"}]
+packages = [{include = "FastDineAPI", from="src"}, {include = "DineFinderAI", from="src"}]
 
 [tool.poetry.dependencies]
 python = "^3.12"
@@ -12,7 +12,7 @@ fastapi = "^0.115.5"
 uvicorn = "^0.32.1"
 
 [tool.poetry.scripts]
-start = "air_backend.app:start"
+start = "FastDineAPI.app:start"
 
 [build-system]
 requires = ["poetry-core"]
