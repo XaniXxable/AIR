@@ -1,5 +1,5 @@
 # Use the official Python 3.10 slim image
-FROM python:3.10-slim
+FROM python:3.12-slim
 
 # Install Poetry
 RUN pip install --no-cache-dir poetry
@@ -10,11 +10,12 @@ WORKDIR /app
 # Copy the Poetry files first to leverage Docker's layer caching
 COPY pyproject.toml poetry.lock ./
 
-# Install dependencies without creating a virtual environment
-RUN poetry config virtualenvs.create false && poetry install --no-root
-
 # Copy the application source code into the container
 COPY src/ ./src/
+COPY README.md .
+
+# Install dependencies without creating a virtual environment
+RUN poetry config virtualenvs.create true && poetry install --no-root
 
 RUN poetry install
 
@@ -22,4 +23,4 @@ RUN poetry install
 EXPOSE 5000
 
 # Use Poetry's run command as the entry point
-CMD ["poetry", "run", "python", "src/backend/app.py"]
+CMD ["poetry", "run", "start"]
