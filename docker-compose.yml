@@ -10,20 +10,20 @@ services:
     volumes:
       - ./python-backend/src:/app/src  # Mount only the src folder for development
 
-  electron-frontend:
-    stdin_open: true
-    tty: true
-    build:
-      context: ./electron-frontend
-      dockerfile: Dockerfile.electron
-    depends_on:
-      - python-backend
-    environment:
-      - ELECTRON_BACKEND_URL=http://python-backend:5000
-      - DISPLAY=$DISPLAY
-    volumes:
-      - ./electron-frontend:/app
-      - $HOME/.Xauthority:/root/.Xauthority:rw
-      - /tmp/.X11-unix:/tmp/.X11-unix
-      - ~/.Xauthority:/root/.Xauthority
-    network_mode: host
+  # electron-frontend:
+  #   stdin_open: true
+  #   tty: true
+  #   build:
+  #     context: ./electron-frontend
+  #     dockerfile: Dockerfile.electron
+  #   depends_on:
+  #     - python-backend
+  #   environment:
+  #     - ELECTRON_BACKEND_URL=http://python-backend:5000
+  #     - DISPLAY=$DISPLAY
+  #   volumes:
+  #     - ./electron-frontend:/app
+  #     - $HOME/.Xauthority:/root/.Xauthority:rw
+  #     - /tmp/.X11-unix:/tmp/.X11-unix
+  #     - ~/.Xauthority:/root/.Xauthority
+  #   network_mode: host
