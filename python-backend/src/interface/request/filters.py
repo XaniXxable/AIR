@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from FastDineAPI.interface.request.baseInterface import BaseInterface
+from interface.request.baseInterface import BaseInterface
 
 @dataclass
 class addit_filters(BaseInterface):

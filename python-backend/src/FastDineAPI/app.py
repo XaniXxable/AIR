@@ -1,9 +1,8 @@
 import uvicorn
 from fastapi import FastAPI, Request
 from pydantic import BaseModel
-from FastDineAPI.interface.request.queryRequest import QueryRequest
-from FastDineAPI.interface.response.queryResponse import QueryResponse
-from FastDineAPI.interface.response.restaurant import Restaurant
+from interface.request.queryRequest import QueryRequest
+
 app = FastAPI()
 
 class MyResponse(BaseModel):
@@ -14,30 +13,16 @@ async def index(reqeust: Request) -> dict[str, str]:
   try:
     json_string = await reqeust.json()
     query_request = QueryRequest.from_json(json_string)
-    print(query_request)
-    response = QueryResponse(
-    Restaurants=[
-        Restaurant(
-            Name="Pasta Palace",
-            Type="Italian",
-            Reviews=150,
-            Location="Main Street",
-            Image="pasta.jpg"
-        ),
-        Restaurant(
-            Name="Sushi Spot",
-            Type="Japanese",
-            Reviews=89,
-            Location="Oak Avenue",
-            Image="sushi.jpg"
-        )
-      ]
-    )
-    return {"Data": response.to_json()}
-    # return response.to_json()
+    # TODO: Call the trianed model.
+    return {"Data": ""}
   except Exception as err:
     print(err)
     return {"Error": "Parsing error"}
+
+@app.get("/status")
+async def status() -> dict[str, str]:
+  # TODO: Get the status of the training
+  return {"Status": "0%"}
 
 
 def start() -> None:

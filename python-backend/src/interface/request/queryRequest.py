@@ -1,7 +1,7 @@
 from typing import Type
 from dataclasses import dataclass
-from FastDineAPI.interface.request.baseInterface import BaseInterface
-from FastDineAPI.interface.request.filters import addit_filters
+from interface.request.baseInterface import BaseInterface
+from interface.request.filters import addit_filters
 
 
 @dataclass
