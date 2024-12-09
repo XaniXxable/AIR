@@ -19,9 +19,6 @@ class DatabaseManager:
   def closeFunc(self) -> None:
     self.con.close()
 
-  def initTable(self) -> None:
-    self.con.cursor().execute("CREATE TABLE restaurants (id integer PRIMARY KEY AUTOINCREMENT, name varchar(255), address varchar(255), city varchar(255), state varchar(255), postal_code varchar(255), stars float, review_count int, categories varchar(255))")
-
   def insertData(self) -> None:
     db = pandas.read_json(self.json_filepath, lines=True)
     db = db[["name", "address", "city", "state", "postal_code", "stars", "review_count", "categories"]]
