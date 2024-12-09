@@ -233,4 +233,5 @@ pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/python
 
-
+# yelp dataset json file
+**yelp_academic_dataset_business.json
