@@ -2,6 +2,8 @@ import yaml
 from pathlib import Path
 from multiprocessing import Pool, cpu_count
 from typing import Callable
+from DineFinderAI.db.DatabaseManager import DatabaseManager
+import pandas as pandas
 
 
 class QueryGenerator:
@@ -106,22 +108,44 @@ class QueryGenerator:
     return queries
 
 
+def extract_data_from_db(data: list[any]) -> dict[str, list[str]]:
+  name_file_path = Path.cwd().joinpath("python-backend", "resources", "name_detail_queries.yaml")
+
+  restaurant_data = []
+
+  for entry in data:
+    name, address, city, state, stars, categories = entry
+    response = f"{name} is located at {address}, {city}, {state}. " f"It has {stars} stars and offers {categories}."
+    query = f"What are the details for {name}?"
+    restaurant_data.append({"query": query, "response": response})
+
+  with open(name_file_path, "w") as file:
+    yaml.dump(restaurant_data, file, default_flow_style=False)
+
+
 def main() -> None:
-  categories = ["bubble tea", "ice cream", "Italian", "Mexican", "Chinese"]
-  cities = ["New York", "Los Angeles", "Chicago"]
-  states = ["NY", "CA", "IL"]
-  star_thresholds = [3, 4, 5]
-  review_thresholds = [50, 100, 200]
-  names = ["Joe's Pizza", "Shake Shack", "The Great Wall"]
+  db_path = Path.cwd().joinpath("python-backend", "resources", "database.db")
+  db_manager = DatabaseManager(database_filepath=db_path)
+  db_manager.connectFunc()
+  rows = db_manager.execute("SELECT name, address, city, state, stars, categories from restaurants")
 
-  gen = QueryGenerator()
-  queries = gen(categories, cities, states, star_thresholds, review_thresholds, names)
+  data = extract_data_from_db(rows)
 
-  dest_file_path = Path.cwd().joinpath("resources", "queries.yaml")
-  with open(dest_file_path, "w") as f:
-    yaml.dump({"queries": queries}, f, default_flow_style=False)
+  # categories = ["bubble tea", "ice cream", "Italian", "Mexican", "Chinese"]
+  # cities = ["New York", "Los Angeles", "Chicago"]
+  # states = ["NY", "CA", "IL"]
+  # star_thresholds = [3, 4, 5]
+  # review_thresholds = [50, 100, 200]
+  # names = ["Joe's Pizza", "Shake Shack", "The Great Wall"]
 
-  print(f"Generated {len(queries)} queries and saved to '{dest_file_path}'.")
+  # gen = QueryGenerator()
+  # queries = gen(categories, cities, states, star_thresholds, review_thresholds, names)
+
+  # dest_file_path = Path.cwd().joinpath("resources", "queries.yaml")
+  # with open(dest_file_path, "w") as f:
+  #   yaml.dump({"queries": queries}, f, default_flow_style=False)
+
+  # print(f"Generated {len(queries)} queries and saved to '{dest_file_path}'.")
 
 
 if __name__ == "__main__":
