@@ -2,8 +2,9 @@ import yaml
 from pathlib import Path
 from multiprocessing import Pool, cpu_count
 from typing import Callable
-class QueryGenerator:
 
+
+class QueryGenerator:
   def __init__(self) -> None:
     pass
 
@@ -45,9 +46,7 @@ class QueryGenerator:
     for city in cities:
       for category in categories:
         for star in stars:
-          queries.append(
-            f"Find {category} restaurants in {city} with has more than {star} stars."
-            )
+          queries.append(f"Find {category} restaurants in {city} with has more than {star} stars.")
     return queries
 
   def _generate_category_by_city(self, categories: list[str], cities: list[str]) -> list[str]:
@@ -58,8 +57,10 @@ class QueryGenerator:
         queries.append(f"What’s a highly rated {category} shop in {city}?")
         queries.append(f"Can you suggest a place for {category} with great reviews?")
     return queries
-  
-  def _generate_category_by_city_and_name(self, categories: list[str], cities: list[str], names: list[str]) -> list[str]:
+
+  def _generate_category_by_city_and_name(
+    self, categories: list[str], cities: list[str], names: list[str]
+  ) -> list[str]:
     queries = []
     for category in categories:
       for city in cities:
@@ -71,34 +72,38 @@ class QueryGenerator:
   def _generate_queries_from_function(self, func: Callable[..., list[str]], args: list) -> list[str]:
     return func(*args)
 
-  def __call__(self,
-              categories: list[str],
-              cities: list[str],
-              states: list[str],
-              stars: list[int],
-              reviews: list[int],
-              names:list[str],
-              ) -> list[str]:
-      queries = []
+  def __call__(
+    self,
+    categories: list[str],
+    cities: list[str],
+    states: list[str],
+    stars: list[int],
+    reviews: list[int],
+    names: list[str],
+  ) -> list[str]:
+    queries = []
 
-      with Pool(processes=cpu_count()) as pool:
-          results = pool.starmap(
-              self._generate_queries_from_function,
-              [
-                  (self._generate_by_name, [names]),
-                  (self._generate_by_category, [categories, states, cities]),
-                  (self._generate_by_star, [stars, categories]),
-                  (self._generate_by_review, [reviews, categories]),
-                  (self._generate_by_city_categ_stars, [cities, categories, stars]),
-                  (self._generate_category_by_city, [categories, cities]),
-                  (self._generate_category_by_city_and_name, [categories, cities, names]),
-              ]
-          )
+    with Pool(processes=cpu_count()) as pool:
+      results = pool.starmap(
+        self._generate_queries_from_function,
+        [
+          (self._generate_by_name, [names]),
+          (self._generate_by_category, [categories, states, cities]),
+          (self._generate_by_star, [stars, categories]),
+          (self._generate_by_review, [reviews, categories]),
+          (self._generate_by_city_categ_stars, [cities, categories, stars]),
+          (self._generate_category_by_city, [categories, cities]),
+          (
+            self._generate_category_by_city_and_name,
+            [categories, cities, names],
+          ),
+        ],
+      )
 
-          for result in results:
-              queries.extend(result)
+      for result in results:
+        queries.extend(result)
 
-      return queries
+    return queries
 
 
 def main() -> None:
@@ -114,12 +119,12 @@ def main() -> None:
 
   dest_file_path = Path.cwd().joinpath("resources", "queries.yaml")
   with open(dest_file_path, "w") as f:
-      yaml.dump({"queries": queries}, f, default_flow_style=False)
+    yaml.dump({"queries": queries}, f, default_flow_style=False)
 
   print(f"Generated {len(queries)} queries and saved to '{dest_file_path}'.")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
   import sys
 
   sys.exit(main())
