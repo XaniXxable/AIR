@@ -3,7 +3,7 @@ from pathlib import Path
 from multiprocessing import Pool, cpu_count
 from typing import Callable
 from DineFinderAI.db.DatabaseManager import DatabaseManager
-import pandas as pandas
+import pandas as pd
 
 
 class QueryGenerator:
@@ -108,28 +108,60 @@ class QueryGenerator:
     return queries
 
 
-def extract_data_from_db(data: list[any]) -> dict[str, list[str]]:
-  name_file_path = Path.cwd().joinpath("python-backend", "resources", "name_detail_queries.yaml")
+def process_restaurant_data(df: pd.DataFrame) -> pd.DataFrame:
+  """
+  Process the DataFrame to generate queries and responses.
 
-  restaurant_data = []
+  Args:
+      df (pd.DataFrame): The raw DataFrame from the database.
 
-  for entry in data:
-    name, address, city, state, stars, categories = entry
-    response = f"{name} is located at {address}, {city}, {state}. " f"It has {stars} stars and offers {categories}."
-    query = f"What are the details for {name}?"
-    restaurant_data.append({"query": query, "response": response})
+  Returns:
+      pd.DataFrame: A DataFrame with query and response columns added.
+  """
 
-  with open(name_file_path, "w") as file:
-    yaml.dump(restaurant_data, file, default_flow_style=False)
+  df["query"] = "What are the details for " + df["name"] + "?"
+
+  df["response"] = (
+    df["name"]
+    + " is located at "
+    + df["address"]
+    + ", "
+    + df["city"]
+    + ", "
+    + df["state"]
+    + ". It has "
+    + df["stars"].astype(str)
+    + " stars and offers "
+    + df["categories"]
+    + "."
+  )
+  return df
+
+
+def write_to_yaml(df: pd.DataFrame, yaml_file: str) -> None:
+  """
+  Write query and response data to a YAML file.
+
+  Args:
+      df (pd.DataFrame): The DataFrame containing query and response columns.
+      yaml_file (str): Path to the YAML file to write.
+  """
+  data: list[dict[str, any]] = df[["query", "response"]].to_dict(orient="records")
+
+  with open(yaml_file, "w") as file:
+    yaml.dump(data, file, default_flow_style=False)
 
 
 def main() -> None:
   db_path = Path.cwd().joinpath("python-backend", "resources", "database.db")
   db_manager = DatabaseManager(database_filepath=db_path)
   db_manager.connectFunc()
-  rows = db_manager.execute("SELECT name, address, city, state, stars, categories from restaurants")
+  data_frame = db_manager.execute("SELECT name, address, city, state, stars, categories from restaurants")
 
-  data = extract_data_from_db(rows)
+  name_file_path = Path.cwd().joinpath("python-backend", "resources", "name_detail_queries_pandas.yaml")
+  rest_details = process_restaurant_data(data_frame)
+
+  write_to_yaml(rest_details, name_file_path)
 
   # categories = ["bubble tea", "ice cream", "Italian", "Mexican", "Chinese"]
   # cities = ["New York", "Los Angeles", "Chicago"]
