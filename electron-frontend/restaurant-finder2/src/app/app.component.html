@@ -1,0 +1,20 @@
+<div class="body">
+  <div class="center">
+    
+    <h1>Find Your Restaurant</h1>
+    
+    <mat-form-field class="input">
+      <mat-label>What are you looking for today?</mat-label>
+      <input matInput placeholder="Ex. Pizza in Hawaii" value="Sushi">
+    </mat-form-field>
+    
+    
+    <div id="search-results">
+      <h2>Recommendations based on your search</h2>
+      <ng-container *ngFor="let res of queryResults">
+        <restaurant class="result" [restaurant]="res"></restaurant>
+      </ng-container>
+    </div>
+
+  </div>
+</div>

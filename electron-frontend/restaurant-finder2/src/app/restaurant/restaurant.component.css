@@ -1,0 +1,32 @@
+:host {
+    --padding-2: 0.125rem;
+    --padding-8: 0.5rem;
+}
+
+.meta-data {
+    display: flex;
+    gap: var(--padding-8);
+    
+    /* 2px */
+    padding: var(--padding-2);
+
+    border-radius: var(--padding-2);
+
+    background-color: whitesmoke;
+    color: black;
+}
+
+.img-container {
+    width: 10.875rem;
+    height: 10.875rem;
+
+    border: 1px solid darkgray;
+}
+
+img {
+    width: auto;
+    height: 100%;
+
+    aspect-ratio: 1; /* will make width equal to height (500px container) */
+    object-fit: cover; /* use the one you need */
+}

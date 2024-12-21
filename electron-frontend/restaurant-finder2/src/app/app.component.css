@@ -1,0 +1,79 @@
+
+
+.body {
+    --default-color: var(whitesmoke);
+    --padding-32: 2.25rem;
+    --padding-16: 1rem;
+    --fs-large: 4rem;   /* 64px */
+
+    font-size: 1rem;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    
+    background-color: black;
+    color: whitesmoke;
+}
+.body::before{
+    content: ' ';
+    display: block;
+    position: absolute;
+
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    
+    opacity: .5;
+
+    /* Src: https://www.pexels.com/photo/wine-glasses-on-table-tops-941861/ */
+    background-image: url("../assets/images/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.center {
+    z-index: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    gap: var(--padding-32);
+}
+
+h1 {
+    font-family: "Rochester", cursive;
+    font-size: var(--fs-large);
+
+    align-self: stretch;
+    
+    padding: var(--padding-32);
+
+    border-bottom: 1px solid;
+}
+
+.input, #search-results {
+    width: 50%;
+}
+
+#search-results {
+    border: 1px solid whitesmoke;
+    border-radius: 5px;
+
+    background-color: rgba(0,0,0,0.6);
+
+    padding: var(--padding-16);
+    
+    max-width: 50%;
+    max-height: 50vh;
+
+    overflow-y: auto;
+
+    gap: var(--padding-16);
+    display: flex;
+    flex-direction: column;
+}
