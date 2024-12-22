@@ -1,8 +1,14 @@
 <div class="meta-data" *ngIf="restaurant != undefined">
     <div class="img-container">
-        <img [src]="restaurant!.photo" alt="">
+        <img [src]="restaurant!.Image" alt="">
+    </div>
+    <div class="text">
+        <h3>{{restaurant!.Name}}</h3>
     </div>
     <div>
-        <h3>{{restaurant!.name}}</h3>
+        <p>
+            {{restaurant.Reviews}}
+            <mat-icon class="star-icon" aria-hidden="false" fontIcon="star"></mat-icon>
+        </p>
     </div>
 </div>

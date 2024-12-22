@@ -3,8 +3,15 @@
     --padding-8: 0.5rem;
 }
 
+p {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--padding-2);
+}
+
 .meta-data {
     display: flex;
+    justify-content: space-between;
     gap: var(--padding-8);
     
     /* 2px */
@@ -23,10 +30,18 @@
     border: 1px solid darkgray;
 }
 
+.text {
+    flex-grow: 2;
+}
+
 img {
     width: auto;
     height: 100%;
 
     aspect-ratio: 1; /* will make width equal to height (500px container) */
     object-fit: cover; /* use the one you need */
+}
+
+.star-icon {
+    color: #d4d42a;
 }

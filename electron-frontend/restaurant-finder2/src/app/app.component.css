@@ -4,6 +4,7 @@
     --default-color: var(whitesmoke);
     --padding-32: 2.25rem;
     --padding-16: 1rem;
+
     --fs-large: 4rem;   /* 64px */
 
     font-size: 1rem;
@@ -56,8 +57,61 @@ h1 {
     border-bottom: 1px solid;
 }
 
-.input, #search-results {
+button {
+    cursor: pointer;
+    
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+#reset {
+    position: absolute; 
+    top: 0; 
+    right: 0;
+}
+#reset > button {
+    background-color: transparent; 
+    color: whitesmoke; 
+    
+
+    font-size: inherit; 
+    
+    margin: var(--padding-16);
+    padding: 2px;
+
+    outline: none;
+    border: none;
+    
+    transition: .2s;
+}
+#reset > button:hover {
+    scale: 1.1;
+    transition: .2s;
+}
+
+#query-input, #search-results {
     width: 50%;
+}
+#query-input {
+    display: flex;
+    align-items: baseline;
+    gap: var(--padding-16);
+}
+#query-input mat-form-field {
+    flex-grow: 2;
+}
+#query-input button {
+    height: 2.5rem;
+    width: 2.5rem;
+}
+
+::ng-deep .mat-mdc-menu-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    padding: 15px !important;
 }
 
 #search-results {
@@ -75,5 +129,11 @@ h1 {
 
     gap: var(--padding-16);
     display: flex;
+    flex-direction: column;
+}
+
+#checkbox-filters {
+    height: 9.375rem; 
+    display: flex; 
     flex-direction: column;
 }

@@ -1,20 +1,47 @@
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-spin-fade" [fullScreen] = "true">
+  <p style="color: #fff;"> Gathering results ... </p>
+</ngx-spinner>
+
 <div class="body">
+  <div id="reset">
+    <button (click)="reset()">
+      Start Over
+      <mat-icon>replay</mat-icon>
+    </button>
+  </div>
   <div class="center">
-    
     <h1>Find Your Restaurant</h1>
     
-    <mat-form-field class="input">
-      <mat-label>What are you looking for today?</mat-label>
-      <input matInput placeholder="Ex. Pizza in Hawaii" value="Sushi">
-    </mat-form-field>
+    <div id="query-input">
+      <mat-form-field>
+        <mat-label>What are you looking for today?</mat-label>
+        <input matInput 
+          placeholder="Ex. Pizza in Hawaii" 
+          value="Sushi" 
+          [(ngModel)]="query"
+          (keyup.enter)="onEnter()"
+        >
+      </mat-form-field>
+      
+      <button [matMenuTriggerFor]="menu">
+        <mat-icon>settings</mat-icon>
+      </button>
+      
+      <mat-menu #menu>
+        <div (click)="$event.stopPropagation()" id="checkbox-filters">
+          <p>Additional options <button mat-button (click)="toggleOffCheckboxes()">Reset</button></p>
+          <ng-container *ngFor="let key of checkableOptions">
+            <mat-checkbox [formControl]="getFormControl(key)"> {{key}} </mat-checkbox>
+          </ng-container>
+        </div>
+      </mat-menu>
+    </div>
     
-    
-    <div id="search-results">
-      <h2>Recommendations based on your search</h2>
+    <div id="search-results" *ngIf="queryResults.length !== 0">
+      <h2>Recommendations based on "{{latestQuery}}"</h2>
       <ng-container *ngFor="let res of queryResults">
         <restaurant class="result" [restaurant]="res"></restaurant>
       </ng-container>
     </div>
-
   </div>
 </div>
