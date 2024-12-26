@@ -120,12 +120,12 @@ def process_restaurant_data(df: pd.DataFrame) -> pd.DataFrame:
   """
 
   df["query"] = "What are the details for " + df["name"] + "?"
-
+  
   df["response"] = (
     df["name"]
     + " is located at "
     + df["address"]
-    + ", "
+    + " in "
     + df["city"]
     + ", "
     + df["state"]
@@ -138,7 +138,7 @@ def process_restaurant_data(df: pd.DataFrame) -> pd.DataFrame:
   return df
 
 
-def write_to_yaml(df: pd.DataFrame, yaml_file: str) -> None:
+def write_to_yaml(df: pd.DataFrame, yaml_file: Path) -> None:
   """
   Write query and response data to a YAML file.
 
@@ -150,17 +150,22 @@ def write_to_yaml(df: pd.DataFrame, yaml_file: str) -> None:
 
   with open(yaml_file, "w") as file:
     yaml.dump(data, file, default_flow_style=False)
+    
+  print(f"Saved {yaml_file.resolve()}")
 
 
 def main() -> None:
-  db_path = Path.cwd().joinpath("python-backend", "resources", "database.db")
+  resources_path = Path.cwd().joinpath("resources")
+  db_path = resources_path.joinpath("database.db")
   db_manager = DatabaseManager(database_filepath=db_path)
   db_manager.connectFunc()
   data_frame = db_manager.execute("SELECT name, address, city, state, stars, categories from restaurants")
+  db_manager.closeFunc()
 
-  name_file_path = Path.cwd().joinpath("python-backend", "resources", "name_detail_queries_pandas.yaml")
+  name_file_path = resources_path.joinpath("name_detail_queries_pandas.yaml")
   rest_details = process_restaurant_data(data_frame)
-
+  
+  print(f"Generated {len(data_frame)} query-response pairs")
   write_to_yaml(rest_details, name_file_path)
 
   # categories = ["bubble tea", "ice cream", "Italian", "Mexican", "Chinese"]
