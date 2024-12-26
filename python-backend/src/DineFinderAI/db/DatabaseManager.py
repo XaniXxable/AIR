@@ -40,6 +40,9 @@ class DatabaseManager:
     db = db[db["categories"].str.contains("Keys & Locksmith") == False]
 
     db = db[db["name"].str.contains("Wellness") == False]
+
+    db = db[db["address"] != ""]
+
     db = self.removeCategory(db, ["Restaurants"])
 
     db.to_sql("restaurants", self.con)
