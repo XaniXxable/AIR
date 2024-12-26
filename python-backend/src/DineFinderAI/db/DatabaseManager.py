@@ -26,5 +26,15 @@ class DatabaseManager:
   def insertData(self) -> None:
     db = pd.read_json(self.json_filepath, lines=True)
     db = db[["name", "address", "city", "state", "postal_code", "stars", "review_count", "categories"]]
+
     db = db[db["categories"].str.contains("Restaurants") == True]
+    db = db[db["categories"].str.contains("Beauty & Spas") == False]
+    db = db[db["categories"].str.contains("Health & Medical") == False]
+    db = db[db["categories"].str.contains("Doctors") == False]
+    db = db[db["categories"].str.contains("Towing") == False]
+    db = db[db["categories"].str.contains("Keys & Locksmith") == False]
+
+    db = db[db["name"].str.contains("Wellness") == False]
+
     db.to_sql("restaurants", self.con)
+
