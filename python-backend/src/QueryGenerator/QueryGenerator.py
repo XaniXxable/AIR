@@ -131,7 +131,7 @@ def process_restaurant_data(df: pd.DataFrame) -> pd.DataFrame:
     + df["state"]
     + ". It has "
     + df["stars"].astype(str)
-    + " stars and offers "
+    + " stars and is famous in categories like "
     + df["categories"]
     + "."
   )
