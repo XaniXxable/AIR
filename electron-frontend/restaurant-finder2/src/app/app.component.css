@@ -131,9 +131,18 @@ button {
     display: flex;
     flex-direction: column;
 }
+#search-results h2 {
+    overflow-wrap: break-word;
+    font-weight: 300;
+}
 
 #checkbox-filters {
-    height: 9.375rem; 
+    max-height: 9.375rem;
     display: flex; 
     flex-direction: column;
+}
+#checkbox-filters > p {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
 }

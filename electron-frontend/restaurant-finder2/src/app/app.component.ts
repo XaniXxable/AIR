@@ -12,6 +12,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Filter, RestaurantFinderRequest } from '../interfaces/RestaurantFinderRequest';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +26,8 @@ import { Filter, RestaurantFinderRequest } from '../interfaces/RestaurantFinderR
     MatMenuModule, 
     MatIconModule,
     MatCheckboxModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './app.component.html',
@@ -41,12 +43,10 @@ export class AppComponent {
   private additionalOptionsForm: FormGroup = new FormGroup({});
   private additionalOptions: any[] = [
     {name: 'Family-Friendly', selected: false},
-    {name: 'Pet-Friendly', selected: false}, 
-    {name: 'Cow-Friendly', selected: false},
-    {name: 'Cat-Friendly', selected: false},
+    {name: 'Pet-Friendly', selected: false}
   ]
 
-  constructor (private spinner: NgxSpinnerService) {
+  constructor (private spinner: NgxSpinnerService, private http: HttpClient) {
     this.additionalOptions.map((item) => {
       this.additionalOptionsForm.addControl(item.name, new FormControl(item.selected, {nonNullable: true}));
     });
@@ -91,6 +91,7 @@ export class AppComponent {
     console.log(requestBody);
 
     // BE call
+    this.http.post("http://localhost:8000/restauratnts/", requestBody);
     await this.delay(2000);
 
     this.spinner.hide();
@@ -99,7 +100,7 @@ export class AppComponent {
     this.queryResults = [
       {
         Location: "Graz",
-        Name: "Tree Amici",
+        Name: "Tre Amici",
         Image: "../assets/images/restaurant-types/italian.jpg",
         Reviews: 400,
         Type: "Italian"

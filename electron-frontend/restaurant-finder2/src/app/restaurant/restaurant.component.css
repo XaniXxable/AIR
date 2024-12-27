@@ -9,13 +9,17 @@ p {
     gap: var(--padding-2);
 }
 
+h3 {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
 .meta-data {
     display: flex;
     justify-content: space-between;
     gap: var(--padding-8);
     
-    /* 2px */
-    padding: var(--padding-2);
+    padding: var(--padding-8);
 
     border-radius: var(--padding-2);
 
@@ -33,6 +37,11 @@ p {
 .text {
     flex-grow: 2;
 }
+.text .header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
 
 img {
     width: auto;
@@ -44,4 +53,19 @@ img {
 
 .star-icon {
     color: #d4d42a;
+}
+
+table {
+    text-align: left;
+    border: 1px solid black;
+    width: 100%;
+    font-size: 14px;
+}
+td {
+    padding: 2px 4px;
+    overflow-wrap: anywhere;
+}
+tr > td:first-child {
+    width: 70px;
+    background-color: #e0e0e0;
 }

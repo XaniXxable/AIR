@@ -3,12 +3,23 @@
         <img [src]="restaurant!.Image" alt="">
     </div>
     <div class="text">
-        <h3>{{restaurant!.Name}}</h3>
-    </div>
-    <div>
-        <p>
-            {{restaurant.Reviews}}
-            <mat-icon class="star-icon" aria-hidden="false" fontIcon="star"></mat-icon>
-        </p>
+        <div class="header">
+            <h3>{{restaurant!.Name}}</h3>
+            <p>
+                {{restaurant.Reviews}}
+                <mat-icon class="star-icon" aria-hidden="false" fontIcon="star"></mat-icon>
+            </p>
+        </div>
+
+        <table>
+            <tr>
+                <td>Location</td>
+                <td>{{restaurant!.Location}}</td>
+            </tr>
+            <tr>
+                <td>Type</td>
+                <td>{{restaurant!.Type}}</td>
+            </tr>
+        </table>
     </div>
 </div>
