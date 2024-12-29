@@ -20,6 +20,7 @@ pandas = "^2.2.3"
 [tool.poetry.scripts]
 start = "FastDineAPI.app:start"
 generate = "QueryGenerator.QueryGenerator:main"
+training = "DineFinderAI.main:training"
 
 [build-system]
 requires = ["poetry-core"]

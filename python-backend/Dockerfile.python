@@ -12,6 +12,7 @@ COPY pyproject.toml poetry.lock ./
 
 # Copy the application source code into the container
 COPY src/ ./src/
+COPY resources/ ./resources/
 COPY README.md .
 
 # Install dependencies without creating a virtual environment
@@ -23,4 +24,4 @@ RUN poetry install
 EXPOSE 5000
 
 # Use Poetry's run command as the entry point
-CMD ["poetry", "run", "start"]
+CMD ["poetry", "run", "training"]
