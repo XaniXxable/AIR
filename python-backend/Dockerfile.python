@@ -8,7 +8,7 @@ RUN pip install --no-cache-dir poetry
 WORKDIR /app
 
 # Copy the Poetry files first to leverage Docker's layer caching
-COPY pyproject.toml poetry.lock ./
+COPY pyproject.toml ./
 
 # Copy the application source code into the container
 COPY src/ ./src/
@@ -23,4 +23,4 @@ RUN poetry install
 EXPOSE 5000
 
 # Use Poetry's run command as the entry point
-CMD ["poetry", "run", "generate"]
+CMD ["poetry", "run", "start"]
