@@ -10,7 +10,8 @@ services:
     ports:
       - "5000:8000"
     volumes:
-      - ./python-backend/src:/app/src  # Mount only the src folder for development
+      - ./python-backend/src:/app/src
+      - ./python-backend/resources:/app/resources
 
   # electron-frontend:
   #   stdin_open: true
