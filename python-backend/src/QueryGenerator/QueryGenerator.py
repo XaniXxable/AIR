@@ -190,48 +190,38 @@ def process_category_queries_for_all_cities(
       start_index = int(f.read().strip())
 
   print(f"Resuming from index: {start_index}")
+  results = {}
+  for _, row in city_category_combinations.iterrows():
+    city = row["city"]
+    query_category = row["category"]
+    responses = []
+    scores = []
 
-  for i in range(start_index, len(city_category_combinations), batch_size):
-    # Process a batch
-    batch = city_category_combinations.iloc[i : i + batch_size]
+    # Skip specific categories
+    if query_category in ["restaurants", "food", "nightlife"]:
+      continue
 
-    # Merge with the original DataFrame to check for matches
-    batch_results = {}
-    for _, row in batch.iterrows():
-      city = row["city"]
-      query_category = row["category"]
-      responses = []
-      scores = []
+    # Filter restaurants in the given city
+    city_restaurants = df[df["city_normalized"] == city]
+    cat_rest = filter_rows_by_string(city_restaurants, "categories", query_category)
 
-      if query_category in ["restaurants", "food", "nightlife"]:
-        continue
-      # Filter restaurants in the given city
-      city_restaurants = df[df["city_normalized"] == city]
-      cat_rest = filter_rows_by_string(city_restaurants, "categories", query_category)
-
-      if cat_rest.empty:
-        query = f"Where can I find good {query_category} in {city}?"
-        response = f"Sorry, we couldn't find good {query_category} in {city}."
-        batch_results[query] = {"responses": response, "scores": 0}
-        continue
-
+    # Handle cases where no matching restaurants are found
+    if cat_rest.empty:
       query = f"Where can I find good {query_category} in {city}?"
+      response = f"Sorry, we couldn't find good {query_category} in {city}."
+      results[query] = {"responses": response, "scores": 0}
+      continue
 
-      for _, restaurant in cat_rest.iterrows():
-        response = f"You can find good {query_category} in {city} at {restaurant['name']}"
-        score = count_matching_categories(restaurant["categories"], query_category)
-        responses.append(response)
-        scores.append(score)
-      batch_results[query] = {"responses": responses, "scores": scores}
+    # Generate query and responses for found matches
+    query = f"Where can I find good {query_category} in {city}?"
+    for _, restaurant in cat_rest.iterrows():
+      response = f"You can find good {query_category} in {city} at {restaurant['name']}"
+      score = count_matching_categories(restaurant["categories"], query_category)
+      responses.append(response)
+      scores.append(score)
 
-    write_to_json(batch_results, output_file)
-
-    with open(checkpoint_file, "w") as checkpoint:
-      checkpoint.write(str(i + batch_size))
-
-    print(f"Processed up to index: {i + batch_size}")
-    batch_results.clear()
-
+    results[query] = {"responses": responses, "scores": scores}
+  return results
   print("Processing completed.")
 
 
