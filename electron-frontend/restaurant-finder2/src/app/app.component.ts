@@ -1,18 +1,21 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild } from '@angular/core';
 
-import { MatInputModule } from '@angular/material/input';
-import { CommonModule } from '@angular/common';
 import { RestaurantComponent } from './restaurant/restaurant.component';
 import { RestaurantMetaData } from '../interfaces/RestaurantMetaData';
+
+import { CommonModule } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatMenu, MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Filter, RestaurantFinderRequest } from '../interfaces/RestaurantFinderRequest';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-root',
@@ -26,6 +29,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
     MatMenuModule, 
     MatIconModule,
     MatCheckboxModule,
+    MatSelectModule,
     ReactiveFormsModule,
     HttpClientModule
   ],
@@ -35,11 +39,12 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 })
 
 export class AppComponent {
-
   public query: string = "";
   public latestQuery: string = "";
   public queryResults: RestaurantMetaData[] = []; 
   
+  public selectedSortingOption: string = "option1";
+
   private additionalOptionsForm: FormGroup = new FormGroup({});
   private additionalOptions: any[] = [
     {name: 'Family-Friendly', selected: false},
@@ -56,11 +61,53 @@ export class AppComponent {
     return Object.keys(this.additionalOptionsForm.controls);
   }
 
+  get sortingOptions() {
+    let options: string[] = [];
+    
+    Object.keys(this.queryResults[0]).forEach((key) => {
+      if (key != "Image")
+        options.push(key);
+    })
+
+    return options;
+  }
+
   public reset() {
     this.query = "";
     this.queryResults = [];
+    this.selectedSortingOption = "option1";
 
     this.toggleOffCheckboxes();
+  }
+
+  public sortResults(key: string): void {
+    this.spinner.show();
+    this.queryResults = this.insertionSort(key);
+    this.spinner.hide();
+  }
+
+  // Src: https://dev.to/bugudiramu/a-developers-guide-to-sorting-algorithms-2kl9
+  private insertionSort(key: string): RestaurantMetaData[] {
+    let sortedQueryResults: RestaurantMetaData[] = this.queryResults.slice();
+    const length: number = sortedQueryResults.length;
+
+    for (let idx: number = 1; idx < length; idx++) {
+      const currentElement: any = sortedQueryResults[idx];
+
+      let col: number = idx - 1;
+  
+      while (col >= 0 && (sortedQueryResults[col] as any)[key] > currentElement[key]) {
+        sortedQueryResults[col + 1] = sortedQueryResults[col];
+        col--;
+      }
+  
+      sortedQueryResults[col + 1] = currentElement;
+    }
+
+    if (this.selectedSortingOption === "option2")
+      sortedQueryResults = sortedQueryResults.reverse()
+    
+    return sortedQueryResults;
   }
 
   public getFormControl(key: string) {

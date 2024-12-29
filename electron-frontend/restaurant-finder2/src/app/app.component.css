@@ -57,12 +57,17 @@ h1 {
     border-bottom: 1px solid;
 }
 
-button {
+button, mat-button {
     cursor: pointer;
     
     display: flex;
     align-items: center;
     gap: 2px;
+
+}
+.menu-button {
+    width: 2.5rem;
+    height: 2.5rem;
 }
 
 #reset {
@@ -115,6 +120,13 @@ button {
 }
 
 #search-results {
+    display: flex;
+    gap: var(--padding-16);
+
+    max-width: 50%;
+    max-height: 50vh;
+}
+#search-results > div {
     border: 1px solid whitesmoke;
     border-radius: 5px;
 
@@ -122,10 +134,9 @@ button {
 
     padding: var(--padding-16);
     
-    max-width: 50%;
-    max-height: 50vh;
-
     overflow-y: auto;
+
+    flex-grow: 2;
 
     gap: var(--padding-16);
     display: flex;

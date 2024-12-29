@@ -23,11 +23,11 @@
         >
       </mat-form-field>
       
-      <button [matMenuTriggerFor]="menu">
+      <button class="menu-button" [matMenuTriggerFor]="checkboxMenu">
         <mat-icon>settings</mat-icon>
       </button>
       
-      <mat-menu #menu>
+      <mat-menu #checkboxMenu>
         <div (click)="$event.stopPropagation()" id="checkbox-filters">
           <p>Additional options <button mat-button (click)="toggleOffCheckboxes()">Reset</button></p>
           <ng-container *ngFor="let key of checkableOptions">
@@ -38,10 +38,30 @@
     </div>
     
     <div id="search-results" *ngIf="queryResults.length !== 0">
-      <h2>Recommendations based on "{{latestQuery}}"</h2>
-      <ng-container *ngFor="let res of queryResults">
-        <restaurant class="result" [restaurant]="res"></restaurant>
-      </ng-container>
+      <div>
+        <h2>Recommendations based on "{{latestQuery}}"</h2>
+        <ng-container *ngFor="let res of queryResults">
+          <restaurant class="result" [restaurant]="res"></restaurant>
+        </ng-container>
+      </div>
+
+      <button class="menu-button" [matMenuTriggerFor]="sortingMenu">
+        <mat-icon>sort</mat-icon>
+      </button>
+      <mat-menu #sortingMenu>
+        <mat-form-field (click)="$event.stopPropagation()">
+          <mat-label>Sorting Order</mat-label>
+          <mat-select [(value)]="selectedSortingOption">
+            <mat-option value="option1">A-Z / Lowest to Highest</mat-option>
+            <mat-option value="option2">Z-A / Highest to Lowest</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <ng-container *ngFor="let key of sortingOptions">
+          <button mat-menu-item (click)="sortResults(key)">{{key}}</button>
+        </ng-container>
+      </mat-menu>
     </div>
+
   </div>
 </div>
