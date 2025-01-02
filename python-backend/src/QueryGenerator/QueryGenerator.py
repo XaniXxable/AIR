@@ -4,6 +4,7 @@ from multiprocessing import Pool, cpu_count
 from typing import Callable
 from DineFinderAI.db.DatabaseManager import DatabaseManager
 import pandas as pd
+import numpy as np
 import json
 
 
@@ -236,6 +237,42 @@ def count_matching_categories(target_categories: str, search_categories: str) ->
 
   return matches / len(targets)
 
+def generate_best_places_by_city(db_manager: DatabaseManager) -> None:
+  """
+  _summary_
+
+  Args:
+      db_manager (DatabaseManager): The DatabaseManager containing restaurant details.
+  """
+  df = db_manager.execute("SELECT DISTINCT(city) FROM restaurants")
+  for _, row in df.iterrows():
+    cities = row["city"]
+    best_restaurants = f"SELECT name, stars, review_count FROM restaurants WHERE city = \"{cities}\""
+    best_restaurants_df = db_manager.execute(best_restaurants)
+
+    best_restaurants_df["normalized_rating"] = best_restaurants_df["stars"] / 5
+    best_restaurants_df["log_review_count"] = np.log1p(best_restaurants_df["review_count"])
+
+    best_restaurants_df["score"] = (
+        0.75 * best_restaurants_df["normalized_rating"] +
+        0.25 * best_restaurants_df["log_review_count"]
+    ).round(2)
+
+    # 10 best restaurants
+    sorted_restaurants = best_restaurants_df.sort_values(by="score", ascending=False)[:10]
+
+    # Generate query and responses for found matches
+    query = f"What are the best restaurants in {cities}?"
+    responses = []
+    scores = []
+    for _, restaurant in sorted_restaurants.iterrows():
+      response = f"One of the best restaurants in {cities} is {restaurant['name']} with {restaurant['stars']} stars and {restaurant['review_count']} reviews."
+      responses.append(response)
+      scores.append(restaurant['score'])
+
+    results = {}
+    results[query] = {"responses": responses, "scores": scores}
+    write_to_json(results, Path.cwd().joinpath("resources", "best_places_by_city.json"))
 
 def write_to_yaml(df: pd.DataFrame, yaml_file: Path) -> None:
   """
@@ -262,8 +299,8 @@ def write_to_json(data: dict[str, any], json_file: Path) -> None:
       json_file (str): Path to the JSON file to write.
   """
   with open(json_file, "a") as file:
-    file.write(json.dumps(data))
-  print(f"Saved {json_file.resolve()}")
+    file.write(json.dumps(data, indent=2))
+  #print(f"Saved {json_file.resolve()}")
 
 
 def write_to_json_pd(df: pd.DataFrame, json_file: Path) -> None:
@@ -286,15 +323,17 @@ def main() -> None:
   db_manager = DatabaseManager(database_filepath=db_path)
   db_manager.connectFunc()
   data_frame = db_manager.execute("SELECT name, address, city, state, stars, categories from restaurants")
+  generate_best_places_by_city(db_manager)
   db_manager.closeFunc()
 
   name_file_path = resources_path.joinpath("name_detail_queries_pandas.yaml")
   checkpoint = resources_path.joinpath("checkpoint.yaml")
   output_file = resources_path.joinpath("categ_in_city_queries.json")
-  rest_details = process_category_queries_for_all_cities(data_frame, output_file, checkpoint)
+  #rest_details = process_category_queries_for_all_cities(data_frame, output_file, checkpoint)
+
 
   print(f"Generated {len(data_frame)} query-response pairs")
-  write_to_json(rest_details, name_file_path)
+  #write_to_json(rest_details, name_file_path)
 
   # categories = ["bubble tea", "ice cream", "Italian", "Mexican", "Chinese"]
   # cities = ["New York", "Los Angeles", "Chicago"]
