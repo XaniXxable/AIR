@@ -21,6 +21,7 @@ torch = "^2.5.1"
 
 [tool.poetry.scripts]
 start = "FastDineAPI.app:start"
+ingest = "DineFinderAI.db.DatabaseManager:main"
 generate = "QueryGenerator.QueryGenerator:main"
 training = "DineFinderAI.main:training"
 

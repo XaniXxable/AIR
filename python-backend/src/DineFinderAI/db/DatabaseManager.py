@@ -4,13 +4,12 @@ It is used to provide the testdata for the ML model.
 """
 
 import sqlite3
-import pathlib
+from pathlib import Path
 import pandas as pd
-from typing import Tuple, Any
 
 
 class DatabaseManager:
-  def __init__(self, database_filepath: pathlib.Path, json_filepath: pathlib.Path | None = None) -> None:
+  def __init__(self, database_filepath: Path, json_filepath: Path | None = None) -> None:
     self.database_filepath = database_filepath
     self.json_filepath = json_filepath
 
@@ -66,3 +65,22 @@ class DatabaseManager:
       
     return df
 
+def main() -> None:
+
+  resources_path = Path.cwd().joinpath("resources")
+  db_path = resources_path.joinpath("database.db")
+  data_path = resources_path.joinpath("yelp_academic_dataset_business.json")
+  if not data_path.exists():
+    print("Data path doesn't exist, please provide one.")
+    return
+  db_path.unlink(missing_ok=True)
+
+  db_manager = DatabaseManager(db_path, data_path)
+  db_manager.connectFunc()
+  db_manager.insertData()
+  db_manager.closeFunc()
+
+if __name__ == "__main__":
+  import sys
+
+  sys.exit(main())
