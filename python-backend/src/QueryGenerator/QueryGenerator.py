@@ -1,114 +1,9 @@
 import yaml
 from pathlib import Path
-from multiprocessing import Pool, cpu_count
-from typing import Callable
+from typing import Any
 from DineFinderAI.db.DatabaseManager import DatabaseManager
 import pandas as pd
-import numpy as np
 import json
-
-
-class QueryGenerator:
-  def __init__(self) -> None:
-    pass
-
-  def _generate_by_name(self, names: list[str]) -> list[str]:
-    queries = []
-    for name in names:
-      queries.append(f"What are the details for {name}?")
-      queries.append(f"Show me reviews for {name}.")
-      queries.append(f"Is there a {name} nearby?")
-    return queries
-
-  def _generate_by_category(self, categories: list[str], states: list[str], cities: list[str]) -> list[str]:
-    queries = []
-    for category in categories:
-      for city in cities:
-        queries.append(f"Where can I find good {category} in {city}?")
-        queries.append(f"Best {category} places in {city}.")
-      for state in states:
-        queries.append(f"Best {category} places in {state}.")
-    return queries
-
-  def _generate_by_star(self, stars: list[float], categories: list[str]) -> list[str]:
-    queries = []
-    for star in stars:
-      queries.append(f"List restaurants with at least {star} stars.")
-      for category in categories:
-        queries.append(f"Are there any {category} spots rated {star} stars or higher?")
-    return queries
-
-  def _generate_by_review(self, reviews: list[int], categories: list[str]) -> list[str]:
-    queries = []
-    for review in reviews:
-      for category in categories:
-        queries.append(f"Show top-rated {category} places with more than {review} reviews.")
-    return queries
-
-  def _generate_by_city_categ_stars(self, cities: list[str], categories: list[str], stars: list[str]) -> list[str]:
-    queries = []
-    for city in cities:
-      for category in categories:
-        for star in stars:
-          queries.append(f"Find {category} restaurants in {city} with has more than {star} stars.")
-    return queries
-
-  def _generate_category_by_city(self, categories: list[str], cities: list[str]) -> list[str]:
-    queries = []
-    for category in categories:
-      for city in cities:
-        queries.append(f"I’m looking for the best {category} in {city}.")
-        queries.append(f"What’s a highly rated {category} shop in {city}?")
-        queries.append(f"Can you suggest a place for {category} with great reviews?")
-    return queries
-
-  def _generate_category_by_city_and_name(
-    self, categories: list[str], cities: list[str], names: list[str]
-  ) -> list[str]:
-    queries = []
-    for category in categories:
-      for city in cities:
-        queries.append(f"What’s the address of the best {category} spot in {city}?")
-      for name in names:
-        queries.append(f"Where is {name} located, and what are the reviews?")
-    return queries
-
-  def _generate_queries_from_function(self, func: Callable[..., list[str]], args: list) -> list[str]:
-    return func(*args)
-
-  def __call__(
-    self,
-    categories: list[str],
-    cities: list[str],
-    states: list[str],
-    stars: list[int],
-    reviews: list[int],
-    names: list[str],
-  ) -> list[str]:
-    queries = []
-
-    with Pool(processes=cpu_count()) as pool:
-      results = pool.starmap(
-        self._generate_queries_from_function,
-        [
-          (self._generate_by_name, [names]),
-          (self._generate_by_category, [categories, states, cities]),
-          (self._generate_by_star, [stars, categories]),
-          (self._generate_by_review, [reviews, categories]),
-          (self._generate_by_city_categ_stars, [cities, categories, stars]),
-          (self._generate_category_by_city, [categories, cities]),
-          (
-            self._generate_category_by_city_and_name,
-            [categories, cities, names],
-          ),
-        ],
-      )
-
-      for result in results:
-        queries.extend(result)
-
-    return queries
-
 
 def process_restaurant_data(df: pd.DataFrame) -> pd.DataFrame:
   """
@@ -162,8 +57,8 @@ def filter_rows_by_string(dataframe, column_name, search_string, case_sensitive=
   return filtered_df
 
 
-def process_category_queries_for_all_cities(
-  df: pd.DataFrame, output_file: str, checkpoint_file: str, batch_size: int = 100
+def generate_category_queries_for_all_cities(
+  df: pd.DataFrame, output_file: Path, checkpoint_file: Path, batch_size: int = 100
 ):
   """
   Process 'Where can I find good {category} in {city}?' queries with scores,
@@ -171,8 +66,8 @@ def process_category_queries_for_all_cities(
 
   Args:
       df (pd.DataFrame): DataFrame containing restaurant details.
-      output_file (str): YAML file path to save the results.
-      checkpoint_file (str): File path to save the checkpoint (last processed index).
+      output_file (Path): JSON file path to save the results.
+      checkpoint_file (Path): File path to save the checkpoint (last processed index).
       batch_size (int): Number of rows to process before saving progress.
   """
   # Normalize city and category columns to ensure case-insensitivity
@@ -217,16 +112,15 @@ def process_category_queries_for_all_cities(
     query = f"Where can I find good {query_category} in {city}?"
     for _, restaurant in cat_rest.iterrows():
       response = f"You can find good {query_category} in {city} at {restaurant['name']}"
-      score = count_matching_categories(restaurant["categories"], query_category)
+      score = count_matching_categories(restaurant["categories"], query_category) # type: ignore
       responses.append(response)
       scores.append(score)
 
     results[query] = {"responses": responses, "scores": scores}
-  return results
-  print("Processing completed.")
+  write_to_json(results, output_file)
 
 
-def count_matching_categories(target_categories: str, search_categories: str) -> int:
+def count_matching_categories(target_categories: str, search_categories: str) -> float:
   matches = 0
   targets = target_categories.split(",")
   searches = search_categories.split(", ")
@@ -237,42 +131,48 @@ def count_matching_categories(target_categories: str, search_categories: str) ->
 
   return matches / len(targets)
 
-def generate_best_places_by_city(db_manager: DatabaseManager) -> None:
+def generate_best_places_by_city(db_manager: DatabaseManager, output_file: Path) -> None:
   """
-  _summary_
+  Process 'What are the best restaurants in {city}?' queries with scores.
 
   Args:
       db_manager (DatabaseManager): The DatabaseManager containing restaurant details.
+      output_file (Path): JSON file path to save the results.
   """
   df = db_manager.execute("SELECT DISTINCT(city) FROM restaurants")
+  results = {}
   for _, row in df.iterrows():
-    cities = row["city"]
-    best_restaurants = f"SELECT name, stars, review_count FROM restaurants WHERE city = \"{cities}\""
-    best_restaurants_df = db_manager.execute(best_restaurants)
+    city = row["city"]
+    restaurants = f"SELECT name, address, stars, review_count FROM restaurants WHERE city = \"{city}\""
+    restaurants_df = db_manager.execute(restaurants)
+    highest_review_count = restaurants_df.sort_values(by="review_count", ascending=False).iloc[0]["review_count"]
 
-    best_restaurants_df["normalized_rating"] = best_restaurants_df["stars"] / 5
-    best_restaurants_df["log_review_count"] = np.log1p(best_restaurants_df["review_count"])
+    # normalize + scoring for the responses
+    restaurants_df["normalized_rating"] = restaurants_df["stars"] / 5.0
+    restaurants_df["normalized_review_count"] = restaurants_df["review_count"] / highest_review_count
+    restaurants_df["score"] = (
+        0.75 * restaurants_df["normalized_rating"] +
+        0.25 * restaurants_df["normalized_review_count"]
+    )
 
-    best_restaurants_df["score"] = (
-        0.75 * best_restaurants_df["normalized_rating"] +
-        0.25 * best_restaurants_df["log_review_count"]
-    ).round(2)
+    sorted_restaurants = restaurants_df.sort_values(by="score", ascending=False)
 
-    # 10 best restaurants
-    sorted_restaurants = best_restaurants_df.sort_values(by="score", ascending=False)[:10]
+    # NOTE: If you want to round the score, uncomment the following line
+    # sorted_restaurants["score"] = sorted_restaurants["score"].round(3)
 
     # Generate query and responses for found matches
-    query = f"What are the best restaurants in {cities}?"
+    query = f"What are the best restaurants in {city}?"
     responses = []
     scores = []
     for _, restaurant in sorted_restaurants.iterrows():
-      response = f"One of the best restaurants in {cities} is {restaurant['name']} with {restaurant['stars']} stars and {restaurant['review_count']} reviews."
+      response = (f"One of the best restaurants in {city} is {restaurant['name']} " 
+                  + f"at {restaurant['address']}, with {restaurant['stars']} stars "
+                  + f"and {restaurant['review_count']} reviews.")
       responses.append(response)
       scores.append(restaurant['score'])
 
-    results = {}
     results[query] = {"responses": responses, "scores": scores}
-    write_to_json(results, Path.cwd().joinpath("resources", "best_places_by_city.json"))
+  write_to_json(results, output_file)
 
 def write_to_yaml(df: pd.DataFrame, yaml_file: Path) -> None:
   """
@@ -282,7 +182,7 @@ def write_to_yaml(df: pd.DataFrame, yaml_file: Path) -> None:
       df (pd.DataFrame): The DataFrame containing query and response columns.
       yaml_file (str): Path to the YAML file to write.
   """
-  data: list[dict[str, any]] = df[["query", "response"]].to_dict(orient="records")
+  data: list[dict[str, Any]] = df[["query", "response"]].to_dict(orient="records") # type: ignore
 
   with open(yaml_file, "w") as file:
     yaml.dump(data, file, default_flow_style=False)
@@ -290,7 +190,7 @@ def write_to_yaml(df: pd.DataFrame, yaml_file: Path) -> None:
   print(f"Saved {yaml_file.resolve()}")
 
 
-def write_to_json(data: dict[str, any], json_file: Path) -> None:
+def write_to_json(data: dict[str, Any], json_file: Path) -> None:
   """
   Write query and response data to a JSON file.
 
@@ -300,7 +200,7 @@ def write_to_json(data: dict[str, any], json_file: Path) -> None:
   """
   with open(json_file, "a") as file:
     file.write(json.dumps(data, indent=2))
-  #print(f"Saved {json_file.resolve()}")
+  print(f"Saved {json_file.resolve()}")
 
 
 def write_to_json_pd(df: pd.DataFrame, json_file: Path) -> None:
@@ -311,9 +211,9 @@ def write_to_json_pd(df: pd.DataFrame, json_file: Path) -> None:
       df (pd.DataFrame): The DataFrame containing query and response columns.
       json_file (str): Path to the JSON file to write.
   """
-  data: list[dict[str, any]] = df.to_json(orient="records")
+  data: list[dict[str, Any]] = df.to_json(orient="records") # type: ignore
   with open(json_file, "w") as file:
-    file.write(data)
+    file.write(data) # type: ignore
   print(f"Saved {json_file.resolve()}")
 
 
@@ -321,35 +221,16 @@ def main() -> None:
   resources_path = Path.cwd().joinpath("resources")
   db_path = resources_path.joinpath("database.db")
   db_manager = DatabaseManager(database_filepath=db_path)
+
   db_manager.connectFunc()
   data_frame = db_manager.execute("SELECT name, address, city, state, stars, categories from restaurants")
-  generate_best_places_by_city(db_manager)
+  output_file = resources_path.joinpath("best_places_by_city_queries.json")
+  generate_best_places_by_city(db_manager, output_file)
   db_manager.closeFunc()
 
-  name_file_path = resources_path.joinpath("name_detail_queries_pandas.yaml")
   checkpoint = resources_path.joinpath("checkpoint.yaml")
   output_file = resources_path.joinpath("categ_in_city_queries.json")
-  #rest_details = process_category_queries_for_all_cities(data_frame, output_file, checkpoint)
-
-
-  print(f"Generated {len(data_frame)} query-response pairs")
-  #write_to_json(rest_details, name_file_path)
-
-  # categories = ["bubble tea", "ice cream", "Italian", "Mexican", "Chinese"]
-  # cities = ["New York", "Los Angeles", "Chicago"]
-  # states = ["NY", "CA", "IL"]
-  # star_thresholds = [3, 4, 5]
-  # review_thresholds = [50, 100, 200]
-  # names = ["Joe's Pizza", "Shake Shack", "The Great Wall"]
-
-  # gen = QueryGenerator()
-  # queries = gen(categories, cities, states, star_thresholds, review_thresholds, names)
-
-  # dest_file_path = Path.cwd().joinpath("resources", "queries.yaml")
-  # with open(dest_file_path, "w") as f:
-  #   yaml.dump({"queries": queries}, f, default_flow_style=False)
-
-  # print(f"Generated {len(queries)} queries and saved to '{dest_file_path}'.")
+  generate_category_queries_for_all_cities(data_frame, output_file, checkpoint)
 
 
 if __name__ == "__main__":
