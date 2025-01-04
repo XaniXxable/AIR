@@ -1,1 +1,4 @@
-To start the app, run "npm run electron-build"
+To start the app, packages must be installed first 
+- cd to angular project "restaurant-finder"
+- run "npm i" if needed to install packages
+- run "npm run electron-build" or "ng serve -o" which does not use electron to start

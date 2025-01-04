@@ -5,7 +5,8 @@
     --padding-32: 2.25rem;
     --padding-16: 1rem;
 
-    --fs-large: 4rem;   /* 64px */
+    --fs-large: 4rem;     /* 64px */
+    --fs-small: 0.875rem; /* 14px */
 
     font-size: 1rem;
     

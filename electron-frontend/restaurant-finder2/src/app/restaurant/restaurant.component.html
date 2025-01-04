@@ -12,13 +12,9 @@
         </div>
 
         <table>
-            <tr>
-                <td>Location</td>
-                <td>{{restaurant!.Location}}</td>
-            </tr>
-            <tr>
-                <td>Type</td>
-                <td>{{restaurant!.Type}}</td>
+            <tr *ngFor="let data of metaData">
+                <td>{{data[0]}}</td>
+                <td>{{data[1]}}</td>
             </tr>
         </table>
     </div>

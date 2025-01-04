@@ -14,7 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Filter, RestaurantFinderRequest } from '../interfaces/RestaurantFinderRequest';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 @Component({
@@ -130,17 +130,31 @@ export class AppComponent {
     
     this.spinner.show();
 
-    var requestBody: RestaurantFinderRequest = {
+    var requestBody: any = JSON.stringify({
       UserInput: this.query,
-      Filters: this.evaluateAdditionalOptionsForm()
-    } 
+      Filters: [ 
+        {
+          PetFriendly: true,
+          FamilyFriendly: false //this.evaluateAdditionalOptionsForm()
+        }
+      ]
+    }) 
     
     console.log(requestBody);
 
     // BE call
-    this.http.post("http://localhost:8000/restauratnts/", requestBody);
-    await this.delay(2000);
+    this.http.post("http://127.0.0.1:5000/restauratnts/", requestBody, 
+      {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json'
+        })
+      })
+    .subscribe((data) => {
+        console.log(data);
+        
+    });
 
+    await this.delay(2000);
     this.spinner.hide();
 
     this.latestQuery = this.query;
@@ -148,28 +162,28 @@ export class AppComponent {
       {
         Location: "Graz",
         Name: "Tre Amici",
-        Image: "../assets/images/restaurant-types/italian.jpg",
+        Image: "assets/images/restaurant-types/italian.jpg",
         Reviews: 400,
         Type: "Italian"
       },
       {
         Location: "Vienna",
         Name: "McDonalds",
-        Image: "../assets/images/restaurant-types/american.jpg",
+        Image: "assets/images/restaurant-types/default.jpg",
         Reviews: 1001,
         Type: "American"
       },
       {
         Location: "Graz",
         Name: "Meet",
-        Image: "../assets/images/restaurant-types/asian.jpg",
+        Image: "assets/images/restaurant-types/asian.jpg",
         Reviews: 30,
         Type: "Asian"
       },
       {
         Location: "Graz",
         Name: "Don Camillo",
-        Image: "../assets/images/restaurant-types/italian.jpg",
+        Image: "assets/images/restaurant-types/italian.jpg",
         Reviews: 1050,
         Type: "Italian"
       }

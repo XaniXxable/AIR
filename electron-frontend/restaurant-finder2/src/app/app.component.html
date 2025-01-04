@@ -48,6 +48,7 @@
       <button class="menu-button" [matMenuTriggerFor]="sortingMenu">
         <mat-icon>sort</mat-icon>
       </button>
+
       <mat-menu #sortingMenu>
         <mat-form-field (click)="$event.stopPropagation()">
           <mat-label>Sorting Order</mat-label>
@@ -58,7 +59,7 @@
         </mat-form-field>
 
         <ng-container *ngFor="let key of sortingOptions">
-          <button mat-menu-item (click)="sortResults(key)">{{key}}</button>
+          <button style="scale: 0.95;" mat-menu-item (click)="sortResults(key)">{{key}}</button>
         </ng-container>
       </mat-menu>
     </div>

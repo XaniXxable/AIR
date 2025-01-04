@@ -17,4 +17,17 @@ import { MatIconModule } from '@angular/material/icon'
 export class RestaurantComponent {
 
   @Input() restaurant: RestaurantMetaData | undefined;
+
+  get metaData() {
+    let pairs: any[] = [];
+    if (this.restaurant) {
+      Object.entries(this.restaurant).forEach(([key, value])=> {
+        if (!["Image", "Name", "Reviews"].includes(key)) {
+          pairs.push([key, value])
+        }
+      });
+    }
+    
+    return pairs;
+  }
 }
