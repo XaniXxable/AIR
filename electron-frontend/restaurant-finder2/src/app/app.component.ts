@@ -15,6 +15,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Filter, RestaurantFinderRequest } from '../interfaces/RestaurantFinderRequest';
 import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http';
+import { RestaurantFinderResponse } from '../interfaces/RestaurantFinderResponse';
 
 
 @Component({
@@ -74,6 +75,7 @@ export class AppComponent {
 
   public reset() {
     this.query = "";
+    this.latestQuery = "";
     this.queryResults = [];
     this.selectedSortingOption = "option1";
 
@@ -118,26 +120,19 @@ export class AppComponent {
     this.additionalOptionsForm.reset();
   }
 
-  delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
-  }
+  // delay(ms: number) {
+  //   return new Promise( resolve => setTimeout(resolve, ms) );
+  // }
 
   public async onEnter() {
     if (this.query === "")
       return;
 
-    console.log(this.query);
-    
     this.spinner.show();
 
-    var requestBody: any = JSON.stringify({
+    var requestBody: string = JSON.stringify({
       UserInput: this.query,
-      Filters: [ 
-        {
-          PetFriendly: true,
-          FamilyFriendly: false //this.evaluateAdditionalOptionsForm()
-        }
-      ]
+      Filters: this.evaluateAdditionalOptionsForm()
     }) 
     
     console.log(requestBody);
@@ -149,45 +144,45 @@ export class AppComponent {
           'Content-Type':  'application/json'
         })
       })
-    .subscribe((data) => {
-        console.log(data);
+    .subscribe((res: any) => {
+        console.log(res);
         
+        this.queryResults = res["Data"];
+        this.latestQuery = this.query;
+        this.spinner.hide();
     });
 
-    await this.delay(2000);
-    this.spinner.hide();
 
-    this.latestQuery = this.query;
-    this.queryResults = [
-      {
-        Location: "Graz",
-        Name: "Tre Amici",
-        Image: "assets/images/restaurant-types/italian.jpg",
-        Reviews: 400,
-        Type: "Italian"
-      },
-      {
-        Location: "Vienna",
-        Name: "McDonalds",
-        Image: "assets/images/restaurant-types/default.jpg",
-        Reviews: 1001,
-        Type: "American"
-      },
-      {
-        Location: "Graz",
-        Name: "Meet",
-        Image: "assets/images/restaurant-types/asian.jpg",
-        Reviews: 30,
-        Type: "Asian"
-      },
-      {
-        Location: "Graz",
-        Name: "Don Camillo",
-        Image: "assets/images/restaurant-types/italian.jpg",
-        Reviews: 1050,
-        Type: "Italian"
-      }
-    ]
+    // this.queryResults = [
+    //   {
+    //     Location: "Graz",
+    //     Name: "Tre Amici",
+    //     Image: "assets/images/restaurant-types/italian.jpg",
+    //     Reviews: 400,
+    //     Type: "Italian"
+    //   },
+    //   {
+    //     Location: "Vienna",
+    //     Name: "McDonalds",
+    //     Image: "assets/images/restaurant-types/default.jpg",
+    //     Reviews: 1001,
+    //     Type: "American"
+    //   },
+    //   {
+    //     Location: "Graz",
+    //     Name: "Meet",
+    //     Image: "assets/images/restaurant-types/asian.jpg",
+    //     Reviews: 30,
+    //     Type: "Asian"
+    //   },
+    //   {
+    //     Location: "Graz",
+    //     Name: "Don Camillo",
+    //     Image: "assets/images/restaurant-types/italian.jpg",
+    //     Reviews: 1050,
+    //     Type: "Italian"
+    //   }
+    // ]
   }
 
   private evaluateAdditionalOptionsForm(): Filter[] {
