@@ -37,7 +37,7 @@
       </mat-menu>
     </div>
     
-    <div id="search-results" *ngIf="queryResults.length !== 0">
+    <div id="search-results" *ngIf="queryResults.length !== 0; else noResults">
       <div>
         <h2>Recommendations based on "{{latestQuery}}"</h2>
         <ng-container *ngFor="let res of queryResults">
@@ -64,5 +64,8 @@
       </mat-menu>
     </div>
 
+    <ng-template #noResults>
+      <h2 *ngIf="latestQuery != ''">Sorry, no results for "{{latestQuery}}" could be found.</h2>
+    </ng-template>
   </div>
 </div>
