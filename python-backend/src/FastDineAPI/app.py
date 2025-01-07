@@ -4,8 +4,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from interface.request.queryRequest import QueryRequest
 from interface.response.queryResponse import QueryResponse
-from FastDineAPI.recomentation_system import RestaurantRecommender
+from interface.response.restaurant import Restaurant
+from FastDineAPI.recomentation_system.RestaurantRecommender import RestaurantRecommender
 import pandas as pd
+import json
 
 app = FastAPI()
 app.add_middleware(
@@ -27,12 +29,22 @@ class MyResponse(BaseModel):
 async def index(reqeust: Request) -> dict[str, str]:
   try:
     json_string = await reqeust.json()
+    print(json_string)
     query_request = QueryRequest.from_json(json_string)
     print(f"Processing {query_request.UserInput}")
     feature_weight = None
     top_restaurants: pd.DataFrame = recommend_system(query_request.UserInput, feature_weight)
-    response = QueryResponse()
-    response.Restaurants = top_restaurants.to_dict()
+
+    restaurants: list[dict] = []
+    for _, element in top_restaurants.iterrows():
+      tmp = {}
+      tmp["Image"] = "assets/images/restaurants-types/default.jpg"
+      tmp["Location"] = element["city"]
+      tmp["Type"] = element["categories"]
+      restaurants.append(tmp)
+
+    response = json.dumps(restaurants)
+    print(type(json.dumps(response)))
     # TODO: Call the trianed model.
     return {"Data": response}
   except Exception as err:
