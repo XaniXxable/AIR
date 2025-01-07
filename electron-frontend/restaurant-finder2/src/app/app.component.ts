@@ -120,10 +120,6 @@ export class AppComponent {
     this.additionalOptionsForm.reset();
   }
 
-  // delay(ms: number) {
-  //   return new Promise( resolve => setTimeout(resolve, ms) );
-  // }
-
   public async onEnter() {
     if (this.query === "")
       return;
@@ -154,6 +150,7 @@ export class AppComponent {
     });
 
     // Where can i find good pizza in Philadelphia?
+    // Where can i find good bubble tea in Tampa?
 
     // this.queryResults = [
     //   {

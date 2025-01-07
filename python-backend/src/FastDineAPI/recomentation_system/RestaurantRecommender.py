@@ -43,10 +43,18 @@ class RestaurantRecommenter:
     # Assign a score based on cuisine frequency
     filtered_df["score"] = filtered_df["categories"].apply(lambda x: cuisine_counts.get(x, 0))
 
+    # Add scores based on labeled features
+    highest_review_count = filtered_df.sort_values(by="review_count", ascending=False).iloc[0]["review_count"]
+    filtered_df["normalized_rating"] = filtered_df["stars"] / 5.0
+    filtered_df["normalized_review_count"] = filtered_df["review_count"] / highest_review_count
+
+    filtered_df["score"] = (
+      0.5 * filtered_df["normalized_rating"] + 0.5 * filtered_df["normalized_review_count"]
+    )
+
     if feature_weights is None:
       return filtered_df
 
-    # Add scores based on labeled features
     for feature, sentiments in feature_weights.items():
       if feature in filtered_df.columns:
         filtered_df["score"] -= filtered_df[feature].apply(lambda sentiment: sentiments.get(sentiment, 0))

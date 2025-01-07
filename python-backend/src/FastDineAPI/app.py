@@ -43,6 +43,7 @@ async def index(reqeust: Request) -> dict[str, str]:
       tmp["Type"] = element["categories"]
       tmp["Stars"] = element["stars"]
       tmp["Reviews"] = element["review_count"]
+      tmp["Score"] = element["score"]
 
       restaurants.append(tmp)
 
