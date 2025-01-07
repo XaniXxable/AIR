@@ -4,6 +4,8 @@ from typing import Any
 from DineFinderAI.db.DatabaseManager import DatabaseManager
 import pandas as pd
 import json
+import re
+
 
 def process_restaurant_data(df: pd.DataFrame) -> pd.DataFrame:
   """
@@ -57,6 +59,34 @@ def filter_rows_by_string(dataframe, column_name, search_string, case_sensitive=
   return filtered_df
 
 
+def is_city_separated(city_name: str) -> bool:
+  """
+  Check if a city is separated with some separators.
+
+  Args:
+    city_name (str): name to check
+
+  Returns:
+    boolean: Ture if it is separated otherwise False
+  """
+  separators = [" ", "_", "-"]
+  return any(sep in city_name for sep in separators)
+
+
+def is_category_separated(category: str):
+  """
+  Check if a category is separated with some separators.
+
+  Args:
+    city_name (str): name to check
+
+  Returns:
+  boolean: Ture if it is separated otherwise False
+  """
+  separators = [" ", "_", "-"]
+  return any(sep in category for sep in separators)
+
+
 def generate_category_queries_for_all_cities(
   df: pd.DataFrame, output_file: Path, checkpoint_file: Path, batch_size: int = 100
 ):
@@ -78,46 +108,42 @@ def generate_category_queries_for_all_cities(
   city_category_combinations = pd.MultiIndex.from_product(
     [df["city_normalized"].unique(), df["categories_normalized"].explode().unique()], names=["city", "category"]
   ).to_frame(index=False)
+  results = []
+  found_tokens = {"city": [], "cuisines": []}
 
-  # Determine the starting index
-  start_index = 0
-  if Path.exists(checkpoint_file):
-    with open(checkpoint_file, "r") as f:
-      start_index = int(f.read().strip())
-
-  print(f"Resuming from index: {start_index}")
-  results = {}
   for _, row in city_category_combinations.iterrows():
-    city = row["city"]
-    query_category = row["category"]
-    responses = []
-    scores = []
+    query = "Where can I find good CATEGORY in CITY"
+    # query = f"Where can I find good {row["category"]} in {row["city"]}"
+    tmp = {"tokens": [], "labels": []}
 
-    # Skip specific categories
-    if query_category in ["restaurants", "food", "nightlife"]:
-      continue
+    if is_city_separated(row["city"]):
+      found_tokens["city"].append(row["city"])
 
-    # Filter restaurants in the given city
-    city_restaurants = df[df["city_normalized"] == city]
-    cat_rest = filter_rows_by_string(city_restaurants, "categories", query_category)
+    if is_category_separated(row["category"]):
+      found_tokens["cuisines"].append(row["category"])
 
-    # Handle cases where no matching restaurants are found
-    if cat_rest.empty:
-      query = f"Where can I find good {query_category} in {city}?"
-      response = f"Sorry, we couldn't find good {query_category} in {city}."
-      results[query] = {"responses": response, "scores": 0}
-      continue
+    for string in query.split(" "):
+      string = string.replace("CATEGORY", row["category"])
+      string = string.replace("CITY", row["city"])
+      pattern_category = rf'\b{row["category"]}\b'
+      pattern_city = rf'\b{row["city"]}\b'
+      # if string not in row["category"] and string not in row["city"]:
+      if not re.search(pattern_category, string) and not re.search(pattern_city, string):
+        tmp["tokens"].append(string)
+        tmp["labels"].append("O")
+        continue
 
-    # Generate query and responses for found matches
-    query = f"Where can I find good {query_category} in {city}?"
-    for _, restaurant in cat_rest.iterrows():
-      response = f"You can find good {query_category} in {city} at {restaurant['name']}"
-      score = count_matching_categories(restaurant["categories"], query_category) # type: ignore
-      responses.append(response)
-      scores.append(score)
-
-    results[query] = {"responses": responses, "scores": scores}
+      if string in row["category"]:
+        tmp["tokens"].append(string)
+        tmp["labels"].append("CUISINE")
+      elif string in row["city"]:
+        tmp["tokens"].append(string)
+        tmp["labels"].append("LOC")
+    results.append(tmp)
   write_to_json(results, output_file)
+  # found_tokens["city"] = list((set(found_tokens["city"])))
+  # found_tokens["cuisines"] = list(set(found_tokens["cuisines"]))
+  # write_to_json(found_tokens, Path.cwd().joinpath("resources/new_tokens.json"))
 
 
 def count_matching_categories(target_categories: str, search_categories: str) -> float:
@@ -131,6 +157,7 @@ def count_matching_categories(target_categories: str, search_categories: str) ->
 
   return matches / len(targets)
 
+
 def generate_best_places_by_city(db_manager: DatabaseManager, output_file: Path) -> None:
   """
   Process 'What are the best restaurants in {city}?' queries with scores.
@@ -140,10 +167,10 @@ def generate_best_places_by_city(db_manager: DatabaseManager, output_file: Path)
       output_file (Path): JSON file path to save the results.
   """
   df = db_manager.execute("SELECT DISTINCT(city) FROM restaurants")
-  results = {}
+  results = []
   for _, row in df.iterrows():
     city = row["city"]
-    restaurants = f"SELECT name, address, stars, review_count FROM restaurants WHERE city = \"{city}\""
+    restaurants = f'SELECT name, address, stars, review_count FROM restaurants WHERE city = "{city}"'
     restaurants_df = db_manager.execute(restaurants)
     highest_review_count = restaurants_df.sort_values(by="review_count", ascending=False).iloc[0]["review_count"]
 
@@ -151,28 +178,33 @@ def generate_best_places_by_city(db_manager: DatabaseManager, output_file: Path)
     restaurants_df["normalized_rating"] = restaurants_df["stars"] / 5.0
     restaurants_df["normalized_review_count"] = restaurants_df["review_count"] / highest_review_count
     restaurants_df["score"] = (
-        0.75 * restaurants_df["normalized_rating"] +
-        0.25 * restaurants_df["normalized_review_count"]
+      0.75 * restaurants_df["normalized_rating"] + 0.25 * restaurants_df["normalized_review_count"]
     )
 
     sorted_restaurants = restaurants_df.sort_values(by="score", ascending=False)
 
     # NOTE: If you want to round the score, uncomment the following line
-    # sorted_restaurants["score"] = sorted_restaurants["score"].round(3)
+    sorted_restaurants["score"] = sorted_restaurants["score"].round(3)
 
     # Generate query and responses for found matches
     query = f"What are the best restaurants in {city}?"
     responses = []
-    scores = []
     for _, restaurant in sorted_restaurants.iterrows():
-      response = (f"One of the best restaurants in {city} is {restaurant['name']} " 
-                  + f"at {restaurant['address']}, with {restaurant['stars']} stars "
-                  + f"and {restaurant['review_count']} reviews.")
+      # response = (
+      #   f"One of the best restaurants in {city} is {restaurant['name']} "
+      #   + f"at {restaurant['address']}, with {restaurant['stars']} stars "
+      #   + f"and {restaurant['review_count']} reviews."
+      # )
+      response = {
+        "name": restaurant["name"],
+        "address": restaurant["address"],
+        "score": restaurant["score"],
+      }
       responses.append(response)
-      scores.append(restaurant['score'])
-
-    results[query] = {"responses": responses, "scores": scores}
+    responses = sorted(responses, key=lambda x: x["score"], reverse=True)[:10]
+    results.append({"query": query, "location": city, "responses": responses})
   write_to_json(results, output_file)
+
 
 def write_to_yaml(df: pd.DataFrame, yaml_file: Path) -> None:
   """
@@ -182,7 +214,7 @@ def write_to_yaml(df: pd.DataFrame, yaml_file: Path) -> None:
       df (pd.DataFrame): The DataFrame containing query and response columns.
       yaml_file (str): Path to the YAML file to write.
   """
-  data: list[dict[str, Any]] = df[["query", "response"]].to_dict(orient="records") # type: ignore
+  data: list[dict[str, Any]] = df[["query", "response"]].to_dict(orient="records")  # type: ignore
 
   with open(yaml_file, "w") as file:
     yaml.dump(data, file, default_flow_style=False)
@@ -211,9 +243,9 @@ def write_to_json_pd(df: pd.DataFrame, json_file: Path) -> None:
       df (pd.DataFrame): The DataFrame containing query and response columns.
       json_file (str): Path to the JSON file to write.
   """
-  data: list[dict[str, Any]] = df.to_json(orient="records") # type: ignore
+  data: list[dict[str, Any]] = df.to_json(orient="records")  # type: ignore
   with open(json_file, "w") as file:
-    file.write(data) # type: ignore
+    file.write(data)  # type: ignore
   print(f"Saved {json_file.resolve()}")
 
 
@@ -224,12 +256,12 @@ def main() -> None:
 
   db_manager.connectFunc()
   data_frame = db_manager.execute("SELECT name, address, city, state, stars, categories from restaurants")
-  output_file = resources_path.joinpath("best_places_by_city_queries.json")
-  generate_best_places_by_city(db_manager, output_file)
-  db_manager.closeFunc()
+  # output_file = resources_path.joinpath("best_places_by_city_queries.json")
+  # generate_best_places_by_city(db_manager, output_file)
+  # db_manager.closeFunc()
 
   checkpoint = resources_path.joinpath("checkpoint.yaml")
-  output_file = resources_path.joinpath("categ_in_city_queries.json")
+  output_file = resources_path.joinpath("query_learning.json")
   generate_category_queries_for_all_cities(data_frame, output_file, checkpoint)
 
 
