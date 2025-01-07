@@ -3,7 +3,7 @@ import pandas as pd
 from pathlib import Path
 
 
-class RestaurantRecommenter:
+class RestaurantRecommender:
   def __init__(self) -> None:
     self._ner_model_path = Path.cwd().joinpath("resources/model/NER/")
     self.data = self._load_from_db()
@@ -64,8 +64,8 @@ class RestaurantRecommenter:
 
 
 if __name__ == "__main__":
-  query = "Recommend a good fast food restaurant in New Orleans"
-  recommend_system = RestaurantRecommenter()
+  query = "Where is the best italian restaurant in Riverview?"
+  recommend_system = RestaurantRecommender()
   top_restaurants = recommend_system(query)
   print(f"Top restaurants found for {query}")
   print(top_restaurants)

@@ -106,49 +106,6 @@ class RestaurantNER:
     final_filtered_df = pd.DataFrame(final_filtered_list)
     return final_filtered_df
 
-    # final_filtered_list = self._calculate_scores(final_filtered_df)
-
-    # # Sort by score in descending order and take the top 10
-    # top_10_restaurants = final_filtered_df.sort_values(by="score", ascending=False).head(10)
-
-    # return top_10_restaurants
-
-  # def _calculate_scores(self, filtered_df: pd.DataFrame, feature_weights: dict[str, int] | None = None) -> pd.DataFrame:
-  #   """
-  #   Calculate scores for the filtered DataFrame based on cuisine frequency.
-
-  #   Args:
-  #       filtered_df (pd.DataFrame): DataFrame containing filtered restaurants.
-  #       feature_weights (dict[str, int] | None): Dictionary of feature weights with keys as feature names
-  #                                               (e.g., 'pet_friendly', 'price_value_ratio') and values as
-  #                                               dictionaries mapping sentiment ('positive', 'neutral', 'negative') to weights.
-
-  #                                               Example:
-  #                                               {
-  #                                                   'pet_friendly': {'positive': 2, 'neutral': 0, 'negative': -1},
-  #                                                   'price_value_ratio': {'positive': 3, 'neutral': 1, 'negative': -2}
-  #                                               }
-  #   Returns:
-  #       pd.DataFrame: DataFrame with an additional 'score' column.
-  #   """
-  #   if filtered_df.empty:
-  #     return filtered_df
-
-  #   # Calculate frequency of each cuisine
-  #   cuisine_counts = filtered_df["categories"].value_counts().to_dict()
-  #   # Assign a score based on cuisine frequency
-  #   filtered_df["score"] = filtered_df["categories"].apply(lambda x: cuisine_counts.get(x, 0))
-
-  #   if feature_weights is None:
-  #     return filtered_df
-
-  #   # Add scores based on labeled features
-  #   for feature, sentiments in feature_weights.items():
-  #     if feature in filtered_df.columns:
-  #       filtered_df["score"] -= filtered_df[feature].apply(lambda sentiment: sentiments.get(sentiment, 0))
-
-  #   return filtered_df
-
 
 def load_from_db() -> pd.DataFrame:
   import sqlite3
