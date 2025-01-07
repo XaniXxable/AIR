@@ -18,12 +18,14 @@ pyyaml = "^6.0.2"
 pandas = "^2.2.3"
 transformers = "^4.47.1"
 torch = "^2.5.1"
+accelerate = "^1.2.1"
+scikit-learn = "^1.6.0"
 
 [tool.poetry.scripts]
 start = "FastDineAPI.app:start"
 ingest = "DineFinderAI.db.DatabaseManager:main"
 generate = "QueryGenerator.QueryGenerator:main"
-training = "DineFinderAI.main:training"
+training = "DineFinderAI.main:main"
 
 [build-system]
 requires = ["poetry-core"]
