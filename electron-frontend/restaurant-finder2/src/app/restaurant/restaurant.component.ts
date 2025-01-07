@@ -22,7 +22,7 @@ export class RestaurantComponent {
     let pairs: any[] = [];
     if (this.restaurant) {
       Object.entries(this.restaurant).forEach(([key, value])=> {
-        if (!["Image", "Name", "Reviews"].includes(key)) {
+        if (!["Image", "Name", "Stars"].includes(key)) {
           pairs.push([key, value])
         }
       });

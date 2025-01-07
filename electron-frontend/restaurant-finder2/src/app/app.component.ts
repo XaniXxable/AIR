@@ -145,13 +145,15 @@ export class AppComponent {
         })
       })
     .subscribe((res: any) => {
-        console.log(res);
-        
-        this.queryResults = res["Data"];
+      
+        this.queryResults = JSON.parse(res["Data"]);
+        console.log(this.queryResults);
         this.latestQuery = this.query;
+
         this.spinner.hide();
     });
 
+    // Where can i find good pizza in Philadelphia?
 
     // this.queryResults = [
     //   {
