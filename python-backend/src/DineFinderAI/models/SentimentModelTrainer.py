@@ -248,3 +248,7 @@ def predict(self, texts: list[str]) -> list[dict[str, float]]:
     predicted_class = torch.argmax(probs).item()
     results.append({"class": predicted_class, "probabilities": class_probs})
   return results
+
+
+def train() -> None:
+  print("AASAS")
