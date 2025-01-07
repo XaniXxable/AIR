@@ -4,4 +4,5 @@ export interface RestaurantMetaData {
     Reviews: number;
     Location: string;
     Image: string;
+    Stars: number;
 }

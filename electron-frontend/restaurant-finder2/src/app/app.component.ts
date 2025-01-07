@@ -120,10 +120,6 @@ export class AppComponent {
     this.additionalOptionsForm.reset();
   }
 
-  // delay(ms: number) {
-  //   return new Promise( resolve => setTimeout(resolve, ms) );
-  // }
-
   public async onEnter() {
     if (this.query === "")
       return;
@@ -145,13 +141,16 @@ export class AppComponent {
         })
       })
     .subscribe((res: any) => {
-        console.log(res);
-        
-        this.queryResults = res["Data"];
+      
+        this.queryResults = JSON.parse(res["Data"]);
+        console.log(this.queryResults);
         this.latestQuery = this.query;
+
         this.spinner.hide();
     });
 
+    // Where can i find good pizza in Philadelphia?
+    // Where can i find good bubble tea in Tampa?
 
     // this.queryResults = [
     //   {

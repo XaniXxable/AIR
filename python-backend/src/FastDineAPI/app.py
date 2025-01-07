@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from interface.request.queryRequest import QueryRequest
 from interface.response.queryResponse import QueryResponse
 from interface.response.restaurant import Restaurant
-from FastDineAPI.recomentation_system.RestaurantRecommender import RestaurantRecommender
+from FastDineAPI.recomentation_system.RestaurantRecommender import RestaurantRecommenter
 import pandas as pd
 import json
 
@@ -18,7 +18,7 @@ app.add_middleware(
   allow_headers=["*"],
 )
 
-recommend_system = RestaurantRecommender()
+recommend_system = RestaurantRecommenter()
 
 
 class MyResponse(BaseModel):
@@ -38,9 +38,13 @@ async def index(reqeust: Request) -> dict[str, str]:
     restaurants: list[dict] = []
     for _, element in top_restaurants.iterrows():
       tmp = {}
-      tmp["Image"] = "assets/images/restaurants-types/default.jpg"
+      tmp["Image"] = "assets/images/restaurant-types/default.jpg"
       tmp["Location"] = element["city"]
       tmp["Type"] = element["categories"]
+      tmp["Stars"] = element["stars"]
+      tmp["Reviews"] = element["review_count"]
+      tmp["Score"] = element["score"]
+
       restaurants.append(tmp)
 
     response = json.dumps(restaurants)
