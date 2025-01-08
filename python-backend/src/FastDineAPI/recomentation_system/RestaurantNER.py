@@ -90,7 +90,7 @@ class RestaurantNER:
     if not cuisines:
       most_common_cuisine = filtered_restaurants["categories"].value_counts().idxmax()  # Most frequent cuisine
       print(f"No cuisine specified. Using most common cuisine: {most_common_cuisine}")
-      cuisines = most_common_cuisine
+      cuisines.append(most_common_cuisine)
 
     return self._filter_by_cuisines(filtered_restaurants, cuisines)
 
