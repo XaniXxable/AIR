@@ -17,7 +17,7 @@ def load_json(file_name: str) -> dict[str, any]:
 
 
 def main() -> None:
-  data = load_json("query_learning.json")
+  data = load_json("ner_training_dataset.json")
   analyser = TokenAnalyser(new_tokens=True)
   analyser.train(data)
 

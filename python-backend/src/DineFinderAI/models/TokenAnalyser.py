@@ -3,6 +3,7 @@ from transformers import BertTokenizerFast, BertForTokenClassification, Trainer,
 from pathlib import Path
 from sklearn.model_selection import KFold
 from torch.utils.data import Subset
+import json
 
 
 class TokenAnalyser:
@@ -76,7 +77,8 @@ class TokenAnalyser:
 
     for fold, (train_idx, val_idx) in enumerate(kf.split(range(len(train_dataset)))):
       print(f"\nFold {fold + 1}/{k}")
-
+      log_path = self.NER_OUTPUT.joinpath("logs")
+      log_path.mkdir(exist_ok=True)
       # Create train and validation datasets for this fold
       train_subset = Subset(train_dataset, train_idx)
       val_subset = Subset(train_dataset, val_idx)
@@ -84,7 +86,8 @@ class TokenAnalyser:
       training_args = TrainingArguments(
         output_dir=self.NER_OUTPUT.joinpath(f"fold_{fold}"),
         evaluation_strategy="steps",
-        logging_dir=self.NER_OUTPUT.joinpath("/logs/fold_{fold}"),
+        logging_dir=log_path.joinpath(f"fold_{fold}"),
+        logging_strategy="epoch",
         per_device_train_batch_size=64,
         num_train_epochs=3,
         save_steps=10,
@@ -107,3 +110,7 @@ class TokenAnalyser:
 
     avg_loss = sum([result["eval_loss"] for result in fold_results]) / k
     print(f"\nAverage Validation Loss Across {k} Folds: {avg_loss:.4f}")
+
+    log_history = trainer.state.log_history
+    with open(log_path.joinpath("NER_training_logs.json"), "w") as f:
+      json.dump(log_history, f, indent=4)
