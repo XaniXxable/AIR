@@ -20,12 +20,14 @@ transformers = "^4.47.1"
 torch = "^2.5.1"
 accelerate = "^1.2.1"
 scikit-learn = "^1.6.0"
+matplotlib = "^3.10.0"
 
 [tool.poetry.scripts]
 start = "FastDineAPI.app:start"
 ingest = "DineFinderAI.db.DatabaseManager:main"
 generate = "QueryGenerator.QueryGenerator:main"
 training = "DineFinderAI.main:main"
+sem = "DineFinderAI.models.SentimentModelTrainer:train"
 
 [build-system]
 requires = ["poetry-core"]
