@@ -235,4 +235,5 @@ pyrightconfig.json
 
 # yelp dataset json file
 **yelp_academic_dataset_business.json
+**yelp_academic_dataset_review.json
 queries.yaml
