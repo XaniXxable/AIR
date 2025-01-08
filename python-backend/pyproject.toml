@@ -10,7 +10,8 @@ readme = "README.md"
 packages = [
             {include = "FastDineAPI", from="src"},
             {include = "DineFinderAI", from="src"},
-            {include = "QueryGenerator", from="src"}
+            {include = "QueryGenerator", from="src"},
+            {include = "Analyser", from="src"}
             ]
 
 [tool.poetry.dependencies]
@@ -32,6 +33,7 @@ ingest = "DineFinderAI.db.DatabaseManager:main"
 generate = "QueryGenerator.QueryGenerator:main"
 training = "DineFinderAI.main:main"
 sem = "DineFinderAI.models.SentimentModelTrainer:train"
+analyse_db = "Analyser.DatabaseAnalyser:main"
 
 [build-system]
 requires = ["poetry-core"]
