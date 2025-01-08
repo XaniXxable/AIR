@@ -1,8 +1,11 @@
 [tool.poetry]
 name = "python-backend"
 version = "0.1.0"
-description = ""
-authors = ["Matthias Hemmer <matthias.hemmer@student.tugraz.at>"]
+description = "Backend project for our recommender system"
+authors = ["Kevin Heinrich <kevin.heinrich@student.tugraz.at>",
+           "Matthias Hemmer <matthias.hemmer@student.tugraz.at>",
+           "Christina Knes <christina.knes@student.tugraz.at>",
+           "Fiona Trapp <fiona.trapp@student.tugraz.at>"]
 readme = "README.md"
 packages = [
             {include = "FastDineAPI", from="src"},
@@ -21,6 +24,7 @@ torch = "^2.5.1"
 accelerate = "^1.2.1"
 scikit-learn = "^1.6.0"
 matplotlib = "^3.10.0"
+poetry = "1.8.5"
 
 [tool.poetry.scripts]
 start = "FastDineAPI.app:start"
