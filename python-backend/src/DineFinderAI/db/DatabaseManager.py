@@ -28,7 +28,7 @@ class DatabaseManager:
       return
     
     db = pd.read_json(self.json_filepath, lines=True)
-    db = db[["name", "address", "city", "state", "postal_code", "stars", "review_count", "categories"]]
+    db = db[["business_id", "name", "address", "city", "state", "postal_code", "stars", "review_count", "categories"]]
 
     db = db.dropna()
     db = db[db["categories"].str.contains("Restaurants") == True]
@@ -64,6 +64,10 @@ class DatabaseManager:
       df.at[index, 'categories'] = ", ".join(category_list)
       
     return df
+
+  def addColumn(self, column_name: str, sql_data_type: str) -> None:
+    query = f"ALTER TABLE restaurants ADD {column_name} {sql_data_type}"
+    self.con.cursor().execute(query)
 
 def main() -> None:
 
