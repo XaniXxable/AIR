@@ -10,3 +10,5 @@ class Restaurant:
   Reviews: int | None = None
   Location: str | None = None
   Image: str | None = None
+  Starts: float | None = None
+  Score: float | None = None
