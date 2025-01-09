@@ -25,7 +25,7 @@ class MyResponse(BaseModel):
   data: dict
 
 
-@app.post("/restauratnts/")
+@app.post("/restauratnts/", response_model=QueryResponse)
 async def index(reqeust: Request) -> dict[str, str]:
   try:
     json_string = await reqeust.json()
@@ -35,22 +35,20 @@ async def index(reqeust: Request) -> dict[str, str]:
     feature_weight = None
     top_restaurants: pd.DataFrame = recommend_system(query_request.UserInput, feature_weight)
 
-    restaurants: list[dict] = []
+    # restaurants: list[dict] = []
+    restaurants = QueryResponse()
     for _, element in top_restaurants.iterrows():
-      tmp = {}
-      tmp["Image"] = "assets/images/restaurant-types/default.jpg"
-      tmp["Location"] = element["city"]
-      tmp["Type"] = element["categories"]
-      tmp["Stars"] = element["stars"]
-      tmp["Reviews"] = element["review_count"]
-      tmp["Score"] = element["score"]
+      restaurant = Restaurant()
+      restaurant.Image = "assets/images/restaurant-types/default.jpg"
+      restaurant.Location = element["city"]
+      restaurant.Type = element["categories"]
+      restaurant.Starts = element["stars"]
+      restaurant.Score = element["score"]
+      restaurant.Name = element["name"]
+      restaurant.Reviews = element["review_count"]
 
-      restaurants.append(tmp)
-
-    response = json.dumps(restaurants)
-    print(type(json.dumps(response)))
-    # TODO: Call the trianed model.
-    return {"Data": response}
+      restaurants.Restaurants.append(restaurant)
+    return restaurants
   except Exception as err:
     print(err)
     return {"Error": "Parsing error"}
@@ -65,3 +63,7 @@ async def status() -> dict[str, str]:
 def start() -> None:
   """Launched with `poetry run start` at root level"""
   uvicorn.run("FastDineAPI.app:app", host="0.0.0.0", port=8000, reload=True)
+
+
+if __name__ == "__main__":
+  start()
