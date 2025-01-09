@@ -8,12 +8,19 @@ import torch
 import pandas as pd
 import sqlite3
 import torch.nn.functional as F
+from typing import Any
 
 
 class DineFinder:
+  """ 
+  A class for finding dining options using restaurant data, pre-trained models and embeddings. 
+  """
   resource_folder = Path.cwd().joinpath("resources")
 
   def __init__(self) -> None:
+    """ 
+    Initializes the DineFinder with restaurant data, pre-trained models and embeddings. 
+    """
     self.restaurants = self.load_from_db()
     self.json_data = self.load_json("categ_in_city_queries.json")
     self.tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
@@ -53,7 +60,7 @@ class DineFinder:
     torch.save(restaurant_embeddings, self.restaurant_emeddings_location)
     print(f"Embeddings saved to {self.restaurant_emeddings_location}")
 
-  def load_restaurant_embeddings(self, load_path: str):
+  def load_restaurant_embeddings(self, load_path: str) -> list[dict[str, Any]]:
     """
     Load pre-generated restaurant embeddings from a file.
 
@@ -61,13 +68,13 @@ class DineFinder:
         load_path (str): Path to the saved embeddings.
 
     Returns:
-        list: List of dictionaries containing restaurant names and their embeddings.
+        list[dict[str, Any]]: List of dictionaries containing restaurant names and their embeddings.
     """
     embeddings = torch.load(load_path)
     print(f"Loaded {len(embeddings)} embeddings from {load_path}")
     return embeddings
 
-  def get_bert_embedding(self, text: str):
+  def get_bert_embedding(self, text: str) -> torch.Tensor:
     """
     Generate an embedding for the given text using BERT.
     Args:
@@ -84,7 +91,7 @@ class DineFinder:
     embedding = hidden_states.mean(dim=1)
     return embedding.squeeze()
 
-  def get_top_10_restaurants(self, query: str):
+  def get_top_10_restaurants(self, query: str) -> list[dict[str, str]]:
     """
     Find the top 10 restaurants matching a query using BERT embeddings.
 
@@ -168,7 +175,7 @@ class DineFinder:
 
     return "philadelphia"
 
-  def get_unique_cities(self) -> list:
+  def get_unique_cities(self) -> list[str]:
     """
     Extract unique cities from the database.
 
@@ -180,7 +187,7 @@ class DineFinder:
       result = pd.read_sql_query(query, conn)
     return result["city"].tolist()
 
-  def load_json(self, file_name: str) -> dict[str, any]:
+  def load_json(self, file_name: str) -> dict[str, Any]:
     with open(self.resource_folder.joinpath(file_name), "r") as file:
       content = json.load(file)
     print(f"File {file_name} loaded")

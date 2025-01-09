@@ -8,6 +8,14 @@ from tqdm import tqdm
 from pathlib import Path
 
 
+from transformers import Trainer, TrainingArguments, BertTokenizer, BertForSequenceClassification
+from torch.utils.data import Dataset
+from sklearn.model_selection import StratifiedKFold
+from sklearn.metrics import accuracy_score, precision_recall_fscore_support
+import numpy as np
+import pandas as pd
+
+
 class SentimentModelTrainer:
   """
   A class to train and evaluate a sentiment classification model using BERT with K-Fold cross-validation.
@@ -31,8 +39,10 @@ class SentimentModelTrainer:
         batch_size (int): Batch size for training and validation.
         learning_rate (float): Learning rate for the optimizer.
     """
-    self.tokenizer = BertTokenizer.from_pretrained(model_name)
-    self.model = BertForSequenceClassification.from_pretrained(model_name, num_labels=len(self.LABELS.items()))
+    self.model_name = model_name
+    self.num_labels = len(self.LABELS.items())
+    self.tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+    self.model = BertForSequenceClassification.from_pretrained(model_name, num_labels=self.num_labels)
     self.max_length = max_length
     self.batch_size = batch_size
     self.learning_rate = learning_rate
@@ -68,13 +78,18 @@ class SentimentModelTrainer:
       text = self.texts[idx]
       label = self.labels[idx]
       encoding = self.tokenizer(
-        text, max_length=self.max_length, padding="max_length", truncation=True, return_tensors="pt"
+          text,
+          max_length=self.max_length,
+          padding="max_length",
+          truncation=True,
+          return_tensors="pt"
       )
       return {
-        "input_ids": encoding["input_ids"].squeeze(),
-        "attention_mask": encoding["attention_mask"].squeeze(),
-        "label": torch.tensor(label, dtype=torch.long),
+          "input_ids": encoding["input_ids"].squeeze(0),
+          "attention_mask": encoding["attention_mask"].squeeze(0),
+          "label": torch.tensor(label, dtype=torch.long)
       }
+
 
   def prepare_data(self, file_path: str) -> pd.DataFrame:
     """
@@ -90,83 +105,108 @@ class SentimentModelTrainer:
     df["sentiment"] = df["sentiment"].map({"Positive": 0, "Neutral": 1, "Negative": 2})
     return df
 
+  # Metrics Function
+  def compute_metrics(self, pred):
+    labels = pred.label_ids
+    preds = np.argmax(pred.predictions, axis=1)
+    precision, recall, f1, _ = precision_recall_fscore_support(labels, preds, average="weighted")
+    acc = accuracy_score(labels, preds)
+    return {
+        "accuracy": acc,
+        "f1": f1,
+        "precision": precision,
+        "recall": recall
+    }
+
   def train_k_fold(
-    self, report_path: Path, df: pd.DataFrame, k: int = 5, epochs: int = 3
-  ) -> dict[str, dict[str, float]]:
+    self, report_path, df, epochs=3, k=5
+  ):
     """
-    Performs k-fold cross-validation training and evaluation.
+    Trains a sentiment classification model using k-fold cross-validation.
 
     Args:
-        report_path (Path): Path to save the averaged classification report as a JSON file.
-        df (pd.DataFrame): The dataset as a DataFrame with 'text' and 'sentiment' columns.
+        df (pd.DataFrame): DataFrame with 'text' and 'sentiment' columns.
+        tokenizer: Pretrained tokenizer for text processing.
+        max_length (int): Maximum sequence length for tokenization.
+        batch_size (int): Batch size for training and validation.
+        learning_rate (float): Learning rate for the optimizer.
+        num_labels (int): Number of output classes.
+        model_name (str): Pretrained BERT model name.
+        device: Torch device (e.g., 'cuda' or 'cpu').
+        epochs (int): Number of epochs for training.
         k (int): Number of folds for cross-validation.
-        epochs (int): Number of epochs for training in each fold.
 
     Returns:
-        Dict[str, Dict[str, float]]: Average classification metrics across all folds.
+        dict: Averaged classification metrics across all folds.
     """
-    skf = StratifiedKFold(n_splits=k, shuffle=True, random_state=42)
-    texts, labels = df["text"], df["sentiment"]
+    # Ensure texts and labels are pandas Series
+    texts = df["text"].tolist()
+    labels = df["sentiment"].map({"Positive": 0, "Neutral": 1, "Negative": 2}).tolist()
 
+    skf = StratifiedKFold(n_splits=k, shuffle=True, random_state=42)
     fold_results = []
 
     for fold, (train_idx, val_idx) in enumerate(skf.split(texts, labels)):
-      print(f"Starting Fold {fold + 1}/{k}")
+        print(f"=== Fold {fold + 1}/{k} ===")
+        
+        # Split data into train and validation sets
+        train_texts, val_texts = np.array(texts)[train_idx], np.array(texts)[val_idx]
+        train_labels, val_labels = np.array(labels)[train_idx], np.array(labels)[val_idx]
 
-      train_texts, val_texts = texts.iloc[train_idx].tolist(), texts.iloc[val_idx].tolist()
-      train_labels, val_labels = labels.iloc[train_idx].tolist(), labels.iloc[val_idx].tolist()
+        # Create datasets
+        train_dataset = self.SentimentDataset(train_texts, train_labels, self.tokenizer, self.max_length)
+        val_dataset = self.SentimentDataset(val_texts, val_labels, self.tokenizer, self.max_length)
 
-      train_dataset = self.SentimentDataset(train_texts, train_labels, self.tokenizer, self.max_length)
-      val_dataset = self.SentimentDataset(val_texts, val_labels, self.tokenizer, self.max_length)
+        # Load model
+        model = BertForSequenceClassification.from_pretrained(self.model_name, num_labels=self.num_labels).to(self.device)
 
-      train_loader = DataLoader(train_dataset, batch_size=self.batch_size, shuffle=True)
-      val_loader = DataLoader(val_dataset, batch_size=self.batch_size)
+        # Define TrainingArguments
+        training_args = TrainingArguments(
+            output_dir=Path.cwd().joinpath("resources", f"model_fold_{fold + 1}"),
+            evaluation_strategy="epoch",
+            learning_rate=self.learning_rate,
+            per_device_train_batch_size=self.batch_size,
+            per_device_eval_batch_size=self.batch_size,
+            num_train_epochs=epochs,
+            weight_decay=0.01,
+            logging_dir=f"logs_fold_{fold + 1}",
+            logging_steps=50,
+            save_strategy="epoch",
+            load_best_model_at_end=True,
+            metric_for_best_model="accuracy",
+            greater_is_better=True
+        )
 
-      model = BertForSequenceClassification.from_pretrained(self.model_name, num_labels=self.num_labels).to(self.device)
-      optimizer = AdamW(model.parameters(), lr=self.learning_rate)
+        # Initialize Trainer
+        trainer = Trainer(
+            model=model,
+            args=training_args,
+            train_dataset=train_dataset,
+            eval_dataset=val_dataset,
+            tokenizer=self.tokenizer,
+            compute_metrics=self.compute_metrics
+        )
 
-      for epoch in range(epochs):
-        print(f"  Epoch {epoch + 1}/{epochs}")
-        model.train()
-        train_loss = 0
-        for batch in tqdm(train_loader, desc="    Training"):
-          optimizer.zero_grad()
-          input_ids = batch["input_ids"].to(self.device)
-          attention_mask = batch["attention_mask"].to(self.device)
-          labels = batch["label"].to(self.device)
+        # Train model
+        trainer.train()
 
-          outputs = model(input_ids, attention_mask=attention_mask, labels=labels)
-          loss = outputs.loss
-          train_loss += loss.item()
-          loss.backward()
-          optimizer.step()
-        print(f"    Training loss: {train_loss / len(train_loader):.4f}")
+        # Evaluate model
+        eval_results = trainer.evaluate()
+        fold_results.append(eval_results)
 
-      model.eval()
-      val_loss = 0
-      predictions, true_labels = [], []
-      with torch.no_grad():
-        for batch in tqdm(val_loader, desc="    Validation"):
-          input_ids = batch["input_ids"].to(self.device)
-          attention_mask = batch["attention_mask"].to(self.device)
-          labels = batch["label"].to(self.device)
+        # Save model
+        trainer.save_model(Path.cwd().joinpath("resources", f"model_fold_{fold + 1}"),)
+        print(f"Model for fold {fold + 1} saved.")
 
-          outputs = model(input_ids, attention_mask=attention_mask, labels=labels)
-          val_loss += outputs.loss.item()
-          preds = torch.argmax(outputs.logits, dim=1)
-          predictions.extend(preds.cpu().numpy())
-          true_labels.extend(labels.cpu().numpy())
-      print(f"    Validation loss: {val_loss / len(val_loader):.4f}")
-
-      fold_report = classification_report(
-        true_labels, predictions, target_names=["Positive", "Neutral", "Negative"], output_dict=True
-      )
-      fold_results.append(fold_report)
-      print(classification_report(true_labels, predictions, target_names=["Positive", "Neutral", "Negative"]))
-
-    avg_results = self._average_fold_results(fold_results)
-
-    self._save_classification_report(avg_results, report_path)
+    # Average results across folds
+    avg_results = {
+        metric: np.mean([result[metric] for result in fold_results]) for metric in fold_results[0]
+    }
+    print("\n=== Average Results Across Folds ===")
+    print(avg_results)
+    
+    self.model.save_pretrained(Path.cwd().joinpath("resources", "model"))
+    # self._save_classification_report(avg_results, report_path)
 
     return avg_results
 
@@ -218,37 +258,120 @@ class SentimentModelTrainer:
         print(f"    Support:   {metrics['support']}")
 
 
-def predict(self, texts: list[str]) -> list[dict[str, float]]:
-  """
-  Predicts the sentiment of a list of text samples and returns probabilities for each class.
+  def predict(self, texts: list[str]) -> list[dict[str, int] | dict[str, dict[int, float]]]:
+    """
+    Predicts the sentiment of a list of text samples and returns probabilities for each class.
 
-  Args:
-      texts (List[str]): List of text samples to predict.
+    Args:
+        texts (List[str]): List of text samples to predict.
 
-  Returns:
-      List[Dict[str, float]]: Predicted sentiment probabilities for each class.
-      Each prediction includes:
-          - class: The predicted class (e.g., 0, 1, 2).
-          - probabilities: A dictionary with class probabilities (e.g., {0: 0.8, 1: 0.15, 2: 0.05}).
-  """
-  self.model.eval()
-  encodings = self.tokenizer(texts, max_length=self.max_length, padding=True, truncation=True, return_tensors="pt")
-  input_ids = encodings["input_ids"].to(self.device)
-  attention_mask = encodings["attention_mask"].to(self.device)
+    Returns:
+        List[Dict[str, float]]: Predicted sentiment probabilities for each class.
+        Each prediction includes:
+            - class: The predicted class (e.g., 0, 1, 2).
+            - probabilities: A dictionary with class probabilities (e.g., {0: 0.8, 1: 0.15, 2: 0.05}).
+    """
+    self.model.eval()
+    encodings = self.tokenizer(texts, max_length=self.max_length, padding=True, truncation=True, return_tensors="pt")
+    input_ids = encodings["input_ids"].to(self.device)
+    attention_mask = encodings["attention_mask"].to(self.device)
 
-  with torch.no_grad():
-    outputs = self.model(input_ids, attention_mask=attention_mask)
-    logits = outputs.logits
-    probabilities = torch.softmax(logits, dim=-1)  # Compute probabilities
+    with torch.no_grad():
+      outputs = self.model(input_ids, attention_mask=attention_mask)
+      logits = outputs.logits
+      probabilities = torch.softmax(logits, dim=-1)  # Compute probabilities
 
-  # Convert predictions to a readable format
-  results = []
-  for i, probs in enumerate(probabilities):
-    class_probs = {class_idx: prob.item() for class_idx, prob in enumerate(probs)}
-    predicted_class = torch.argmax(probs).item()
-    results.append({"class": predicted_class, "probabilities": class_probs})
-  return results
+    # Convert predictions to a readable format
+    results = []
+    for i, probs in enumerate(probabilities):
+      class_probs = {class_idx: prob.item() for class_idx, prob in enumerate(probs)}
+      predicted_class = torch.argmax(probs).item()
+      results.append({"class": predicted_class, "probabilities": class_probs})
+    return results
 
+def process_row(args):
+  reviews_df, trainer = args  # Unpack the tuple
+  # business_id = row["business_id"]
+  # name = row["name"]
+  # filtered_df = reviews_df[reviews_df["business_id"] == business_id]
+  review_texts = reviews_df["text"].to_list()
+  results = trainer.predict(review_texts)
 
-def train() -> None:
-  print("AASAS")
+  positive = [entry["probabilities"][0] for entry in results]
+  neutral = [entry["probabilities"][1] for entry in results]
+  negative = [entry["probabilities"][2] for entry in results]
+  positive_avg = sum(positive) / len(results)
+  neutral_avg = sum(neutral) / len(results)
+  negative_avg = sum(negative) / len(results)
+  
+  return {
+      # "business_id": business_id,
+      # "name": name,
+      "positive_avg": positive_avg,
+      "neutral_avg": neutral_avg,
+      "negative_avg": negative_avg
+  }
+
+def predict_review_class_for_restaurant(model_path: Path):
+  from DineFinderAI.db.DatabaseManager import DatabaseManager
+  from multiprocessing import set_start_method, Pool
+  trainer = SentimentModelTrainer(model_path)
+  reviews_file_path = Path.cwd().joinpath("resources", "yelp_academic_dataset_review.json")
+  db_manager = DatabaseManager(Path.cwd().joinpath("resources", "database.db"))
+  db_manager.connectFunc()
+  business_id_df = db_manager.execute("SELECT business_id, name FROM restaurants")
+  chunks = []
+  chunk_size = 100000
+
+  print("Read review file...")
+  with pd.read_json(reviews_file_path, orient="records", lines=True, chunksize=chunk_size) as reader:
+    for chunk in reader:
+      # Process the chunk (e.g., filter or aggregate) -> avoid memory issues
+      chunks.append(chunk[["business_id", "text"]])
+
+  reviews_df = pd.concat(chunks, ignore_index=True)
+
+  print("Start with predicting the class of the reviews for each restaurant...")
+  
+  # set_start_method("spawn")
+  # # Create a list of arguments for each row
+  # rows_with_args = [(reviews_df[reviews_df["business_id"] == row["business_id"]], trainer) for _, row in business_id_df.iterrows()]
+
+  # # Use multiprocess Pool for parallel processing
+  # with Pool() as pool:
+  #   results = list(tqdm(pool.imap(process_row, rows_with_args), total=len(rows_with_args)))
+
+  for _, row in tqdm(business_id_df.iterrows(), total=len(business_id_df)):
+    business_id = row["business_id"]
+    # name = row["name"]
+    filtered_df = reviews_df[reviews_df["business_id"] == business_id]
+    reviews_df = reviews_df[reviews_df["business_id"] != business_id]
+    review_texts = filtered_df["text"].to_list()[0:5]
+    results = trainer.predict(review_texts)
+
+    positive = [entry["probabilities"][0] for entry in results]
+    neutral = [entry["probabilities"][1] for entry in results]
+    negative = [entry["probabilities"][2] for entry in results]
+    positive_avg = sum(positive) / len(results)
+    neutral_avg = sum(neutral) / len(results)
+    negative_avg = sum(negative) / len(results)
+
+    # print(f"AVG results for {name} -> Positive: {positive_avg}, Neutral: {neutral_avg}, Negative: {negative_avg}")
+
+  db_manager.closeFunc()
+
+def train():
+  resources_path = Path.cwd().joinpath("resources")
+  report_path = resources_path.joinpath("report.json")
+  model_path = resources_path.joinpath("model")
+  if not model_path.is_dir():
+    trainer = SentimentModelTrainer()
+    df = pd.read_csv(resources_path.joinpath("restaurant_reviews_sample.csv"))
+    trainer.train_k_fold(report_path, df)
+  
+  predict_review_class_for_restaurant(model_path)
+
+if __name__ == "__main__":
+  import sys
+
+  sys.exit(train())
