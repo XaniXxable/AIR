@@ -4,6 +4,7 @@ from pathlib import Path
 from sklearn.model_selection import KFold
 from torch.utils.data import Subset
 import json
+from typing import Any
 
 
 class TokenAnalyser:
@@ -19,6 +20,7 @@ class TokenAnalyser:
 
   MODEL_PATH = Path.cwd().joinpath("resources/model/")
   NER_OUTPUT = Path.cwd().joinpath("resources/model/training")
+  RENER_OUTPUT = Path.cwd().joinpath("resources/model/re-training")
   # Label mapping
   LABELS_TO_IDS = {"O": 0, "LOC": 1, "RES": 2, "CUISINE": 3, "AMBIENCE": 4}
   IDS_TO_LABELS = {v: k for k, v in LABELS_TO_IDS.items()}
@@ -44,13 +46,18 @@ class TokenAnalyser:
       print(f"Tokenizer saved to {self.MODEL_PATH.joinpath("tokenizer_modified")}")
       self.tokenizer.save_pretrained(self.MODEL_PATH.joinpath("tokenizer_modified"))
 
-  def tokenize_and_align_labels(self, data: dict[list[str], list[str]]):
+  def tokenize_and_align_labels(self, data: dict[list[str], list[str]], custom_token: BertTokenizerFast | None = None):
     """
     Tokenize the text and align labels for BERT NER training.
     """
-    tokenized_inputs = self.tokenizer(
-      [item["tokens"] for item in data], is_split_into_words=True, truncation=True, padding=True
-    )
+    if custom_token:
+      tokenized_inputs = self.tokenizer(
+        [item["tokens"] for item in data], is_split_into_words=True, truncation=True, padding=True
+      )
+    else:
+      tokenized_inputs = custom_token(
+        [item["tokens"] for item in data], is_split_into_words=True, truncation=True, padding=True
+      )
     labels = []
     for i, example in enumerate(data):
       word_ids = tokenized_inputs.word_ids(i)
@@ -63,6 +70,60 @@ class TokenAnalyser:
       labels.append(label_ids)
     tokenized_inputs["labels"] = labels
     return tokenized_inputs
+
+  def retrain(self, data: dict[list[str], list[str]]) -> None:
+    self.RENER_OUTPUT.mkdir(exist_ok=True)
+    pre_trained_model_path = self.MODEL_PATH.joinpath("NER")
+    tokenizer_modified = BertTokenizerFast.from_pretrained(self.MODEL_PATH.joinpath("tokenizer_modified"))
+    trained_model = BertForTokenClassification.from_pretrained(pre_trained_model_path)
+    train_dataset = self.tokenize_and_align_labels(data, custom_token=tokenizer_modified)
+    train_dataset = self.RestaurantNERDataset(train_dataset)
+
+    # K-Fold Cross-Validation
+    k = 5  # Number of folds
+    kf = KFold(n_splits=k)
+
+    fold_results = []
+
+    for fold, (train_idx, val_idx) in enumerate(kf.split(range(len(train_dataset)))):
+      print(f"\nFold {fold + 1}/{k}")
+      log_path = self.RENER_OUTPUT.joinpath("logs")
+      log_path.mkdir(exist_ok=True)
+      # Create train and validation datasets for this fold
+      train_subset = Subset(train_dataset, train_idx)
+      val_subset = Subset(train_dataset, val_idx)
+
+      training_args = TrainingArguments(
+        output_dir=self.RENER_OUTPUT.joinpath(f"fold_{fold}"),
+        evaluation_strategy="steps",
+        logging_dir=log_path.joinpath(f"fold_{fold}"),
+        logging_strategy="epoch",
+        per_device_train_batch_size=64,
+        num_train_epochs=3,
+        save_steps=10,
+        logging_steps=10,
+        save_total_limit=2,
+        learning_rate=5e-5,
+      )
+
+      trainer = Trainer(
+        model=trained_model,
+        args=training_args,
+        train_dataset=train_subset,
+        eval_dataset=val_subset,
+      )
+
+      trainer.train()
+
+      eval_results = trainer.evaluate()
+      fold_results.append(eval_results)
+
+    avg_loss = sum([result["eval_loss"] for result in fold_results]) / k
+    print(f"\nAverage Validation Loss Across {k} Folds: {avg_loss:.4f}")
+
+    log_history = trainer.state.log_history
+    with open(log_path.joinpath("RENER_training_logs.json"), "w") as f:
+      json.dump(log_history, f, indent=4)
 
   def train(self, data: dict[list[str], list[str]]) -> None:
     self.NER_OUTPUT.mkdir(exist_ok=True)
