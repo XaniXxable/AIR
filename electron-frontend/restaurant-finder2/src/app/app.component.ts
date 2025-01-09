@@ -141,8 +141,7 @@ export class AppComponent {
         })
       })
     .subscribe((res: any) => {
-      
-        this.queryResults = JSON.parse(res["Data"]);
+        this.queryResults = res["Restaurants"];
         console.log(this.queryResults);
         this.latestQuery = this.query;
 
