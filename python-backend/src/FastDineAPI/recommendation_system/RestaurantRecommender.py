@@ -1,4 +1,4 @@
-from FastDineAPI.recomentation_system.RestaurantNER import RestaurantNER
+from FastDineAPI.recommendation_system.RestaurantNER import RestaurantNER
 import pandas as pd
 from pathlib import Path
 

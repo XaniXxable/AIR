@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from interface.request.queryRequest import QueryRequest
 from interface.response.queryResponse import QueryResponse
 from interface.response.restaurant import Restaurant
-from FastDineAPI.recomentation_system.RestaurantRecommender import RestaurantRecommender
+from FastDineAPI.recommendation_system.RestaurantRecommender import RestaurantRecommender
 import pandas as pd
 import json
 

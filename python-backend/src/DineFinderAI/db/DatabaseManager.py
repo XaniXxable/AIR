@@ -9,12 +9,8 @@ import pandas as pd
 
 
 class DatabaseManager:
-  """
-  A class to manage database operations and optionally interact with a JSON data file.
-
-  Attributes:
-      database_filepath (Path): The file path to the database file.
-      json_filepath (Path | None): The file path to a JSON data file (optional).
+  """ 
+  A class to manage database operations and optionally interact with a JSON data file. 
   """
   def __init__(self, database_filepath: Path, json_filepath: Path | None = None) -> None:
     """
@@ -28,11 +24,15 @@ class DatabaseManager:
     self.json_filepath = json_filepath
 
   def connectFunc(self) -> None:
-    """ Establishes a connection to the database. """
+    """ 
+    Establishes a connection to the database. 
+    """
     self.con = sqlite3.connect(self.database_filepath)
 
   def closeFunc(self) -> None:
-    """ Closes the database connection. """
+    """ 
+    Closes the database connection. 
+    """
     self.con.close()
 
   def execute(self, query: str) -> pd.DataFrame:
