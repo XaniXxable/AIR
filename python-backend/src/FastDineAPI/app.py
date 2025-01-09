@@ -35,7 +35,6 @@ async def index(reqeust: Request) -> dict[str, str]:
     feature_weight = None
     top_restaurants: pd.DataFrame = recommend_system(query_request.UserInput, feature_weight)
 
-    # restaurants: list[dict] = []
     restaurants = QueryResponse()
     for _, element in top_restaurants.iterrows():
       restaurant = Restaurant()
