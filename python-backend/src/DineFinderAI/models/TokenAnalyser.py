@@ -94,6 +94,9 @@ class TokenAnalyser:
         logging_steps=10,
         save_total_limit=2,
         learning_rate=5e-5,
+        load_best_model_at_end=True,
+        metric_for_best_model="eval_loss",
+        greater_is_better=False
       )
 
       trainer = Trainer(
@@ -107,6 +110,9 @@ class TokenAnalyser:
 
       eval_results = trainer.evaluate()
       fold_results.append(eval_results)
+
+    model_path = Path.cwd().joinpath("resources", "model")
+    trainer.save_model(model_path.joinpath("NER"))
 
     avg_loss = sum([result["eval_loss"] for result in fold_results]) / k
     print(f"\nAverage Validation Loss Across {k} Folds: {avg_loss:.4f}")
