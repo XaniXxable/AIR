@@ -33,8 +33,10 @@ ingest = "DineFinderAI.db.DatabaseManager:main"
 generate_basic = "QueryGenerator.QueryGenerator:generate_basic"
 generate_enhanced= "QueryGenerator.QueryGenerator:generate_enhanced"
 training = "DineFinderAI.main:main"
-sem = "DineFinderAI.models.SentimentModelTrainer:train"
+sem = "DineFinderAI.models.SentimentModelTrainer:main"
+analyse_queries = "Analyser.analyze_queries:main"
 analyse_db = "Analyser.DatabaseAnalyser:main"
+analyse_runtime = "Analyser.RuntimeAnalyser:main"
 
 [build-system]
 requires = ["poetry-core"]

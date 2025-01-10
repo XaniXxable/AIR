@@ -7,7 +7,6 @@ from interface.response.queryResponse import QueryResponse
 from interface.response.restaurant import Restaurant
 from FastDineAPI.recommendation_system.RestaurantRecommender import RestaurantRecommender
 import pandas as pd
-import json
 
 app = FastAPI()
 app.add_middleware(

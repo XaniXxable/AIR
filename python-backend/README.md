@@ -11,9 +11,10 @@ This repository contains the code, datasets, and instructions for the Advanced I
 2. [Datasets](#datasets)
 3. [How to Train the Model](#how-to-train-the-model)
 4. [Validation and Evaluation](#validation-and-evaluation)
-5. [Requirements](#requirements)
-6. [Usage](#usage)
-7. [References](#references)
+5. [Findings](#Findings)
+6. [Requirements](#requirements)
+7. [Usage](#usage)
+8. [References](#references)
 
 ---
 
@@ -29,9 +30,9 @@ During this project, we:
 ## Datasets
 
 We used the following datasets for training and validation:
-- **Dataset Name:** [Insert Dataset Name Here]
-- **Source:** [Link to Dataset Source or Citation]
-- **Description:** [Brief Description of the Dataset]
+- **Dataset Name:** yelp_academic_dataset_business.json
+- **Source:** https://www.yelp.com/dataset
+- **Description:** The Dataset contains of businesses which have attributes like name, location (address + city + state + postal code), stars and review counts. Furthermore, they have specific categories to identify the kind of business.
 
 ### Dataset Preprocessing
 - Removed stop words, punctuation, and special characters.
@@ -75,13 +76,16 @@ The model was validated using **k-fold cross-validation**, which ensures robust 
    - Analyzed failure cases to identify patterns in retrieval errors.
    - Refined preprocessing steps and model parameters based on these insights.
 
+## Findings
+
+All findings/plots can be found under `python-backend/resources/findings`. Training statistics can be found after training under `python-backend/resources/model/training` in the different fold folders.
 
 ## Requirements
 
 To run this project, ensure the following requirements are met:
 
 ### System Requirements:
-- **Python**: Version 3.10
+- **Python**: Version 3.12
 - **Poetry**: Version 1.8.5
 
 ## Usage

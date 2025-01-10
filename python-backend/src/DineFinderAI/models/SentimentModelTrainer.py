@@ -29,7 +29,7 @@ class SentimentModelTrainer:
     max_length: int = 128,
     batch_size: int = 32,
     learning_rate: float = 5e-5,
-  ):
+  ) -> None:
     """
     Initializes the SentimentModelTrainer.
 
@@ -54,7 +54,7 @@ class SentimentModelTrainer:
     Custom PyTorch Dataset for tokenized sentiment classification data.
     """
 
-    def __init__(self, texts: list[str], labels: list[int], tokenizer: BertTokenizer, max_length: int):
+    def __init__(self, texts: list[str], labels: list[int], tokenizer: BertTokenizer, max_length: int) -> None:
       """
       Initializes the SentimentDataset.
 
@@ -70,11 +70,15 @@ class SentimentModelTrainer:
       self.max_length = max_length
 
     def __len__(self) -> int:
-      """Returns the number of samples in the dataset."""
+      """
+      Returns the number of samples in the dataset.
+      """
       return len(self.texts)
 
     def __getitem__(self, idx: int) -> dict[str, torch.Tensor]:
-      """Retrieves a tokenized sample and its label."""
+      """
+      Retrieves a tokenized sample and its label.
+      """
       text = self.texts[idx]
       label = self.labels[idx]
       encoding = self.tokenizer(
@@ -105,7 +109,6 @@ class SentimentModelTrainer:
     df["sentiment"] = df["sentiment"].map({"Positive": 0, "Neutral": 1, "Negative": 2})
     return df
 
-  # Metrics Function
   def compute_metrics(self, pred):
     labels = pred.label_ids
     preds = np.argmax(pred.predictions, axis=1)
@@ -119,22 +122,15 @@ class SentimentModelTrainer:
     }
 
   def train_k_fold(
-    self, report_path, df, epochs=3, k=5
+    self, report_path: Path, df: pd.DataFrame, epochs: int = 3, k: int = 5
   ):
     """
     Trains a sentiment classification model using k-fold cross-validation.
 
     Args:
         df (pd.DataFrame): DataFrame with 'text' and 'sentiment' columns.
-        tokenizer: Pretrained tokenizer for text processing.
-        max_length (int): Maximum sequence length for tokenization.
-        batch_size (int): Batch size for training and validation.
-        learning_rate (float): Learning rate for the optimizer.
-        num_labels (int): Number of output classes.
-        model_name (str): Pretrained BERT model name.
-        device: Torch device (e.g., 'cuda' or 'cpu').
-        epochs (int): Number of epochs for training.
-        k (int): Number of folds for cross-validation.
+        epochs (int): Number of epochs for training. Defaults to 3.
+        k (int): Number of folds for cross-validation. Defaults to 5.
 
     Returns:
         dict: Averaged classification metrics across all folds.
@@ -162,7 +158,7 @@ class SentimentModelTrainer:
 
         # Define TrainingArguments
         training_args = TrainingArguments(
-            output_dir=Path.cwd().joinpath("resources", f"model_fold_{fold + 1}"),
+            output_dir=Path.cwd().joinpath("resources", "SEM_model", "training", f"model_fold_{fold + 1}"),
             evaluation_strategy="epoch",
             learning_rate=self.learning_rate,
             per_device_train_batch_size=self.batch_size,
@@ -195,7 +191,7 @@ class SentimentModelTrainer:
         fold_results.append(eval_results)
 
         # Save model
-        trainer.save_model(Path.cwd().joinpath("resources", f"model_fold_{fold + 1}"),)
+        trainer.save_model(Path.cwd().joinpath("resources", "SEM_model", "training", f"model_fold_{fold + 1}"),)
         print(f"Model for fold {fold + 1} saved.")
 
     # Average results across folds
@@ -205,7 +201,7 @@ class SentimentModelTrainer:
     print("\n=== Average Results Across Folds ===")
     print(avg_results)
     
-    self.model.save_pretrained(Path.cwd().joinpath("resources", "model"))
+    self.model.save_pretrained(Path.cwd().joinpath("resources", "SEM_model"))
     # self._save_classification_report(avg_results, report_path)
 
     return avg_results
@@ -288,33 +284,10 @@ class SentimentModelTrainer:
       predicted_class = torch.argmax(probs).item()
       results.append({"class": predicted_class, "probabilities": class_probs})
     return results
-
-def process_row(args):
-  reviews_df, trainer = args  # Unpack the tuple
-  # business_id = row["business_id"]
-  # name = row["name"]
-  # filtered_df = reviews_df[reviews_df["business_id"] == business_id]
-  review_texts = reviews_df["text"].to_list()
-  results = trainer.predict(review_texts)
-
-  positive = [entry["probabilities"][0] for entry in results]
-  neutral = [entry["probabilities"][1] for entry in results]
-  negative = [entry["probabilities"][2] for entry in results]
-  positive_avg = sum(positive) / len(results)
-  neutral_avg = sum(neutral) / len(results)
-  negative_avg = sum(negative) / len(results)
   
-  return {
-      # "business_id": business_id,
-      # "name": name,
-      "positive_avg": positive_avg,
-      "neutral_avg": neutral_avg,
-      "negative_avg": negative_avg
-  }
 
 def predict_review_class_for_restaurant(model_path: Path):
   from DineFinderAI.db.DatabaseManager import DatabaseManager
-  from multiprocessing import set_start_method, Pool
   trainer = SentimentModelTrainer(model_path)
   reviews_file_path = Path.cwd().joinpath("resources", "yelp_academic_dataset_review.json")
   db_manager = DatabaseManager(Path.cwd().joinpath("resources", "database.db"))
@@ -332,18 +305,10 @@ def predict_review_class_for_restaurant(model_path: Path):
   reviews_df = pd.concat(chunks, ignore_index=True)
 
   print("Start with predicting the class of the reviews for each restaurant...")
-  
-  # set_start_method("spawn")
-  # # Create a list of arguments for each row
-  # rows_with_args = [(reviews_df[reviews_df["business_id"] == row["business_id"]], trainer) for _, row in business_id_df.iterrows()]
-
-  # # Use multiprocess Pool for parallel processing
-  # with Pool() as pool:
-  #   results = list(tqdm(pool.imap(process_row, rows_with_args), total=len(rows_with_args)))
 
   for _, row in tqdm(business_id_df.iterrows(), total=len(business_id_df)):
     business_id = row["business_id"]
-    # name = row["name"]
+    name = row["name"]
     filtered_df = reviews_df[reviews_df["business_id"] == business_id]
     reviews_df = reviews_df[reviews_df["business_id"] != business_id]
     review_texts = filtered_df["text"].to_list()[0:5]
@@ -356,17 +321,21 @@ def predict_review_class_for_restaurant(model_path: Path):
     neutral_avg = sum(neutral) / len(results)
     negative_avg = sum(negative) / len(results)
 
-    # print(f"AVG results for {name} -> Positive: {positive_avg}, Neutral: {neutral_avg}, Negative: {negative_avg}")
+    print(f"AVG results for {name} -> Positive: {positive_avg}, Neutral: {neutral_avg}, Negative: {negative_avg}")
 
   db_manager.closeFunc()
 
-def train():
+def main() -> None:
   resources_path = Path.cwd().joinpath("resources")
-  report_path = resources_path.joinpath("report.json")
-  model_path = resources_path.joinpath("model")
+  model_path = resources_path.joinpath("SEM_model")
+  report_path = model_path.joinpath("report.json")
+  review_sample_file = resources_path.joinpath("restaurant_reviews_sample.csv")
   if not model_path.is_dir():
+    if not review_sample_file.is_file():
+      print("No review sample file found. Cannot train SentimentModel. Abort...")
+      return
     trainer = SentimentModelTrainer()
-    df = pd.read_csv(resources_path.joinpath("restaurant_reviews_sample.csv"))
+    df = pd.read_csv(review_sample_file)
     trainer.train_k_fold(report_path, df)
   
   predict_review_class_for_restaurant(model_path)
@@ -374,4 +343,4 @@ def train():
 if __name__ == "__main__":
   import sys
 
-  sys.exit(train())
+  sys.exit(main())

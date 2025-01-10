@@ -1,0 +1,905 @@
+city,found,delta [ns]
+Philadelphia,1,87993164
+Ashland City,1,3331822
+Affton,1,3150038
+Nashville,1,3004854
+Indianapolis,1,3109361
+Largo,1,3015212
+Edmonton,1,3068213
+Reno,1,2946141
+White House,1,3099772
+Ardmore,1,3133167
+Exton,1,2984264
+Alton,1,3076700
+Tucson,1,2942926
+Bala Cynwyd,1,3010254
+Tampa,1,2910874
+Harvey,1,3049979
+West Chester,1,3110163
+Williamstown,1,2968374
+Glenolden,1,3009522
+Wesley Chapel,1,2978914
+Burlington,1,3011356
+Santa Barbara,1,2952885
+New Orleans,1,3008650
+Camden,1,3066240
+Saint Louis,1,2919261
+Fairview Heights,1,2995896
+Wilmington,1,2914903
+Treasure Island,1,2997299
+Brentwood,1,2922958
+Woodbury,1,3030061
+Sparks,1,3124520
+Madison,1,2928017
+Ewing,1,2979064
+Riverview,1,2945621
+Saint Petersburg,1,3026334
+Warrington,1,2918399
+St. Louis,1,3001696
+Lutz,1,3109281
+Langhorne,1,2977281
+King of Prussia,1,3035201
+Carmel,1,2987961
+Clearwater,1,3055278
+New Port Richey,1,2971780
+Avon,1,2996136
+Normandy,1,3127826
+Franklin,1,2930883
+Meridian,1,3033377
+St Albert,1,2944158
+Hermitage,1,2963394
+Downingtown,1,2906687
+Sherwood Park,1,2993641
+Virginia City,1,3096577
+Trenton,1,2959808
+Bensalem,1,3042755
+Marana,1,2970869
+Brandon,1,3027556
+Odessa,1,3035431
+Horsham,1,3195124
+Brownsburg,1,3166700
+Malvern,1,3015784
+Maple Shade,1,3090947
+Lansdale,1,3026995
+Ballwin,1,3000305
+Cedarbrook,1,3051462
+Goodlettsville,1,2980316
+Narberth,1,3129580
+Oldsmar,1,2967933
+Isla Vista,1,3077321
+Glassboro,1,3036092
+Haddonfield,1,2977692
+Kenner,1,3031364
+Montgomeryville,1,3026734
+Chesterfield,1,3077161
+Spring Hill,1,2963856
+Pennsville,1,3039549
+Haddon Heights,1,2978583
+Goleta,1,2907048
+Hazelwood,1,2976950
+View,1,2933538
+Edwardsville,1,3032115
+Brookhaven,1,2920062
+Noblesville,1,3037024
+Metairie,1,2982180
+New Hope,1,2920443
+Norristown,1,3091637
+Cherry Hill,1,3041602
+St Louis,1,3190024
+St Petersburg,1,3077752
+Boise,1,2951211
+Mount Juliet,1,3020693
+Fishers,1,2936493
+Palmyra,1,2980767
+Media,1,2998601
+Saint Charles,1,2989995
+High Ridge,1,2916606
+Conshohocken,1,3014381
+Hernando Beach,1,3025302
+Florissant,1,3813825
+Newtown,1,3131413
+Chadds Ford,1,3166760
+Woodstown,1,3023318
+Plant City,1,3055630
+Levittown,1,2988943
+Ruskin,1,3074315
+Town and Country,1,3007418
+Lebanon,1,3077751
+Bryn Mawr,1,3164235
+Jennings,1,3064527
+Pottstown,1,3128046
+Carpinteria,1,3077010
+Voorhees,1,3104923
+Spring City,1,3054969
+Southampton,1,3031543
+Riverside,1,3105083
+Lambertville,1,3018589
+Ambler,1,3096226
+Madeira Beach,1,3049718
+Godfrey,1,3016986
+Florence Township,1,3092409
+Mascoutah,1,2978242
+Marlton,1,3173132
+Delran,1,3163945
+Huntingdon Valley,1,3003631
+Collingswood,1,3131303
+Creve Coeur,1,3016986
+Fort Washington,1,3243495
+Wayne,1,3095034
+Limerick,1,3045600
+Turnersville,1,3010654
+Holiday,1,2954828
+Doylestown,1,3033227
+Port Richey,1,2967953
+Westwego,1,3087610
+Sicklerville,1,3062191
+Bridgeport,1,3012287
+Moorestown,1,3018278
+Mount Laurel Township,1,2937917
+Glen Carbon,1,3018339
+Washington Crossing,1,2922186
+Zionsville,1,3048276
+St Charles,1,3045980
+Drexel Hill,1,2989514
+Verdi,1,3047163
+Dunedin,1,2968575
+Seminole,1,3044679
+Folsom,1,2962343
+Fenton,1,3047033
+Eagle,1,3065697
+University City,1,3001777
+Arnold,1,3050189
+Collegeville,1,2969186
+Springfield,1,3059166
+Kimberton,1,2985937
+East Norriton,1,3066009
+Harleysville,1,3097920
+Jenkintown,1,2924080
+Granite City,1,2999243
+Dublin,1,2948977
+Harahan,1,3021414
+Old Hickory,1,2934060
+Palm Harbor,1,3020132
+Phoenixville,1,3063604
+Temple Terr,1,2966610
+Pitman,1,3027786
+Mullica Hill,1,2982872
+Ferguson,1,3048445
+Smyrna,1,2957984
+Fairless Hills,1,3029670
+Newtown Square,1,3081629
+Des Peres,1,2994914
+Paoli,1,3047444
+St. Petersburg,1,2945010
+Trooper,1,3014832
+Earth City,1,2895807
+Mount Laurel,1,2993812
+Woodlyn,1,3098109
+Lumberton,1,2944228
+Lahaska,1,3028989
+Pinellas Park,1,2951943
+Woolwich Twp,1,3021956
+Belleville,1,2975739
+Bridgeton,1,3025031
+Waterloo,1,3090315
+Voorhees Township,1,3011897
+Sun City Center,1,3036503
+Willow Grove,1,3047634
+Belle Chasse,1,3408247
+Glenside,1,3456359
+North Wales,1,3034349
+Yardley,1,3141181
+Brooklawn,1,2991497
+Gulfport,1,3085616
+West Berlin,1,3045129
+Darby,1,3004072
+Morrisville,1,3046593
+Gallatin,1,3040040
+Rosemont,1,3080316
+Broomall,1,2969547
+La Vergne,1,3022136
+Barrington,1,2996388
+Cahokia,1,2922086
+Greenbrier,1,3050550
+Chalfont,1,3011075
+Whiteland,1,2991687
+Sewell,1,2908971
+Antioch,1,2993912
+Swedesboro,1,2996086
+Royersford,1,2936153
+Eddystone,1,3018790
+East Greenville,1,2983212
+St Pete Beach,1,3034329
+Maplewood,1,2966220
+Apollo Beach,1,3045350
+Freeburg,1,3038617
+Land O' Lakes,1,2967732
+Ewing Township,1,3040681
+Clearwater Beach,1,3013319
+Glen Mills,1,3040661
+Audubon ,1,3006386
+Bellmawr,1,2998391
+Aston,1,3032566
+Woodbury Heights,1,2925683
+Prospect Park,1,3008049
+Willingboro Township,1,3018288
+Abington,1,3045771
+Morton,1,2988271
+King Of Prussia,1,2993001
+Beaumont,1,3008239
+St. Pete Beach,1,2929922
+Hudson,1,3045991
+Swansea,1,3021244
+Tarpon Springs,1,3006275
+Blue Bell,1,2992069
+Plainfield,1,2960539
+Lansdowne,1,3008821
+Seffner,1,2944910
+TAMPA,1,2998782
+Valrico,1,2991077
+Glenmoore,1,2998361
+Collinsville,1,2957643
+Oaks,1,2992430
+Quakertown,1,3018830
+Tampa Bay,1,2951853
+Mount Ephraim,1,2969116
+Greenwood,1,2994152
+Atco,1,3026975
+Warminster,1,2967081
+Blackwood,1,2970518
+Speedway,1,3027376
+Ridley Park,1,2946763
+Medford,1,3072772
+Newark,1,3370906
+Penns Grove,1,2992129
+Gilbertsville,1,3092479
+Mt. Juliet,1,3048215
+Land o lakes,1,3094333
+Essington,1,3053325
+Arabi,1,3116495
+Eagleville,1,3161409
+Mendenhall,1,3032986
+Maryland Heights,1,3106867
+Maryville,1,3092469
+New Castle,1,3064205
+Schwenksville,1,3007879
+Saint Pete Beach,1,3034699
+Claymont,1,3096386
+Havertown,1,3021153
+Columbia,1,3064827
+ST. Louis,1,2982291
+Chester,1,3009812
+Upper Darby,1,3027606
+Shiloh,1,3010675
+Zephyrhills,1,3120952
+Gibbsboro,1,2999783
+Gretna,1,3043396
+Bellevue,1,2944569
+Secane,1,3041733
+Hendersonville,1,3016055
+Bristol,1,2957884
+Terrytown,1,3107367
+St.Ann,1,2990956
+Elverson,1,3069355
+Clementon,1,2982611
+Greenville,1,2980858
+Bordentown,1,3048265
+Hatboro,1,2980938
+Riverton,1,3039378
+Willingboro,1,2926314
+Dover,1,3069716
+Troy,1,2893813
+Kennett Square,1,2949378
+Spring House,1,3008099
+Merchantville,1,2920543
+Manchester,1,3055068
+O Fallon,1,2960157
+Spanish Springs,1,3016015
+Chalmette,1,2941433
+Wimauma,1,3002018
+Mooresville,1,2992820
+Mt Juliet,1,3007057
+Trappe,1,3063294
+Green Valley,1,2945380
+Shamong,1,3021334
+Kirkwood,1,2910083
+Jefferson,1,2938748
+Mt. Laurel,1,3037866
+Skippack,1,2936865
+St. Albert,1,3063343
+Richboro,1,2943016
+Hockessin,1,3065809
+Kulpsville,1,2992440
+Wood River,1,2983784
+Beech Grove,1,2995205
+Hamilton Township,1,2978564
+Westville,1,3079826
+Plymouth Meeting,1,3017487
+Dresher,1,3374934
+Berlin,1,3097469
+Paulsboro,1,3042865
+Clayton,1,3044358
+Millstadt,1,3037455
+Holland,1,3054687
+Sahuarita,1,2994212
+Trinity,1,3007518
+Valley Park,1,3005514
+Montecito,1,2991528
+Overland,1,3037825
+Yeadon,1,3076078
+Saint Ann,1,3010494
+Feasterville,1,2993070
+Dupo,1,2959036
+Garden City,1,2956802
+Plumsteadville,1,2981539
+Temple Terrace,1,2994915
+Audubon,1,3017607
+Deptford,1,2973323
+Land O Lakes,1,2974816
+Flanders,1,2974075
+Nashville-Davidson metropolitan government (balance),1,2997429
+O'Fallon,1,2946914
+Nolensville,1,3026003
+NEW PORT RICHEY,1,2975828
+Boyertown,1,2966881
+Perkiomenville,1,2998600
+Safety Harbor,1,2977211
+Vineland,1,2989184
+Lafayette Hill,1,3006116
+Caseyville,1,3008540
+Thonotosassa,1,2986678
+Lester,1,2983131
+Vail,1,2955770
+Florence,1,2971360
+Hillsborough County,1,2966942
+Mansfield,1,2925853
+South Cinnaminson,1,2985958
+Mt Laurel,1,2976570
+Elkins Park,1,2970939
+Webster Groves,1,2928819
+Oro Valley,1,2952193
+Feasterville-Trevose,1,3088262
+Imperial,1,2939990
+Maple Glen,1,3001397
+North Redington Beach,1,2992430
+Glendora,1,2972993
+Belmont Hills,1,2926524
+Oaklyn,1,2987781
+Southport,1,2989384
+St.Rose,1,2936383
+Runnemede,1,2987130
+Pleasant View,1,2936433
+Shrewsbury,1,3006607
+Newfield,1,2949539
+Hainesport,1,3004322
+Wyncote,1,3030652
+Somerdale,1,2929520
+Berwyn,1,3000585
+South Pasadena,1,2959077
+Chester Springs,1,3049888
+Perkasie,1,2954498
+Folcroft,1,3038758
+Gloucester City,1,3059757
+West Conshohocken,1,3093862
+Tuscon,1,3047574
+Berlin Township,1,3044218
+Monroe Township,1,3060909
+Pennsburg,1,3016385
+Indian Rocks Beach,1,3008540
+Pennsauken,1,3020874
+Sellersville,1,2947735
+Hatfield,1,3004943
+Boone,1,3015033
+West Deptford,1,3013259
+Mercerville,1,3024791
+Rockledge,1,2989915
+Linwood,1,3093290
+Stratford,1,3457501
+Belle Chase,1,3057433
+Twin Oaks,1,3171048
+Marrero,1,3222816
+New Britain,1,3062702
+Frazer,1,2983203
+NW Edmonton,1,3028568
+Maple Shade Township,1,2977180
+Villanova,1,3043466
+Sun City,1,3088010
+Radnor,1,2974856
+O'fallon,1,3043436
+Trevose,1,2941754
+Avondale,1,3014902
+Croydon,1,2961712
+Lindenwold,1,3000134
+Warson Woods,1,3072542
+Oreland,1,2967682
+Salem,1,3017316
+Swarthmore,1,2948336
+Thorndale,1,2970338
+St. Charles,1,2896778
+Buckingham,1,2985156
+Pittsgrove Township,1,3062743
+Logan Township,1,2938247
+Talleyville,1,3014521
+Wynnewood,1,2923288
+Tabernacle,1,3023158
+Cinnaminson,1,2963615
+Lawrence,1,3015313
+Westtown,1,3161150
+Clifton Heights,1,3004994
+St Louis Downtown,1,3051040
+Mount Holly,1,2962193
+Lemay,1,3023659
+PHILA,1,3004973
+Souderton,1,3003561
+Boothwyn,1,3083031
+Westchase,1,2970799
+Westampton Township,1,3027045
+Westampton,1,2959798
+Saint Albert,1,3011636
+Flourtown,1,2952484
+Telford,1,2986799
+Frontenac,1,3099522
+Colmar,1,2990276
+Sunset Hills,1,3060859
+Jeffersonville,1,2952173
+Edgewater Park,1,3013680
+Columbus,1,3131332
+Holland Southampton,1,2959688
+Pike Creek,1,3167190
+Pontoon Beach,1,2973204
+Delanco,1,3039248
+Collingdale,1,3033867
+Feasterville Trevose,1,3062593
+Bywater,1,3084153
+Thorofare,1,3035441
+New Palestine,1,3116746
+Haddon Township,1,2979795
+Carrollwood,1,3034820
+Trainer,1,3040050
+Furlong,1,2992410
+Belleair Bluffs,1,3048927
+Twn N Cntry,1,3023859
+Hamilton,1,3094183
+Town And Country,1,2999844
+NEW ORLEANS,1,3075376
+East Alton,1,3110062
+Concordville,1,2972652
+RENO,1,3031394
+Red Hill,1,3036183
+Lithia,1,3062512
+National Park,1,3032716
+Unionville,1,2971319
+Sharon Hill,1,3000865
+TUCSON,1,2969035
+Clarksboro,1,3101256
+Tinicum,1,3141341
+Southeast Edmonton,1,3009733
+Oakville,1,3018879
+Wyndmoor,1,2977040
+St Ann,1,3016124
+Gibsonton,1,2927867
+Upper Pittsgrove,1,3015343
+Devon,1,2988512
+Kenneth City,1,2990696
+Westmont,1,2957684
+Harrison Township,1,2921495
+Abington Township,1,3021375
+Marcus Hook,1,2893983
+W.Chester,1,2995335
+W Cherry Hill,1,3012338
+Aldan,1,3086889
+Deptford Township,1,3063424
+Lawnside,1,2984414
+Pemberton,1,2997890
+Pipersville,1,2910454
+Elmer,1,2969948
+Tierra Verde,1,3005785
+Franklinville,1,3049719
+lawrence,1,3019251
+Clermont,1,2972161
+Laurel Springs,1,3022697
+Indianapolis ,1,2948848
+Haverford,1,3020323
+Pennsauken Township,1,3010734
+wilmington,1,2950380
+Birchrunville,1,2987120
+Rock Hill,1,2964827
+Joelton,1,3031493
+Mount Lemmon,1,2939539
+Breckenridge Hills,1,3057483
+Boise City,1,3044338
+Lawrence Township,1,3052153
+Ozona,1,3050179
+Evesham Township,1,2984915
+Pittsgrove,1,3102889
+McCordsville,1,3045921
+West Edmonton,1,3128257
+Whitestown,1,3205744
+Saintt Petersburg,1,3030763
+Bellville,1,3121604
+Rosewood Heights,1,3007348
+East Nashville,1,3062282
+Roslyn,1,3036272
+Garnet Valley,1,2995505
+Marlborough,1,3163744
+Worcester,1,2975036
+Upper Chichester,1,3054948
+Berry Hill,1,2957933
+Primos,1,3079415
+Ashland,1,3022126
+Bethalto,1,2964877
+River Ridge,1,3070017
+Valencia West,1,2934620
+Mantua,1,2996988
+Holicong,1,2941523
+Newport,1,2983714
+Pine HIll,1,2990697
+Coatesville,1,2931895
+Fairview Hts.,1,3098260
+Gwynedd Valley,1,2958926
+EdMonton,1,2986398
+Bryn Athyn,1,2998090
+Palmetto,1,3140580
+Violet,1,3151170
+Crum Lynne,1,2978223
+Upper Gwynedd,1,3107759
+West Deptford Townsh,1,2953706
+Inglewood,1,3005695
+Malaga,1,2941953
+Southwest Tampa,1,2957724
+Jamison,1,2974216
+Cedar Brook,1,2953997
+WEST CHESTER,1,3069817
+Titusville,1,2912849
+Ivyland,1,3025853
+Christiana,1,2939338
+Melrose Park,1,2969636
+Richmond Heights,1,3160338
+Magnolia,1,3367781
+Carneys Point,1,3526762
+Sun Valley,1,3029350
+Hulmeville,1,3122927
+Beverly,1,3184753
+Southampton Township,1,3007037
+Sappington,1,3099462
+Town n Country,1,3057904
+Holmes,1,3027316
+Land O'Lakes,1,3051983
+Norwood,1,2985266
+Merion Station,1,3114971
+Green Lane,1,3025291
+East Saint Louis,1,3103390
+Mantua Township,1,3267811
+Burlington Township,1,3099453
+LOWER PROVIDENCE,1,3112127
+Mc Cordsville,1,3024711
+Silverdale,1,3086748
+Catalina,1,3132455
+NORRISTOWN,1,3139488
+Woodson Terrace,1,3100134
+Meridian ,1,3023348
+St Pete,1,3057994
+Bargersville,1,2997399
+"Mt Laurel Twp, NJ",1,2991377
+Gibbstown,1,3069275
+Gladwyne,1,2981108
+Tren,1,3073643
+Skippack Village,1,2987480
+West Mount Holly,1,3056181
+Gloucester Township,1,3006015
+Indian Shores,1,2983523
+Penndel,1,3032015
+Camby,1,2951742
+Pennsville Township,1,3084144
+Eastampton,1,2956181
+Hilltop,1,3028367
+erdenheim,1,2970638
+Thonosassa,1,3094282
+Elk Township,1,3246110
+Summerland,1,3139237
+Berkeley,1,3114851
+Cheltenham,1,3088261
+Danville,1,3053806
+Chesterbrook,1,3096106
+Balm,1,3016014
+Bethel,1,3082420
+Eaux Claires,1,3050379
+Evesham,1,3053826
+East St. Louis,1,3089784
+Glenoldan,1,2982200
+Zieglerville,1,3040209
+Meraux,1,2983463
+Haddon Twp,1,3003250
+Mont Clare,1,3019581
+reno,1,2971109
+Winslow Township,1,3045961
+Concord Township,1,2982901
+Blvd,1,3028557
+Luling,1,2982020
+Bucks,1,3025873
+Westmont - Haddon Towsship,1,3064607
+Wilmington Manor,1,2945090
+East Lansdowne,1,3044558
+Scott Air Force Base,1,2938467
+San Antonio,1,2959727
+Cheltenham Township,1,2933558
+Franconia,1,2954477
+Lansdale ,1,2991718
+Smithton,1,3000074
+Lionville,1,3020603
+Wrightstown,1,2999523
+Carversville,1,3023378
+CLEARWATER,1,3357871
+Crestwood,1,3046823
+Green Park,1,3069225
+Cornwells Heights,1,3006797
+Saint Rose,1,3013890
+Olivette,1,3157282
+indianopolis,1,3041963
+LARGO,1,2995095
+Pine Hill,1,2964517
+St.Petersburg,1,3030041
+St.Louis,1,3010935
+ST LOUIS,1,3001036
+Belleair Blf,1,2955811
+Bristol Twp,1,2973894
+Kenneth,1,2953135
+Trolley Square,1,2965969
+Manayunk,1,3003460
+Glendale,1,2928589
+Tarpon springs,1,2954138
+Pineville,1,2935101
+St. Rose,1,2977892
+Kingston Springs,1,2938137
+Ladue,1,2942986
+Milmont Park,1,3003100
+Southwest Philadelphia,1,2978684
+Greenfield,1,2982822
+Bethel Township,1,2935401
+Saint Bernard,1,2970198
+Vincentown,1,2941362
+Belle Meade,1,3035732
+West Point,1,3167301
+Elsmere,1,2952034
+Washington Twp,1,2974385
+Castleton,1,3141111
+Hammonton,1,3006787
+MADISON,1,2937275
+Riveridge,1,2998962
+Bridge City,1,3081398
+Chesilhurst,1,3047775
+Redington Shores,1,3003080
+Washington Township,1,3227094
+Fairview Hts,1,3012277
+tucson,1,2989934
+St. Ann,1,3047614
+Philadephia,1,3062803
+Wenonah,1,2970138
+Quinton,1,3018509
+Eastampton Township,1,2949879
+Woolwich Twp.,1,2972061
+New Whiteland,1,3001376
+Downtown,1,2972341
+Oldmans Township,1,3051902
+Wanamaker,1,2999092
+Mt. Holly,1,3018148
+Kimmswick,1,2929430
+Saint Peters,1,2962733
+Greater Northdale,1,2970638
+Bayonet Point,1,2951322
+Toughkenamon,1,3022206
+Gentilly,1,2952324
+Masaryktown,1,3001817
+Town 'n' Country,1,2952545
+Hamiltion,1,2973724
+Lutz fl,1,2964747
+Gwynedd,1,2914101
+Fortville,1,2997890
+Fairview,1,2923159
+Gardenville,1,2992580
+Pleasant Township,1,2955450
+Thornton,1,2973994
+Gulph Mills,1,2946873
+SPRINGHILL,1,2952434
+ST. PETE BEACH,1,3022777
+Mehlville,1,3005464
+Redingtn Shor,1,3049628
+Hancock,1,2993833
+North Redington Bch,1,3200985
+Pilesgrove,1,3188921
+Mt.Laurel,1,2980858
+Dade City,1,3059436
+Mt.Juliet,1,2957744
+sewell,1,3108710
+Wallingford,1,3148796
+Sassamansville,1,2988091
+Line Lexington,1,2964797
+Fairview Village,1,2952975
+Conshohoeken,1,3071880
+Medford Lakes,1,3287058
+Cumberland,1,3083072
+South Tucson,1,3012798
+Linfield,1,2963926
+Jobstown,1,3030231
+Peerless Park,1,2964006
+Saint Petersburg Beach,1,3028999
+HUdson,1,2945511
+Erial,1,2998351
+Drexel Heights,1,3006016
+Fairmont City,1,2966560
+E. Norristown,1,3011014
+Mount Royal,1,2957864
+Black Jack,1,3071179
+Picture Rocks,1,2987621
+Marshallton,1,3032966
+Solebury,1,3025161
+Waterford Works,1,2992790
+Center Square,1,3023618
+O' Fallon,1,3127846
+Bucktown,1,3040301
+wimauma,1,2964748
+Erdenheim,1,2965979
+West Chester PA,1,2973764
+Chalemette,1,2949678
+Wilmington ,1,2981308
+Lima,1,2958586
+Mango,1,2988693
+Royersford ,1,2990275
+East Edmonton,1,2983583
+Tylersport,1,3038437
+Scott AFB,1,2977913
+Delran Twp,1,3032685
+West Trenton,1,3004913
+Algiers,1,3015333
+Scott Afb,1,2968865
+Martinsville,1,2975237
+St. Davids,1,2984585
+Largo (Walsingham),1,2943387
+Upper Southampton,1,3123056
+Sumneytown,1,3025232
+Pennsylvania,1,2960529
+Phila,1,2930963
+St. Peters,1,3118840
+Cedars,1,3413518
+Land o Lakes,1,2939319
+Moorestown-Lenola,1,3042965
+Carney's Point,1,3064807
+Woolwich Township,1,3019521
+Enoch,1,3061601
+Citrus Park,1,2973443
+LITHIA,1,3017918
+Edgemont,1,2966380
+LOWER MERION,1,3105112
+Pinellas park,1,3263914
+Town & Country,1,2999583
+Whites Creek,1,3046943
+BRANDON,1,3016595
+Warrington Township,1,3025011
+TRENTON,1,2966640
+Cottage Hills,1,3013550
+Pennington,1,3075607
+East St Louis,1,2937135
+Metarie,1,3009823
+Stowe,1,2980336
+West Bradford Township,1,3023289
+MEDIA,1,2943717
+Pinellas,1,2990244
+Mccordsville,1,3076749
+Lawrenceville,1,2937827
+Stead,1,3004122
+Hi-Nella,1,2929039
+Roebling,1,2976108
+South Tampa,1,2921264
+Parkside,1,3018739
+Saint John,1,3094833
+Fieldsboro,1,2971830
+Festerville,1,3055920
+Liverpool,1,2946352
+DONELSON,1,3021595
+NASHVILLE,1,2957283
+Goodletsville,1,3008509
+Sauget,1,3144157
+Casas Adobes,1,3008199
+Sherwood,1,3077120
+Corona De Tucson,1,2994524
+Washington Park,1,3150269
+Bensalem Township,1,3002018
+Pine Forge,1,2976590
+LANSDALE,1,3085225
+Newportville,1,2954557
+NORTH WALES,1,2985386
+Lower Southampton Township,1,2986117
+Corona de Tucson,1,3078022
+N Redngtn Bch,1,3054908
+East Falls,1,2992629
+Ridley,1,3058314
+Bensalem. Pa,1,2978834
+Riverview Fl,1,3202167
+Newtown Sqaure,1,2965860
+Bellefontaine,1,3004252
+Westhampton,1,3003511
+Palm harbor,1,2957393
+Chichester,1,3123979
+Bellefontaine Neighbors,1,2951121
+Upper Pottsgrove,1,3040050
+W. Berlin,1,2953285
+Kuna,1,2950190
+Town and Country ,1,2996818
+Winchester,1,2951221
+Dellwood,1,3057803
+Lederach,1,2952584
+Montchanin,1,3042795
+"Saint Louis,",1,2981829
+Indiana,1,3020122
+BOISE,1,3022086
+Elmwood,1,2977130
+Upland,1,3073884
+Gloucester,1,3020222
+Blackwood ,1,3072731
+Monroeville,1,3114531
+Plainfiled,1,3020412
+CLIFTON HEIGHTS,1,3091929
+DELRAN,1,3086517
+PINELLAS PARK,1,3221092
+Telford ,1,3343986
+LANGHORNE,1,3010033
+St.Charles,1,3041072
+TRINITY,1,2973213
+Philly,1,3050099
+Feasterville-trevose,1,3053345
+philadelphia,1,3025111
+Alloway,1,3017908
+Tierre Verde,1,2962564
+Stanton,1,2958956
+ST. PETERSBURG,1,2921024
+Sanatoga,1,2987441
+Foster Pond,1,3001506
+Wycombe,1,3027426
+Santa  Barbara,1,2998672
+Swedeland,1,2965820
+Truckee,1,3056681
+West Collingswood Heights,1,2940040
+"Tampa,Fl",1,3010624
+Tampa Palms,1,3031483
+N.Wales,1,2985677
+Sullivan,1,3015143
+Blooming Glen,1,2941904
+St Louis County,1,3031224
+goodlettsville,1,2955449
+Bel Ridge,1,3057032
+Hilltown,1,3003119
+London Grove,1,2999132
+INpolis,1,3004262
+Clarksville,1,2934450
+Delran Township,1,2985396
+spring city,1,2938037
+Land O'lakes,1,2993662
+Cane Ridge,1,2990545
+St. Leo,1,2981529
+Hurffville,1,2980598
+Kirklyn,1,2928969
+Redington Shore,1,3073202
+Philadelphia ,1,3083613
+Clearwater/ Countryside,1,3318006
+Caln,1,3158403
+RIVERVIEW,1,3052693
+TEMPLE TERR,1,3232024
+RADNOR,1,3041102
+St. Louis County,1,3085196
+Hollywood,1,3019180
+Hernando Bch,1,3044088
+Cold Springs,1,3129749
+WILLOW GROVE,1,3009261
+Middletown,1,3066801
+Saint Leo,1,3004513
+Mt Holly,1,3069966
+Town 'N' Country,1,2997589
+Newton,1,2987631
+S.Pasadena,1,3142964
+Churchville,1,3000695
+St.  Charles,1,3083502
+Charlotte,1,3007939
+Woodbury Hts.,1,3110634
+"Mount Holly,",1,3276258
+Tampa Florida,1,3416062
+UPPER MORELAND,1,3061570

@@ -4,7 +4,6 @@ from pathlib import Path
 from sklearn.model_selection import KFold
 from torch.utils.data import Subset
 import json
-from typing import Any
 
 
 class TokenAnalyser:
@@ -50,7 +49,7 @@ class TokenAnalyser:
     """
     Tokenize the text and align labels for BERT NER training.
     """
-    if custom_token:
+    if not custom_token:
       tokenized_inputs = self.tokenizer(
         [item["tokens"] for item in data], is_split_into_words=True, truncation=True, padding=True
       )

@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, field
 from interface.response.restaurant import Restaurant
 from FastDineAPI.decorators.serializable import serializable
 

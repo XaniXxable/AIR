@@ -125,6 +125,9 @@ def confirmDeletion() -> bool:
   return confirm == "y"
 
 def main() -> None:
+  """
+  Entry point of the script.
+  """
   resources_path = Path.cwd().joinpath("resources")
   db_path = resources_path.joinpath("database.db")
   data_path = resources_path.joinpath("yelp_academic_dataset_business.json")

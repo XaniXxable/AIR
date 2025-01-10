@@ -1,15 +1,22 @@
-from FastDineAPI.recomentation_system.RestaurantNER import RestaurantNER
+from FastDineAPI.recommendation_system.RestaurantNER import RestaurantNER
 import pandas as pd
 from pathlib import Path
 import matplotlib.pyplot as plt
 import json
 from time import perf_counter_ns
 
-finding_folder = Path.cwd().joinpath("resources/findings")
+resources_path = Path.cwd().joinpath("resources")
+finding_folder = resources_path.joinpath("findings")
 finding_folder.mkdir(exist_ok=True)
 
 
 def load_from_db() -> pd.DataFrame:
+  """
+  Loads city and category data from the database.
+
+  Returns:
+      pd.DataFrame: A DataFrame containing the city and category data from the database.
+  """
   import sqlite3
 
   db_loc = Path.cwd().joinpath("resources/database.db")
@@ -20,8 +27,11 @@ def load_from_db() -> pd.DataFrame:
 
 
 def extract_not_found_cities() -> None:
-  file_path = finding_folder.joinpath("found_categories.csv")
-  new_tokens = Path.cwd().joinpath("resources/new_tokens.json")
+  """
+  Extracts cities not found in the query results and updates the tokens file.
+  """
+  file_path = finding_folder.joinpath("found_cities.csv")
+  new_tokens = resources_path.joinpath("new_tokens.json")
 
   try:
     found_city = pd.read_csv(file_path)
@@ -29,19 +39,27 @@ def extract_not_found_cities() -> None:
     print(f"File not found at {file_path}. Please check the file path and try again.")
     return
 
+  not_found_cities = found_city.loc[found_city["found"] == 0, "city"].tolist()
+  
+  if len(not_found_cities) == 0:
+    return
+
   with open(new_tokens, "r") as file:
     tokens = json.load(file)
-
-  not_found_cities = found_city.loc[found_city["found"] == 0, "city"].tolist()
 
   for city in not_found_cities:
     tokens["city"].append(city)
 
   with open(new_tokens, "w") as json_file:
     json.dump(tokens, json_file, indent=4)
+  
+  print(f"Updated tokens file {new_tokens.resolve()}")
 
 
 def plot_restaurants_found() -> None:
+  """
+  Plots a bar chart showing the number of cities found vs not found.
+  """
   file_path = finding_folder.joinpath("found_cities.csv")
   try:
     found_city = pd.read_csv(file_path)
@@ -61,10 +79,13 @@ def plot_restaurants_found() -> None:
   plt.xticks(rotation=0)
   plt.tight_layout()
 
-  plt.savefig(finding_folder.joinpath("found_categories.png"))
+  plt.savefig(finding_folder.joinpath("found_cities.png"))
 
 
 def plot_categories_found() -> None:
+  """
+  Plots a bar chart showing the number of categories found vs not found.
+  """
   file_path = finding_folder.joinpath("found_categories.csv")
   try:
     found_city = pd.read_csv(file_path)
@@ -88,7 +109,9 @@ def plot_categories_found() -> None:
 
 
 def check_city_finding() -> None:
-  plot_restaurants_found()
+  """
+  Checks if cities are correctly identified in city-based queries.
+  """
   data = pd.DataFrame()
   data = load_from_db()
   found_city_records = []
@@ -96,6 +119,7 @@ def check_city_finding() -> None:
   ner_system = RestaurantNER(ner_model_path, data, custom_tokenizer=True)
   save_location = finding_folder.joinpath("found_cities.csv")
   data = data.drop_duplicates(subset=["city"])
+  print("Checking for city queries...")
   for _, row in data.drop_duplicates().iterrows():
     city = row["city"]
     query = f"Can you recommend any italian in {city}"
@@ -109,7 +133,6 @@ def check_city_finding() -> None:
       .replace("?", "")
       .strip()
     )
-    print(f"Checking for {city.lower()}")
     found = 1 if city.lower().strip() == location.lower().strip() else 0
     found_city_records.append({"city": city, "found": found, "delta [ns]": end - start})
 
@@ -120,6 +143,9 @@ def check_city_finding() -> None:
 
 
 def check_category_finding() -> None:
+  """
+  Checks if restaurant categories are correctly identified in category-based queries.
+  """
   plot_restaurants_found()
   data = pd.DataFrame()
   data = [
@@ -189,6 +215,7 @@ def check_category_finding() -> None:
   ner_system = RestaurantNER(ner_model_path, data, custom_tokenizer=True)
   save_location = finding_folder.joinpath("found_categories.csv")
 
+  print("Checking for category queries...")
   for category in data:
     query = f"Can you recommend any {category} in Graz"
     start = perf_counter_ns()
@@ -200,7 +227,6 @@ def check_category_finding() -> None:
       .replace("[CLS]", "")
       .strip()
     )
-    print(f"Checking for {category.lower()}")
     found = 1 if tmp.lower().strip() in category.lower().strip() else 0
     found_category_records.append({"category": category, "found": found, "delta [ns]": end - start})
 
@@ -211,10 +237,13 @@ def check_category_finding() -> None:
 
 
 def main() -> None:
-  # check_city_finding()
-  # plot_restaurants_found()
-  # extract_not_found_cities()
-  # check_category_finding()
+  """
+  Entry point of the script.
+  """
+  check_city_finding()
+  plot_restaurants_found()
+  extract_not_found_cities()
+  check_category_finding()
   plot_categories_found()
 
 
