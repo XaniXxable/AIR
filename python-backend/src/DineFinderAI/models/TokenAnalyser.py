@@ -5,7 +5,6 @@ from sklearn.model_selection import KFold
 from torch.utils.data import Subset
 import json
 
-
 class TokenAnalyser:
   class RestaurantNERDataset(torch.utils.data.Dataset):
     def __init__(self, encodings):
@@ -143,15 +142,16 @@ class TokenAnalyser:
       train_subset = Subset(train_dataset, train_idx)
       val_subset = Subset(train_dataset, val_idx)
 
+      output_dir = self.NER_OUTPUT.joinpath(f"fold_{fold}")
       training_args = TrainingArguments(
-        output_dir=self.NER_OUTPUT.joinpath(f"fold_{fold}"),
+        output_dir=output_dir,
         evaluation_strategy="steps",
         logging_dir=log_path.joinpath(f"fold_{fold}"),
         logging_strategy="epoch",
         per_device_train_batch_size=64,
         num_train_epochs=3,
         save_steps=10,
-        logging_steps=10,
+        logging_steps=1,
         save_total_limit=2,
         learning_rate=5e-5,
         load_best_model_at_end=True,
@@ -171,12 +171,13 @@ class TokenAnalyser:
       eval_results = trainer.evaluate()
       fold_results.append(eval_results)
 
+      # generate log file for each fold to get training statistics
+      log_history = trainer.state.log_history
+      with open(output_dir.joinpath("training_logs.json"), "w") as f:
+        json.dump(log_history, f, indent=4)
+
     model_path = Path.cwd().joinpath("resources", "model")
     trainer.save_model(model_path.joinpath("NER"))
 
     avg_loss = sum([result["eval_loss"] for result in fold_results]) / k
     print(f"\nAverage Validation Loss Across {k} Folds: {avg_loss:.4f}")
-
-    log_history = trainer.state.log_history
-    with open(log_path.joinpath("NER_training_logs.json"), "w") as f:
-      json.dump(log_history, f, indent=4)

@@ -37,6 +37,7 @@ sem = "DineFinderAI.models.SentimentModelTrainer:main"
 analyse_queries = "Analyser.analyze_queries:main"
 analyse_db = "Analyser.DatabaseAnalyser:main"
 analyse_runtime = "Analyser.RuntimeAnalyser:main"
+analyse_training = "Analyser.TrainingAnalyser:main"
 
 [build-system]
 requires = ["poetry-core"]
