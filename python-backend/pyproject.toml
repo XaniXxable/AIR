@@ -38,6 +38,7 @@ analyse_queries = "Analyser.analyze_queries:main"
 analyse_db = "Analyser.DatabaseAnalyser:main"
 analyse_runtime = "Analyser.RuntimeAnalyser:main"
 analyse_training = "Analyser.TrainingAnalyser:main"
+analyse_sentiment = "Analyser.SentimentAnalyser:main"
 
 [build-system]
 requires = ["poetry-core"]
