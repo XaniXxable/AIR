@@ -1,16 +1,10 @@
 import torch
-from torch.utils.data import DataLoader, Dataset
-from transformers import BertTokenizer, BertForSequenceClassification, AdamW
+from torch.utils.data import Dataset
+from transformers import BertTokenizer, BertForSequenceClassification, Trainer, TrainingArguments
 from sklearn.model_selection import StratifiedKFold
-from sklearn.metrics import classification_report
 import pandas as pd
 from tqdm import tqdm
 from pathlib import Path
-
-
-from transformers import Trainer, TrainingArguments, BertTokenizer, BertForSequenceClassification
-from torch.utils.data import Dataset
-from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 import numpy as np
 import pandas as pd
@@ -82,18 +76,13 @@ class SentimentModelTrainer:
       text = self.texts[idx]
       label = self.labels[idx]
       encoding = self.tokenizer(
-          text,
-          max_length=self.max_length,
-          padding="max_length",
-          truncation=True,
-          return_tensors="pt"
+        text, max_length=self.max_length, padding="max_length", truncation=True, return_tensors="pt"
       )
       return {
-          "input_ids": encoding["input_ids"].squeeze(0),
-          "attention_mask": encoding["attention_mask"].squeeze(0),
-          "label": torch.tensor(label, dtype=torch.long)
+        "input_ids": encoding["input_ids"].squeeze(0),
+        "attention_mask": encoding["attention_mask"].squeeze(0),
+        "label": torch.tensor(label, dtype=torch.long),
       }
-
 
   def prepare_data(self, file_path: str) -> pd.DataFrame:
     """
@@ -114,16 +103,9 @@ class SentimentModelTrainer:
     preds = np.argmax(pred.predictions, axis=1)
     precision, recall, f1, _ = precision_recall_fscore_support(labels, preds, average="weighted")
     acc = accuracy_score(labels, preds)
-    return {
-        "accuracy": acc,
-        "f1": f1,
-        "precision": precision,
-        "recall": recall
-    }
+    return {"accuracy": acc, "f1": f1, "precision": precision, "recall": recall}
 
-  def train_k_fold(
-    self, report_path: Path, df: pd.DataFrame, epochs: int = 3, k: int = 5
-  ):
+  def train_k_fold(self, report_path: Path, df: pd.DataFrame, epochs: int = 3, k: int = 5):
     """
     Trains a sentiment classification model using k-fold cross-validation.
 
@@ -143,64 +125,63 @@ class SentimentModelTrainer:
     fold_results = []
 
     for fold, (train_idx, val_idx) in enumerate(skf.split(texts, labels)):
-        print(f"=== Fold {fold + 1}/{k} ===")
-        
-        # Split data into train and validation sets
-        train_texts, val_texts = np.array(texts)[train_idx], np.array(texts)[val_idx]
-        train_labels, val_labels = np.array(labels)[train_idx], np.array(labels)[val_idx]
+      print(f"=== Fold {fold + 1}/{k} ===")
 
-        # Create datasets
-        train_dataset = self.SentimentDataset(train_texts, train_labels, self.tokenizer, self.max_length)
-        val_dataset = self.SentimentDataset(val_texts, val_labels, self.tokenizer, self.max_length)
+      # Split data into train and validation sets
+      train_texts, val_texts = np.array(texts)[train_idx], np.array(texts)[val_idx]
+      train_labels, val_labels = np.array(labels)[train_idx], np.array(labels)[val_idx]
 
-        # Load model
-        model = BertForSequenceClassification.from_pretrained(self.model_name, num_labels=self.num_labels).to(self.device)
+      # Create datasets
+      train_dataset = self.SentimentDataset(train_texts, train_labels, self.tokenizer, self.max_length)
+      val_dataset = self.SentimentDataset(val_texts, val_labels, self.tokenizer, self.max_length)
 
-        # Define TrainingArguments
-        training_args = TrainingArguments(
-            output_dir=Path.cwd().joinpath("resources", "SEM_model", "training", f"model_fold_{fold + 1}"),
-            evaluation_strategy="epoch",
-            learning_rate=self.learning_rate,
-            per_device_train_batch_size=self.batch_size,
-            per_device_eval_batch_size=self.batch_size,
-            num_train_epochs=epochs,
-            weight_decay=0.01,
-            logging_dir=f"logs_fold_{fold + 1}",
-            logging_steps=50,
-            save_strategy="epoch",
-            load_best_model_at_end=True,
-            metric_for_best_model="accuracy",
-            greater_is_better=True
-        )
+      # Load model
+      model = BertForSequenceClassification.from_pretrained(self.model_name, num_labels=self.num_labels).to(self.device)
 
-        # Initialize Trainer
-        trainer = Trainer(
-            model=model,
-            args=training_args,
-            train_dataset=train_dataset,
-            eval_dataset=val_dataset,
-            tokenizer=self.tokenizer,
-            compute_metrics=self.compute_metrics
-        )
+      # Define TrainingArguments
+      training_args = TrainingArguments(
+        output_dir=Path.cwd().joinpath("resources", "SEM_model", "training", f"model_fold_{fold + 1}"),
+        evaluation_strategy="epoch",
+        learning_rate=self.learning_rate,
+        per_device_train_batch_size=self.batch_size,
+        per_device_eval_batch_size=self.batch_size,
+        num_train_epochs=epochs,
+        weight_decay=0.01,
+        logging_dir=f"logs_fold_{fold + 1}",
+        logging_steps=50,
+        save_strategy="epoch",
+        load_best_model_at_end=True,
+        metric_for_best_model="accuracy",
+        greater_is_better=True,
+      )
 
-        # Train model
-        trainer.train()
+      # Initialize Trainer
+      trainer = Trainer(
+        model=model,
+        args=training_args,
+        train_dataset=train_dataset,
+        eval_dataset=val_dataset,
+        tokenizer=self.tokenizer,
+        compute_metrics=self.compute_metrics,
+      )
 
-        # Evaluate model
-        eval_results = trainer.evaluate()
-        fold_results.append(eval_results)
+      # Train model
+      trainer.train()
 
-        # Save model
-        trainer.save_model(Path.cwd().joinpath("resources", "SEM_model", "training", f"model_fold_{fold + 1}"),)
-        print(f"Model for fold {fold + 1} saved.")
+      # Evaluate model
+      eval_results = trainer.evaluate()
+      fold_results.append(eval_results)
+
+    # Save model
+    model_path = Path.cwd().joinpath("resources/model/SEM_model")
+    trainer.save_model(model_path)
+    print(f"Model saved at {model_path}.")
 
     # Average results across folds
-    avg_results = {
-        metric: np.mean([result[metric] for result in fold_results]) for metric in fold_results[0]
-    }
+    avg_results = {metric: np.mean([result[metric] for result in fold_results]) for metric in fold_results[0]}
     print("\n=== Average Results Across Folds ===")
     print(avg_results)
-    
+
     self.model.save_pretrained(Path.cwd().joinpath("resources", "SEM_model"))
     # self._save_classification_report(avg_results, report_path)
 
@@ -253,7 +234,6 @@ class SentimentModelTrainer:
         print(f"    F1-Score:  {metrics['f1-score']:.4f}")
         print(f"    Support:   {metrics['support']}")
 
-
   def predict(self, texts: list[str]) -> list[dict[str, int] | dict[str, dict[int, float]]]:
     """
     Predicts the sentiment of a list of text samples and returns probabilities for each class.
@@ -284,12 +264,13 @@ class SentimentModelTrainer:
       predicted_class = torch.argmax(probs).item()
       results.append({"class": predicted_class, "probabilities": class_probs})
     return results
-  
+
 
 def predict_review_class_for_restaurant(model_path: Path):
   from DineFinderAI.db.DatabaseManager import DatabaseManager
+
   trainer = SentimentModelTrainer(model_path)
-  reviews_file_path = Path.cwd().joinpath("resources", "yelp_academic_dataset_review.json")
+  reviews_file_path = Path.cwd().joinpath("resources", "restaurant_reviews_checker.json")
   db_manager = DatabaseManager(Path.cwd().joinpath("resources", "database.db"))
   db_manager.connectFunc()
   business_id_df = db_manager.execute("SELECT business_id, name FROM restaurants")
@@ -325,6 +306,7 @@ def predict_review_class_for_restaurant(model_path: Path):
 
   db_manager.closeFunc()
 
+
 def main() -> None:
   resources_path = Path.cwd().joinpath("resources")
   model_path = resources_path.joinpath("SEM_model")
@@ -337,8 +319,9 @@ def main() -> None:
     trainer = SentimentModelTrainer()
     df = pd.read_csv(review_sample_file)
     trainer.train_k_fold(report_path, df)
-  
-  predict_review_class_for_restaurant(model_path)
+
+  # predict_review_class_for_restaurant(model_path)
+
 
 if __name__ == "__main__":
   import sys
