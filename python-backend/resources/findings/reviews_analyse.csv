@@ -1,0 +1,501 @@
+review,score,predict_label,actual_label
+Extremely overpriced for the quality of food.,0.9977321624755859,Negative,Negative
+The food was outstanding!,0.9982426166534424,Positive,Positive
+"The staff were rude, and the service was slow.",0.9964210987091064,Negative,Negative
+"The experience was average, nothing remarkable.",0.9991521835327148,Neutral,Neutral
+"Such a delightful experience, I will definitely come back.",0.9979325532913208,Positive,Positive
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+Worst dining experience I've had in years.,0.84030681848526,Negative,Negative
+An ordinary restaurant with decent service.,0.9985243678092957,Neutral,Neutral
+The food was outstanding!,0.9982426166534424,Positive,Positive
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+"The experience was average, nothing remarkable.",0.9991521835327148,Neutral,Neutral
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+"The restaurant was too noisy, and the chairs were uncomfortable.",0.9966540336608887,Negative,Negative
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+"The service was okay, but it took a while to get seated.",0.998508632183075,Neutral,Neutral
+The food was outstanding!,0.9982426166534424,Positive,Positive
+"The food was okay, but I’ve had better.",0.9990940093994141,Neutral,Neutral
+"Exceptional dining experience, from start to finish.",0.9980254173278809,Positive,Positive
+An ordinary restaurant with decent service.,0.9985243678092957,Neutral,Neutral
+The dessert was absolutely heavenly.,0.998403012752533,Positive,Positive
+"The service was okay, but it took a while to get seated.",0.998508632183075,Neutral,Neutral
+Perfect spot for a family dinner or special occasion.,0.9916166663169861,Positive,Positive
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+An ordinary restaurant with decent service.,0.9985243678092957,Neutral,Neutral
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+"Exceptional dining experience, from start to finish.",0.9980254173278809,Positive,Positive
+"The service was okay, but it took a while to get seated.",0.998508632183075,Neutral,Neutral
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+"The staff were rude, and the service was slow.",0.9964210987091064,Negative,Negative
+The food was outstanding!,0.9982426166534424,Positive,Positive
+Worst dining experience I've had in years.,0.84030681848526,Negative,Negative
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+An ordinary restaurant with decent service.,0.9985243678092957,Neutral,Neutral
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+"The portions were tiny, and the food was overcooked.",0.9977555871009827,Negative,Negative
+"The food was okay, but I’ve had better.",0.9990940093994141,Neutral,Neutral
+"Exceptional dining experience, from start to finish.",0.9980254173278809,Positive,Positive
+The food was outstanding!,0.9982426166534424,Positive,Positive
+Amazing service and a cozy ambiance.,0.998370349407196,Positive,Positive
+Perfect spot for a family dinner or special occasion.,0.9916166663169861,Positive,Positive
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+Perfect spot for a family dinner or special occasion.,0.9916166663169861,Positive,Positive
+Amazing service and a cozy ambiance.,0.998370349407196,Positive,Positive
+Highly recommend this place to everyone!,0.9981291890144348,Positive,Positive
+"The food was okay, but I’ve had better.",0.9990940093994141,Neutral,Neutral
+"The waiter was kind, and the food was served hot and fresh.",0.991544246673584,Positive,Positive
+"The portions were tiny, and the food was overcooked.",0.9977555871009827,Negative,Negative
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+"The portions were tiny, and the food was overcooked.",0.9977555871009827,Negative,Negative
+Great variety on the menu and everything was delicious.,0.9983722567558289,Positive,Positive
+Worst dining experience I've had in years.,0.84030681848526,Negative,Negative
+Extremely overpriced for the quality of food.,0.9977321624755859,Negative,Negative
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+"The ambiance was nice, but the food was just fine.",0.9989909529685974,Neutral,Neutral
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+Great variety on the menu and everything was delicious.,0.9983722567558289,Positive,Positive
+"The portions were tiny, and the food was overcooked.",0.9977555871009827,Negative,Negative
+"Nothing special, but it wasn’t bad either.",0.9990715980529785,Neutral,Neutral
+"The dessert was stale, and the coffee was burnt.",0.9975199103355408,Negative,Negative
+"The portions were tiny, and the food was overcooked.",0.9977555871009827,Negative,Negative
+Perfect spot for a family dinner or special occasion.,0.9916166663169861,Positive,Positive
+Perfect spot for a family dinner or special occasion.,0.9916166663169861,Positive,Positive
+"The staff were rude, and the service was slow.",0.9964210987091064,Negative,Negative
+"The staff were rude, and the service was slow.",0.9964210987091064,Negative,Negative
+"The staff were rude, and the service was slow.",0.9964210987091064,Negative,Negative
+"The dessert was stale, and the coffee was burnt.",0.9975199103355408,Negative,Negative
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+Great variety on the menu and everything was delicious.,0.9983722567558289,Positive,Positive
+Extremely overpriced for the quality of food.,0.9977321624755859,Negative,Negative
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+"Exceptional dining experience, from start to finish.",0.9980254173278809,Positive,Positive
+Highly recommend this place to everyone!,0.9981291890144348,Positive,Positive
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+A very standard dining experience overall.,0.9975584745407104,Positive,Neutral
+"The ambiance was nice, but the food was just fine.",0.9989909529685974,Neutral,Neutral
+"The restaurant was too noisy, and the chairs were uncomfortable.",0.9966540336608887,Negative,Negative
+Best meal I've had in a long time.,0.744234561920166,Positive,Positive
+"The restaurant was too noisy, and the chairs were uncomfortable.",0.9966540336608887,Negative,Negative
+Extremely overpriced for the quality of food.,0.9977321624755859,Negative,Negative
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+"The service was okay, but it took a while to get seated.",0.998508632183075,Neutral,Neutral
+Amazing service and a cozy ambiance.,0.998370349407196,Positive,Positive
+Perfect spot for a family dinner or special occasion.,0.9916166663169861,Positive,Positive
+"The service was okay, but it took a while to get seated.",0.998508632183075,Neutral,Neutral
+The dessert was absolutely heavenly.,0.998403012752533,Positive,Positive
+"Such a delightful experience, I will definitely come back.",0.9979325532913208,Positive,Positive
+Amazing service and a cozy ambiance.,0.998370349407196,Positive,Positive
+"Exceptional dining experience, from start to finish.",0.9980254173278809,Positive,Positive
+"The staff were rude, and the service was slow.",0.9964210987091064,Negative,Negative
+Perfect spot for a family dinner or special occasion.,0.9916166663169861,Positive,Positive
+"The staff were rude, and the service was slow.",0.9964210987091064,Negative,Negative
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+"It was fine, but I wouldn’t rush back.",0.9917513728141785,Neutral,Neutral
+"The dessert was stale, and the coffee was burnt.",0.9975199103355408,Negative,Negative
+"Nothing special, but it wasn’t bad either.",0.9990715980529785,Neutral,Neutral
+"The experience was average, nothing remarkable.",0.9991521835327148,Neutral,Neutral
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+A very standard dining experience overall.,0.9975584745407104,Positive,Neutral
+An ordinary restaurant with decent service.,0.9985243678092957,Neutral,Neutral
+Great variety on the menu and everything was delicious.,0.9983722567558289,Positive,Positive
+Extremely overpriced for the quality of food.,0.9977321624755859,Negative,Negative
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+"It was fine, but I wouldn’t rush back.",0.9917513728141785,Neutral,Neutral
+Worst dining experience I've had in years.,0.84030681848526,Negative,Negative
+An ordinary restaurant with decent service.,0.9985243678092957,Neutral,Neutral
+"The waiter was kind, and the food was served hot and fresh.",0.991544246673584,Positive,Positive
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+Amazing service and a cozy ambiance.,0.998370349407196,Positive,Positive
+"The food was okay, but I’ve had better.",0.9990940093994141,Neutral,Neutral
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+Extremely overpriced for the quality of food.,0.9977321624755859,Negative,Negative
+"It was fine, but I wouldn’t rush back.",0.9917513728141785,Neutral,Neutral
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+"The food was okay, but I’ve had better.",0.9990940093994141,Neutral,Neutral
+"The dessert was stale, and the coffee was burnt.",0.9975199103355408,Negative,Negative
+"Nothing special, but it wasn’t bad either.",0.9990715980529785,Neutral,Neutral
+Perfect spot for a family dinner or special occasion.,0.9916166663169861,Positive,Positive
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+Extremely overpriced for the quality of food.,0.9977321624755859,Negative,Negative
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+"Exceptional dining experience, from start to finish.",0.9980254173278809,Positive,Positive
+"The dessert was stale, and the coffee was burnt.",0.9975199103355408,Negative,Negative
+"The service was okay, but it took a while to get seated.",0.998508632183075,Neutral,Neutral
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+"The restaurant was too noisy, and the chairs were uncomfortable.",0.9966540336608887,Negative,Negative
+"A very disappointing meal, will not return.",0.997002899646759,Negative,Negative
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+"Such a delightful experience, I will definitely come back.",0.9979325532913208,Positive,Positive
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+"Such a delightful experience, I will definitely come back.",0.9979325532913208,Positive,Positive
+Amazing service and a cozy ambiance.,0.998370349407196,Positive,Positive
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+"The staff were rude, and the service was slow.",0.9964210987091064,Negative,Negative
+Highly recommend this place to everyone!,0.9981291890144348,Positive,Positive
+"The dessert was stale, and the coffee was burnt.",0.9975199103355408,Negative,Negative
+A very standard dining experience overall.,0.9975584745407104,Positive,Neutral
+Highly recommend this place to everyone!,0.9981291890144348,Positive,Positive
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+Great variety on the menu and everything was delicious.,0.9983722567558289,Positive,Positive
+"Exceptional dining experience, from start to finish.",0.9980254173278809,Positive,Positive
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+A very standard dining experience overall.,0.9975584745407104,Positive,Neutral
+Extremely overpriced for the quality of food.,0.9977321624755859,Negative,Negative
+"Nothing special, but it wasn’t bad either.",0.9990715980529785,Neutral,Neutral
+"The portions were tiny, and the food was overcooked.",0.9977555871009827,Negative,Negative
+Worst dining experience I've had in years.,0.84030681848526,Negative,Negative
+"Nothing special, but it wasn’t bad either.",0.9990715980529785,Neutral,Neutral
+"Exceptional dining experience, from start to finish.",0.9980254173278809,Positive,Positive
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+Amazing service and a cozy ambiance.,0.998370349407196,Positive,Positive
+Highly recommend this place to everyone!,0.9981291890144348,Positive,Positive
+Amazing service and a cozy ambiance.,0.998370349407196,Positive,Positive
+"The portions were tiny, and the food was overcooked.",0.9977555871009827,Negative,Negative
+"The waiter was kind, and the food was served hot and fresh.",0.991544246673584,Positive,Positive
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+Great variety on the menu and everything was delicious.,0.9983722567558289,Positive,Positive
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+The food was outstanding!,0.9982426166534424,Positive,Positive
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+"The waiter was kind, and the food was served hot and fresh.",0.991544246673584,Positive,Positive
+Perfect spot for a family dinner or special occasion.,0.9916166663169861,Positive,Positive
+"Such a delightful experience, I will definitely come back.",0.9979325532913208,Positive,Positive
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+"The portions were tiny, and the food was overcooked.",0.9977555871009827,Negative,Negative
+"The ambiance was nice, but the food was just fine.",0.9989909529685974,Neutral,Neutral
+"The dessert was stale, and the coffee was burnt.",0.9975199103355408,Negative,Negative
+"The service was okay, but it took a while to get seated.",0.998508632183075,Neutral,Neutral
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+Best meal I've had in a long time.,0.744234561920166,Positive,Positive
+"The portions were tiny, and the food was overcooked.",0.9977555871009827,Negative,Negative
+"The dessert was stale, and the coffee was burnt.",0.9975199103355408,Negative,Negative
+Best meal I've had in a long time.,0.744234561920166,Positive,Positive
+"Such a delightful experience, I will definitely come back.",0.9979325532913208,Positive,Positive
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+"Such a delightful experience, I will definitely come back.",0.9979325532913208,Positive,Positive
+"The dessert was stale, and the coffee was burnt.",0.9975199103355408,Negative,Negative
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+Best meal I've had in a long time.,0.744234561920166,Positive,Positive
+Amazing service and a cozy ambiance.,0.998370349407196,Positive,Positive
+"It was fine, but I wouldn’t rush back.",0.9917513728141785,Neutral,Neutral
+"The staff were rude, and the service was slow.",0.9964210987091064,Negative,Negative
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+Amazing service and a cozy ambiance.,0.998370349407196,Positive,Positive
+Great variety on the menu and everything was delicious.,0.9983722567558289,Positive,Positive
+Perfect spot for a family dinner or special occasion.,0.9916166663169861,Positive,Positive
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+"Nothing special, but it wasn’t bad either.",0.9990715980529785,Neutral,Neutral
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+"The ambiance was nice, but the food was just fine.",0.9989909529685974,Neutral,Neutral
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+Worst dining experience I've had in years.,0.84030681848526,Negative,Negative
+"The experience was average, nothing remarkable.",0.9991521835327148,Neutral,Neutral
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+"The service was okay, but it took a while to get seated.",0.998508632183075,Neutral,Neutral
+Best meal I've had in a long time.,0.744234561920166,Positive,Positive
+"Nothing special, but it wasn’t bad either.",0.9990715980529785,Neutral,Neutral
+"The experience was average, nothing remarkable.",0.9991521835327148,Neutral,Neutral
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+"The experience was average, nothing remarkable.",0.9991521835327148,Neutral,Neutral
+"The food was okay, but I’ve had better.",0.9990940093994141,Neutral,Neutral
+"A very disappointing meal, will not return.",0.997002899646759,Negative,Negative
+"The ambiance was nice, but the food was just fine.",0.9989909529685974,Neutral,Neutral
+"The portions were tiny, and the food was overcooked.",0.9977555871009827,Negative,Negative
+"Such a delightful experience, I will definitely come back.",0.9979325532913208,Positive,Positive
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+The dessert was absolutely heavenly.,0.998403012752533,Positive,Positive
+"The restaurant was too noisy, and the chairs were uncomfortable.",0.9966540336608887,Negative,Negative
+An ordinary restaurant with decent service.,0.9985243678092957,Neutral,Neutral
+Perfect spot for a family dinner or special occasion.,0.9916166663169861,Positive,Positive
+Amazing service and a cozy ambiance.,0.998370349407196,Positive,Positive
+"The ambiance was nice, but the food was just fine.",0.9989909529685974,Neutral,Neutral
+Extremely overpriced for the quality of food.,0.9977321624755859,Negative,Negative
+"A very disappointing meal, will not return.",0.997002899646759,Negative,Negative
+"The food was okay, but I’ve had better.",0.9990940093994141,Neutral,Neutral
+"A very disappointing meal, will not return.",0.997002899646759,Negative,Negative
+"The experience was average, nothing remarkable.",0.9991521835327148,Neutral,Neutral
+Highly recommend this place to everyone!,0.9981291890144348,Positive,Positive
+Amazing service and a cozy ambiance.,0.998370349407196,Positive,Positive
+An ordinary restaurant with decent service.,0.9985243678092957,Neutral,Neutral
+"The dessert was stale, and the coffee was burnt.",0.9975199103355408,Negative,Negative
+"The staff were rude, and the service was slow.",0.9964210987091064,Negative,Negative
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+"The waiter was kind, and the food was served hot and fresh.",0.991544246673584,Positive,Positive
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+"The food was okay, but I’ve had better.",0.9990940093994141,Neutral,Neutral
+Highly recommend this place to everyone!,0.9981291890144348,Positive,Positive
+"Such a delightful experience, I will definitely come back.",0.9979325532913208,Positive,Positive
+"Nothing special, but it wasn’t bad either.",0.9990715980529785,Neutral,Neutral
+"It was fine, but I wouldn’t rush back.",0.9917513728141785,Neutral,Neutral
+Perfect spot for a family dinner or special occasion.,0.9916166663169861,Positive,Positive
+Best meal I've had in a long time.,0.744234561920166,Positive,Positive
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+A very standard dining experience overall.,0.9975584745407104,Positive,Neutral
+"The food was okay, but I’ve had better.",0.9990940093994141,Neutral,Neutral
+A very standard dining experience overall.,0.9975584745407104,Positive,Neutral
+"The experience was average, nothing remarkable.",0.9991521835327148,Neutral,Neutral
+The dessert was absolutely heavenly.,0.998403012752533,Positive,Positive
+A very standard dining experience overall.,0.9975584745407104,Positive,Neutral
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+Best meal I've had in a long time.,0.744234561920166,Positive,Positive
+Best meal I've had in a long time.,0.744234561920166,Positive,Positive
+Highly recommend this place to everyone!,0.9981291890144348,Positive,Positive
+Worst dining experience I've had in years.,0.84030681848526,Negative,Negative
+Extremely overpriced for the quality of food.,0.9977321624755859,Negative,Negative
+Extremely overpriced for the quality of food.,0.9977321624755859,Negative,Negative
+"Nothing special, but it wasn’t bad either.",0.9990715980529785,Neutral,Neutral
+"A very disappointing meal, will not return.",0.997002899646759,Negative,Negative
+Extremely overpriced for the quality of food.,0.9977321624755859,Negative,Negative
+"Exceptional dining experience, from start to finish.",0.9980254173278809,Positive,Positive
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+Best meal I've had in a long time.,0.744234561920166,Positive,Positive
+"The portions were tiny, and the food was overcooked.",0.9977555871009827,Negative,Negative
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+An ordinary restaurant with decent service.,0.9985243678092957,Neutral,Neutral
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+Best meal I've had in a long time.,0.744234561920166,Positive,Positive
+Worst dining experience I've had in years.,0.84030681848526,Negative,Negative
+"It was fine, but I wouldn’t rush back.",0.9917513728141785,Neutral,Neutral
+Highly recommend this place to everyone!,0.9981291890144348,Positive,Positive
+Highly recommend this place to everyone!,0.9981291890144348,Positive,Positive
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+"The ambiance was nice, but the food was just fine.",0.9989909529685974,Neutral,Neutral
+"The ambiance was nice, but the food was just fine.",0.9989909529685974,Neutral,Neutral
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+An ordinary restaurant with decent service.,0.9985243678092957,Neutral,Neutral
+"The experience was average, nothing remarkable.",0.9991521835327148,Neutral,Neutral
+Best meal I've had in a long time.,0.744234561920166,Positive,Positive
+A very standard dining experience overall.,0.9975584745407104,Positive,Neutral
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+"The dessert was stale, and the coffee was burnt.",0.9975199103355408,Negative,Negative
+"The waiter was kind, and the food was served hot and fresh.",0.991544246673584,Positive,Positive
+"Such a delightful experience, I will definitely come back.",0.9979325532913208,Positive,Positive
+Extremely overpriced for the quality of food.,0.9977321624755859,Negative,Negative
+"The staff were rude, and the service was slow.",0.9964210987091064,Negative,Negative
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+Perfect spot for a family dinner or special occasion.,0.9916166663169861,Positive,Positive
+The food was outstanding!,0.9982426166534424,Positive,Positive
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+Amazing service and a cozy ambiance.,0.998370349407196,Positive,Positive
+Highly recommend this place to everyone!,0.9981291890144348,Positive,Positive
+A very standard dining experience overall.,0.9975584745407104,Positive,Neutral
+"It was fine, but I wouldn’t rush back.",0.9917513728141785,Neutral,Neutral
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+The dessert was absolutely heavenly.,0.998403012752533,Positive,Positive
+"The food was okay, but I’ve had better.",0.9990940093994141,Neutral,Neutral
+"The experience was average, nothing remarkable.",0.9991521835327148,Neutral,Neutral
+"It was fine, but I wouldn’t rush back.",0.9917513728141785,Neutral,Neutral
+"The staff were rude, and the service was slow.",0.9964210987091064,Negative,Negative
+"Nothing special, but it wasn’t bad either.",0.9990715980529785,Neutral,Neutral
+"It was fine, but I wouldn’t rush back.",0.9917513728141785,Neutral,Neutral
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+"The staff were rude, and the service was slow.",0.9964210987091064,Negative,Negative
+"It was fine, but I wouldn’t rush back.",0.9917513728141785,Neutral,Neutral
+Perfect spot for a family dinner or special occasion.,0.9916166663169861,Positive,Positive
+Perfect spot for a family dinner or special occasion.,0.9916166663169861,Positive,Positive
+"The service was okay, but it took a while to get seated.",0.998508632183075,Neutral,Neutral
+"The service was okay, but it took a while to get seated.",0.998508632183075,Neutral,Neutral
+"The food was okay, but I’ve had better.",0.9990940093994141,Neutral,Neutral
+Great variety on the menu and everything was delicious.,0.9983722567558289,Positive,Positive
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+"The service was okay, but it took a while to get seated.",0.998508632183075,Neutral,Neutral
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+"The staff were rude, and the service was slow.",0.9964210987091064,Negative,Negative
+"Nothing special, but it wasn’t bad either.",0.9990715980529785,Neutral,Neutral
+A very standard dining experience overall.,0.9975584745407104,Positive,Neutral
+"It was fine, but I wouldn’t rush back.",0.9917513728141785,Neutral,Neutral
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+"The waiter was kind, and the food was served hot and fresh.",0.991544246673584,Positive,Positive
+"The restaurant was too noisy, and the chairs were uncomfortable.",0.9966540336608887,Negative,Negative
+Worst dining experience I've had in years.,0.84030681848526,Negative,Negative
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+The food was outstanding!,0.9982426166534424,Positive,Positive
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+A very standard dining experience overall.,0.9975584745407104,Positive,Neutral
+The dessert was absolutely heavenly.,0.998403012752533,Positive,Positive
+"The ambiance was nice, but the food was just fine.",0.9989909529685974,Neutral,Neutral
+"The food was okay, but I’ve had better.",0.9990940093994141,Neutral,Neutral
+"The service was okay, but it took a while to get seated.",0.998508632183075,Neutral,Neutral
+"The portions were tiny, and the food was overcooked.",0.9977555871009827,Negative,Negative
+Perfect spot for a family dinner or special occasion.,0.9916166663169861,Positive,Positive
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+"The restaurant was too noisy, and the chairs were uncomfortable.",0.9966540336608887,Negative,Negative
+Perfect spot for a family dinner or special occasion.,0.9916166663169861,Positive,Positive
+"The ambiance was nice, but the food was just fine.",0.9989909529685974,Neutral,Neutral
+"It was fine, but I wouldn’t rush back.",0.9917513728141785,Neutral,Neutral
+The dessert was absolutely heavenly.,0.998403012752533,Positive,Positive
+Great variety on the menu and everything was delicious.,0.9983722567558289,Positive,Positive
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+"The experience was average, nothing remarkable.",0.9991521835327148,Neutral,Neutral
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+"The portions were tiny, and the food was overcooked.",0.9977555871009827,Negative,Negative
+"Such a delightful experience, I will definitely come back.",0.9979325532913208,Positive,Positive
+Worst dining experience I've had in years.,0.84030681848526,Negative,Negative
+"The service was okay, but it took a while to get seated.",0.998508632183075,Neutral,Neutral
+"The waiter was kind, and the food was served hot and fresh.",0.991544246673584,Positive,Positive
+"It was fine, but I wouldn’t rush back.",0.9917513728141785,Neutral,Neutral
+Amazing service and a cozy ambiance.,0.998370349407196,Positive,Positive
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+Worst dining experience I've had in years.,0.84030681848526,Negative,Negative
+Best meal I've had in a long time.,0.744234561920166,Positive,Positive
+An ordinary restaurant with decent service.,0.9985243678092957,Neutral,Neutral
+"The dessert was stale, and the coffee was burnt.",0.9975199103355408,Negative,Negative
+"It was fine, but I wouldn’t rush back.",0.9917513728141785,Neutral,Neutral
+"The ambiance was nice, but the food was just fine.",0.9989909529685974,Neutral,Neutral
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+"The ambiance was nice, but the food was just fine.",0.9989909529685974,Neutral,Neutral
+"Nothing special, but it wasn’t bad either.",0.9990715980529785,Neutral,Neutral
+The dessert was absolutely heavenly.,0.998403012752533,Positive,Positive
+"The staff were rude, and the service was slow.",0.9964210987091064,Negative,Negative
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+"The restaurant was too noisy, and the chairs were uncomfortable.",0.9966540336608887,Negative,Negative
+"Such a delightful experience, I will definitely come back.",0.9979325532913208,Positive,Positive
+"The waiter was kind, and the food was served hot and fresh.",0.991544246673584,Positive,Positive
+"A very disappointing meal, will not return.",0.997002899646759,Negative,Negative
+Best meal I've had in a long time.,0.744234561920166,Positive,Positive
+"The food was okay, but I’ve had better.",0.9990940093994141,Neutral,Neutral
+"The service was okay, but it took a while to get seated.",0.998508632183075,Neutral,Neutral
+Extremely overpriced for the quality of food.,0.9977321624755859,Negative,Negative
+"The portions were tiny, and the food was overcooked.",0.9977555871009827,Negative,Negative
+"The portions were tiny, and the food was overcooked.",0.9977555871009827,Negative,Negative
+Worst dining experience I've had in years.,0.84030681848526,Negative,Negative
+A very standard dining experience overall.,0.9975584745407104,Positive,Neutral
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+"Nothing special, but it wasn’t bad either.",0.9990715980529785,Neutral,Neutral
+Great variety on the menu and everything was delicious.,0.9983722567558289,Positive,Positive
+"The portions were tiny, and the food was overcooked.",0.9977555871009827,Negative,Negative
+"The staff were rude, and the service was slow.",0.9964210987091064,Negative,Negative
+Perfect spot for a family dinner or special occasion.,0.9916166663169861,Positive,Positive
+"The ambiance was nice, but the food was just fine.",0.9989909529685974,Neutral,Neutral
+Amazing service and a cozy ambiance.,0.998370349407196,Positive,Positive
+"The service was okay, but it took a while to get seated.",0.998508632183075,Neutral,Neutral
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+"Exceptional dining experience, from start to finish.",0.9980254173278809,Positive,Positive
+"The dessert was stale, and the coffee was burnt.",0.9975199103355408,Negative,Negative
+The dessert was absolutely heavenly.,0.998403012752533,Positive,Positive
+"It was fine, but I wouldn’t rush back.",0.9917513728141785,Neutral,Neutral
+Worst dining experience I've had in years.,0.84030681848526,Negative,Negative
+An ordinary restaurant with decent service.,0.9985243678092957,Neutral,Neutral
+"The portions were tiny, and the food was overcooked.",0.9977555871009827,Negative,Negative
+"The food was okay, but I’ve had better.",0.9990940093994141,Neutral,Neutral
+"The experience was average, nothing remarkable.",0.9991521835327148,Neutral,Neutral
+"Nothing special, but it wasn’t bad either.",0.9990715980529785,Neutral,Neutral
+"The portions were tiny, and the food was overcooked.",0.9977555871009827,Negative,Negative
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+"Nothing special, but it wasn’t bad either.",0.9990715980529785,Neutral,Neutral
+"The dessert was stale, and the coffee was burnt.",0.9975199103355408,Negative,Negative
+"The experience was average, nothing remarkable.",0.9991521835327148,Neutral,Neutral
+Highly recommend this place to everyone!,0.9981291890144348,Positive,Positive
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+"The restaurant was too noisy, and the chairs were uncomfortable.",0.9966540336608887,Negative,Negative
+"The waiter was kind, and the food was served hot and fresh.",0.991544246673584,Positive,Positive
+Worst dining experience I've had in years.,0.84030681848526,Negative,Negative
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+The food was outstanding!,0.9982426166534424,Positive,Positive
+"Exceptional dining experience, from start to finish.",0.9980254173278809,Positive,Positive
+"The food was okay, but I’ve had better.",0.9990940093994141,Neutral,Neutral
+"The service was okay, but it took a while to get seated.",0.998508632183075,Neutral,Neutral
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+An ordinary restaurant with decent service.,0.9985243678092957,Neutral,Neutral
+"It was fine, but I wouldn’t rush back.",0.9917513728141785,Neutral,Neutral
+Great variety on the menu and everything was delicious.,0.9983722567558289,Positive,Positive
+An ordinary restaurant with decent service.,0.9985243678092957,Neutral,Neutral
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+Extremely overpriced for the quality of food.,0.9977321624755859,Negative,Negative
+Amazing service and a cozy ambiance.,0.998370349407196,Positive,Positive
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+The food was outstanding!,0.9982426166534424,Positive,Positive
+The dessert was absolutely heavenly.,0.998403012752533,Positive,Positive
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+"A very disappointing meal, will not return.",0.997002899646759,Negative,Negative
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+"Exceptional dining experience, from start to finish.",0.9980254173278809,Positive,Positive
+Highly recommend this place to everyone!,0.9981291890144348,Positive,Positive
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+An ordinary restaurant with decent service.,0.9985243678092957,Neutral,Neutral
+The dessert was absolutely heavenly.,0.998403012752533,Positive,Positive
+Worst dining experience I've had in years.,0.84030681848526,Negative,Negative
+"The ambiance was nice, but the food was just fine.",0.9989909529685974,Neutral,Neutral
+"The food was okay, but I’ve had better.",0.9990940093994141,Neutral,Neutral
+"The dessert was stale, and the coffee was burnt.",0.9975199103355408,Negative,Negative
+Best meal I've had in a long time.,0.744234561920166,Positive,Positive
+"The experience was average, nothing remarkable.",0.9991521835327148,Neutral,Neutral
+"The ambiance was nice, but the food was just fine.",0.9989909529685974,Neutral,Neutral
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+Great variety on the menu and everything was delicious.,0.9983722567558289,Positive,Positive
+"The portions were tiny, and the food was overcooked.",0.9977555871009827,Negative,Negative
+Perfect spot for a family dinner or special occasion.,0.9916166663169861,Positive,Positive
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+Worst dining experience I've had in years.,0.84030681848526,Negative,Negative
+"The portions were tiny, and the food was overcooked.",0.9977555871009827,Negative,Negative
+An ordinary restaurant with decent service.,0.9985243678092957,Neutral,Neutral
+Amazing service and a cozy ambiance.,0.998370349407196,Positive,Positive
+An average restaurant experience with no surprises.,0.9883467555046082,Neutral,Neutral
+Perfect spot for a family dinner or special occasion.,0.9916166663169861,Positive,Positive
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+"The service was okay, but it took a while to get seated.",0.998508632183075,Neutral,Neutral
+"A very disappointing meal, will not return.",0.997002899646759,Negative,Negative
+"Exceptional dining experience, from start to finish.",0.9980254173278809,Positive,Positive
+An ordinary restaurant with decent service.,0.9985243678092957,Neutral,Neutral
+The food was outstanding!,0.9982426166534424,Positive,Positive
+Great variety on the menu and everything was delicious.,0.9983722567558289,Positive,Positive
+A very standard dining experience overall.,0.9975584745407104,Positive,Neutral
+A very standard dining experience overall.,0.9975584745407104,Positive,Neutral
+Great variety on the menu and everything was delicious.,0.9983722567558289,Positive,Positive
+Worst dining experience I've had in years.,0.84030681848526,Negative,Negative
+"The dessert was stale, and the coffee was burnt.",0.9975199103355408,Negative,Negative
+Perfect spot for a family dinner or special occasion.,0.9916166663169861,Positive,Positive
+"The service was okay, but it took a while to get seated.",0.998508632183075,Neutral,Neutral
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+"The dessert was stale, and the coffee was burnt.",0.9975199103355408,Negative,Negative
+The food was cold and lacked flavor.,0.9934130311012268,Negative,Negative
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+"The portions were tiny, and the food was overcooked.",0.9977555871009827,Negative,Negative
+A very standard dining experience overall.,0.9975584745407104,Positive,Neutral
+"The dessert was stale, and the coffee was burnt.",0.9975199103355408,Negative,Negative
+An ordinary restaurant with decent service.,0.9985243678092957,Neutral,Neutral
+"It was fine, but I wouldn’t rush back.",0.9917513728141785,Neutral,Neutral
+Amazing service and a cozy ambiance.,0.998370349407196,Positive,Positive
+A very standard dining experience overall.,0.9975584745407104,Positive,Neutral
+Worst dining experience I've had in years.,0.84030681848526,Negative,Negative
+"Exceptional dining experience, from start to finish.",0.9980254173278809,Positive,Positive
+Great variety on the menu and everything was delicious.,0.9983722567558289,Positive,Positive
+"Nothing special, but it wasn’t bad either.",0.9990715980529785,Neutral,Neutral
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+"A very disappointing meal, will not return.",0.997002899646759,Negative,Negative
+"The food was okay, but I’ve had better.",0.9990940093994141,Neutral,Neutral
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
+A very standard dining experience overall.,0.9975584745407104,Positive,Neutral
+"The waiter was kind, and the food was served hot and fresh.",0.991544246673584,Positive,Positive
+"The food portions were fair, but the taste was mediocre.",0.9989221096038818,Neutral,Neutral
+"Such a delightful experience, I will definitely come back.",0.9979325532913208,Positive,Positive
+"I waited for over an hour, and the food was disappointing.",0.9977020621299744,Negative,Negative
+Great variety on the menu and everything was delicious.,0.9983722567558289,Positive,Positive
+"The ambiance was nice, but the food was just fine.",0.9989909529685974,Neutral,Neutral
+"Terrible experience, I wouldn’t recommend this place.",0.9969507455825806,Negative,Negative
